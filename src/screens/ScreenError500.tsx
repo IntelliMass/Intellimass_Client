@@ -2,9 +2,12 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-type ScreenProfileProps = {};
+type Screen500Props = {};
 
-const ScreenProfile: React.FC<ScreenProfileProps> = () => {
+const ScreenError500: React.FC<Screen500Props> = () => {
+  const error404 =
+    "https://www.winx5.com/wp-content/themes/ekommart/assets/images/404/404.png";
+
   return (
     <div className="App">
       <header className="App-header">
@@ -22,8 +25,19 @@ const ScreenProfile: React.FC<ScreenProfileProps> = () => {
               fontSize: 40,
             }}
           >
-            Profile
+            500
           </h2>
+          <img src={error404} alt="404" />
+          <p
+            style={{
+              color: "red",
+              padding: 0,
+              textAlign: "center",
+              fontSize: 40,
+            }}
+          >
+            Sorry we got into some issues...
+          </p>
           <ButtonGroup
             disableElevation
             variant="contained"
@@ -44,6 +58,6 @@ const ScreenProfile: React.FC<ScreenProfileProps> = () => {
   );
 };
 
-export default ScreenProfile;
+export default ScreenError500;
 
-ScreenProfile.defaultProps = {};
+ScreenError500.defaultProps = {};

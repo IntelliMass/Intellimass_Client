@@ -4,7 +4,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 type Screen401Props = {};
 
-const Screen401: React.FC<Screen401Props> = () => {
+const ScreenError401: React.FC<Screen401Props> = () => {
   const error404 =
     "https://www.winx5.com/wp-content/themes/ekommart/assets/images/404/404.png";
 
@@ -58,6 +58,6 @@ const Screen401: React.FC<Screen401Props> = () => {
   );
 };
 
-export default Screen401;
+export default ScreenError401;
 
-Screen401.defaultProps = {};
+ScreenError401.defaultProps = {};

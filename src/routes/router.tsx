@@ -1,24 +1,27 @@
 import { Switch, Route } from "react-router-dom";
 import Header from "../layout/header";
 import Menu from "../layout/menu";
+import NavBar from "../components/nav-bar/NavBar"
 
 // ROUTES
-import ScreenHome from "../screens/screen.home";
-import ScreenSearch from "../screens/screen.search";
-import ScreenProfile from "../screens/screen.profile";
+import ScreenHome from "../screens/ScreenHome";
+import ScreenSearch from "../screens/ScreenSearch";
+import ScreenProfile from "../screens/ScreenProfile";
 
 // EXCEPTIONS
-import Screen404 from "../screens/screen.404";
-import Screen401 from "../screens/screen.401";
-import Screen500 from "../screens/screen.500";
+import ScreenError404 from "../screens/ScreenError404";
+import ScreenError401 from "../screens/ScreenError401";
+import ScreenError500 from "../screens/ScreenError500";
+import ScreenResearches from "../screens/ScreenResearches";
+import {ScreenQuestions} from "../screens/ScreenQuestions";
 
 
 function RouterApplication() {
 
   return (
     <>
-     <Header/>
-     <Menu/>
+     <NavBar/>
+     {/*<Menu/>*/}
       <Switch>
         <Route path="/" exact>
           <ScreenHome />
@@ -32,16 +35,24 @@ function RouterApplication() {
           <ScreenProfile />
         </Route>
 
+        <Route path="/researches">
+          <ScreenResearches />
+        </Route>
+
+        <Route path="/questions">
+          <ScreenQuestions />
+        </Route>
+
         <Route path="/unauthorized">
-          <Screen401 />
+          <ScreenError401 />
         </Route>
 
         <Route path="/server">
-          <Screen500 />
+          <ScreenError500 />
         </Route>
 
         <Route path="/*">
-          <Screen404 />
+          <ScreenError404 />
         </Route>
       </Switch>
     </>
