@@ -1,0 +1,51 @@
+.tenant-drawer {
+  top: 50px;
+  height: 100%;
+
+  .ant-drawer-header {
+    background-color: rgb(86, 91, 117);
+    border-bottom: none;
+
+    .ant-drawer-title {
+      padding-top: 12px;
+      color: white;
+      font-size: 20px;
+    }
+  }
+
+  .ant-drawer-body {
+    background-color: rgb(86, 91, 117);
+    padding-top: 12px;
+  }
+
+  .title {
+    .ui-title {
+      color: white;
+    }
+  }
+
+  .list {
+
+    .tenant-container {
+      background-color: rgba(237, 240, 247, 0.2);
+      padding: 12px 16px;
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 400;
+      transition: background-color 0.3s;
+      color: white;
+
+      &:hover {
+        background-color: rgba(237, 240, 247, 0.4);
+      }
+
+      &.active {
+        background-color: rgba(237, 240, 247, 1);
+        color: var(--app-purple);
+
+      }
+    }
+  }
+}

@@ -1,10 +1,9 @@
 # IntelliMass Client
-Request timeline application based on React.
+A system for researchers to improve the research process on the big data era.
 
 
-![NBA](https://s9.gifyu.com/images/timeline-online-video-cutter.com.gif)
+![DEMO](https://i.ibb.co/86B3m6M/Screen-Shot-2021-12-31-at-19-55-10.png)
 
-An application that publishes information of requests 
 
 
 ## Demo
@@ -15,30 +14,33 @@ https://i.ibb.co/1v7fyXd/nba-zoom-online-video-cutter-com.gif
 - [React](https://reactjs.org/)
 - [Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Redux](https://redux.js.org/)
 
 
 ## ⌨️ Key Features
-- Select User
-- Show Requests
-- Select Request 
+- Define query
+- Define complex query
+- Adding insights to query
+- Filter the data-items result set
+- Zoom in / out
 
 ## 🖥️‍ Site Screens
-- Home screen - Show Request timeline fiterd by users.
-![demo](https://s9.gifyu.com/images/TimeLine.md.png)
-
+- Home screen 
+- Search screen 
+- Research screen 
 
 
 ## 🏃‍ Local Installation
 
 1. Clone the Repo by going to your local Git Client and pushing in the command:
-https://github.com/Daniel-Modilevsky/timeline
-or download.
-2. $cd server.
-3. $npm start.
+   git@github.com:IntelliMass/Intellimass_Client.git
+2. $cd intellimass-client.
+3. $npm i.
+4. $npm start.
 
 
-## ‍ Thanks and enjoy the application
+## Thanks and enjoy the application
 
 Daniel Modilevsky,
-Full Stack developer,
-Software Engineer.
+Yaniv Zlotnik,
+Anar Djafarov

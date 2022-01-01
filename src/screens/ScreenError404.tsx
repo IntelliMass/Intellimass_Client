@@ -2,9 +2,9 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-type Screen500Props = {};
+type Screen404Props = {};
 
-const Screen500: React.FC<Screen500Props> = () => {
+const ScreenError404: React.FC<Screen404Props> = () => {
   const error404 =
     "https://www.winx5.com/wp-content/themes/ekommart/assets/images/404/404.png";
 
@@ -25,7 +25,7 @@ const Screen500: React.FC<Screen500Props> = () => {
               fontSize: 40,
             }}
           >
-            500
+            404{" "}
           </h2>
           <img src={error404} alt="404" />
           <p
@@ -36,7 +36,7 @@ const Screen500: React.FC<Screen500Props> = () => {
               fontSize: 40,
             }}
           >
-            Sorry we got into some issues...
+            This Route is not exist
           </p>
           <ButtonGroup
             disableElevation
@@ -58,6 +58,6 @@ const Screen500: React.FC<Screen500Props> = () => {
   );
 };
 
-export default Screen500;
+export default ScreenError404;
 
-Screen500.defaultProps = {};
+ScreenError404.defaultProps = {};
