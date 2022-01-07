@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import {Menu, Switch} from "antd";
+import {Menu} from "antd";
+import { useAppSelector } from '../hooks/hooks'
 import {
   MailOutlined,
   AppstoreOutlined,
@@ -15,12 +16,12 @@ type MenuTab = {
 };
 
 const MenuComponent: React.FC<MenuProps> = (props) => {
-  const [currentTab, setCurrentTab] = useState<MenuTab>({ current: "mail" });
-  const [theme, setTheme] = React.useState('light');
+  // REDUCER
+  const theme = useAppSelector<string>(state => state.shared.theme)
 
-  const changeTheme = (value: any) => {
-      setTheme(value ? 'dark' : 'light');
-  };
+  // STATES
+  const [currentTab, setCurrentTab] = useState<MenuTab>({ current: "mail" });
+
 
   const handleClick = (e: any) => {
     setCurrentTab({ current: e.key });
@@ -28,7 +29,7 @@ const MenuComponent: React.FC<MenuProps> = (props) => {
 
   return (
       <>
-        <Menu onClick={(e) => { handleClick(e); }} selectedKeys={[currentTab.current]} mode="horizontal">
+        <Menu theme={theme==='light'? 'light' : 'dark'} onClick={(e) => { handleClick(e); }} selectedKeys={[currentTab.current]} mode="horizontal">
           <Menu.Item key="mail" icon={<MailOutlined />}>
             Navigation One
           </Menu.Item>
@@ -55,8 +56,7 @@ const MenuComponent: React.FC<MenuProps> = (props) => {
             </a>
           </Menu.Item>
         </Menu>
-        <Switch onChange={changeTheme} /> Change Style
-    </>
+      </>
 );
 };
 

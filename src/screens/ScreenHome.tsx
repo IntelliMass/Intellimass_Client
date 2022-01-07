@@ -3,10 +3,8 @@ import MenuComponent from "../layout/menu";
 
 type HomeScreenProps = {};
 
-const HomeScreen: React.FC<HomeScreenProps> = () => {
+const HomeScreen: React.FC<HomeScreenProps> = (props) => {
 
-
-  
   return (
     <>
       <MenuComponent/>
@@ -17,3 +15,4 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 export default HomeScreen;
 
 HomeScreen.defaultProps = {};
+

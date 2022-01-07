@@ -3,10 +3,15 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import RouterApplication from "./routes/router";
 import { BrowserRouter } from "react-router-dom";
+import store from "./reducers/Store";
+import { Provider } from "react-redux";
+
 
 ReactDOM.render(
   <BrowserRouter>
-    <RouterApplication />
+      <Provider store={store}>
+        <RouterApplication />
+      </Provider>
   </BrowserRouter>,
   document.getElementById("root")
 );

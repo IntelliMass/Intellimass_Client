@@ -1,6 +1,4 @@
 import { Switch, Route } from "react-router-dom";
-import Header from "../layout/header";
-import Menu from "../layout/menu";
 import NavBar from "../components/nav-bar/NavBar"
 
 // ROUTES
@@ -21,7 +19,6 @@ function RouterApplication() {
   return (
     <>
      <NavBar/>
-     {/*<Menu/>*/}
       <Switch>
         <Route path="/" exact>
           <ScreenHome />

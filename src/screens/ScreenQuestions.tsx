@@ -1,5 +1,4 @@
 import React from "react";
-import ScreenSearch from "./ScreenSearch";
 
 type QuestionsScreenProps = {};
 
