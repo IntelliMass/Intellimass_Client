@@ -21,8 +21,8 @@ const NavigationMenu: React.FC<any> = (props: IProps) => {
                 <Menu.Item key="researches">
                     <NavLink to={"/researches"}>My Researches</NavLink>
                 </Menu.Item>
-                <Menu.Item key="questions">
-                    <NavLink to={"/questions"}>Questions</NavLink>
+                <Menu.Item key="query">
+                    <NavLink to={"/query"}>Query</NavLink>
                 </Menu.Item>
                 <Menu.Item key="home">
                     <NavLink to={"/"}>Home</NavLink>
