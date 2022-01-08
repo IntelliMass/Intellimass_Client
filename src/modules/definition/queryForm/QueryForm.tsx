@@ -1,6 +1,12 @@
 import {Form, Select, Radio, Button, Space, Input} from 'antd';
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import { OperatorTag } from "../../../components/tag/OperatorTag"
+import {useHistory} from "react-router-dom"
+import { useAppSelector, useAppDispatch } from '../../../hooks/hooks'
+import { createQuery, KeywordsListObject } from "../../../actions/QueryActions";
+import {QueryState} from "../../../reducers/QueryReducer";
+import {useEffect} from "react";
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -10,9 +16,46 @@ const formItemLayout = {
 
 export const DefinitionForm = () => {
     const [form] = Form.useForm();
+    const history = useHistory();
+    const query = useAppSelector<string>(state => state.query.query)
+    const first_keyword = useAppSelector<string>(state => state.query.first_keyword)
+    const first_operator = useAppSelector<string>(state => state.query.first_operator)
+    const extra_keywords = useAppSelector<Array<KeywordsListObject>>(state => state.query.extra_keywords)
+    const source = useAppSelector<string>(state => state.query.source)
+    const strategy = useAppSelector<string>(state => state.query.strategy)
+    const dispatch = useAppDispatch()
+
+    useEffect(()=>{
+        form.setFieldsValue({
+            query: query,
+            first_keyword: first_keyword,
+            first_operator: first_operator,
+            source: source,
+            strategy: strategy,
+        });
+    },[])
+
+    const makeKeywordsTemplate = (keyeords:Array<{keyword: string, operator:string}>, source:string):Array<KeywordsListObject> =>  {
+        let newExtraKeywords:Array<KeywordsListObject> = [];
+        keyeords.forEach((item) => {
+            newExtraKeywords.push({keyword: item.keyword, operator: item.operator, source: source})
+        })
+        return newExtraKeywords;
+    }
 
     const onFinish = (values: any) => {
         console.log('validation + sending ', values);
+        const newKeywords = values.keywords || [];
+        const newQuery:QueryState = {
+            query: values.query,
+            first_keyword: values.first_keyword,
+            first_operator: values.first_operator,
+            extra_keywords: makeKeywordsTemplate(newKeywords, "user"),
+            source: values.source,
+            strategy: values.strategy
+        }
+        dispatch(createQuery(newQuery))
+        history.replace('/search')
     };
 
     const onReset = () => {
@@ -43,7 +86,7 @@ export const DefinitionForm = () => {
             {...formItemLayout}
             onFinish={onFinish}
         >
-            <Form.Item label="Title">
+            <Form.Item label="Title" style={{color:"gray", fontWeight:"bold"}}>
                 <span className="ant-form-text">Searching Query</span>
             </Form.Item>
             <Form.Item
@@ -92,7 +135,8 @@ export const DefinitionForm = () => {
                                     >
                                         <Input style={{marginLeft:10}}/>
                                     </Form.Item>
-                                    <Form.Item label="Operator" style={{width:250}}>
+                                    <Form.Item label="Operator" name={[field.name, 'operator']}
+                                               style={{width:250}}>
                                         <Select style={{marginLeft:14, width:100}}>
                                             <Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>
                                             <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>

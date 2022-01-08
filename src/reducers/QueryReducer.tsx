@@ -1,5 +1,5 @@
 // QUERY STATE MANAGEMENT REDUCER
-import { QueryCreateAction, QueryUpdateKeywordsAction } from "../actions/QueryActions";
+import {KeywordsListObject, QueryAction} from "../actions/QueryActions";
 
 export interface QueryState {
     query: string,
@@ -8,12 +8,6 @@ export interface QueryState {
     extra_keywords: Array<KeywordsListObject>,
     source: string,
     strategy: string
-}
-
-export interface KeywordsListObject {
-    keyword: string,
-    operator: string,
-    source: string
 }
 
 const initState = {
@@ -25,7 +19,7 @@ const initState = {
     strategy: 'suggestions'
 };
 
-const QueryReducer = (state: QueryState = initState, action:QueryCreateAction | QueryUpdateKeywordsAction) => {
+const QueryReducer = (state: QueryState = initState, action:QueryAction) => {
     switch (action.type) {
         case "CREATE_QUERY":
             return {

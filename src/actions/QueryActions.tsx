@@ -1,7 +1,14 @@
-import {QueryState, KeywordsListObject} from "../reducers/QueryReducer"
-export type QueryCreateAction = {type: "CREATE_QUERY", payload: QueryState}
-export type QueryUpdateKeywordsAction = {type: "UPDATE_KEYWORDS", payload: Array<KeywordsListObject>}
+import {QueryState} from "../reducers/QueryReducer"
+type QueryCreateAction = {type: "CREATE_QUERY", payload: QueryState}
+type QueryUpdateKeywordsAction = {type: "UPDATE_KEYWORDS", payload: Array<KeywordsListObject>}
+export type QueryAction = QueryCreateAction | QueryUpdateKeywordsAction;
 
+
+export interface KeywordsListObject {
+    keyword: string,
+    operator: string,
+    source?: string
+}
 
 /**
  * Create research query
