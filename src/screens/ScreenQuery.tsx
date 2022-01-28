@@ -1,5 +1,5 @@
 import React from "react";
-import { DefinitionForm } from "../modules/definition/queryForm/QueryForm"
+import { DefinitionForm } from "../modules/query/queryForm/QueryForm"
 
 type QuestionsScreenProps = {};
 
