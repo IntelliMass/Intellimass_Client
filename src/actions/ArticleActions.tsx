@@ -84,16 +84,21 @@ export interface ArticleOfList {
 }
 
 let URL1 = "https://api.semanticscholar.org/v1/paper/0796f6cd7f0403a854d67d525e9b32af3b277331";
-let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search?query=literature+graph&offset=10&limit=100&fields=";
-URL2 += "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
+let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
+let QUERY="literature+graph";
+let OFFSET = 10;
+let LIMIT = 100;
+let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
+
 
 /**
  * Get Articles from the server
  * @return {dispatch} Type + payload.
  */
-export const getArticles = (): (dispatch: any) => Promise<void> =>
+export const getArticles = (query:string): (dispatch: any) => Promise<void> =>
         async dispatch => {
-            await fetch(URL2)
+            let URL_GET_ARTICLES = `${URL2}?query=${query}&offset=${OFFSET.toString()}&limit=${LIMIT.toString()}&fields=${FIELDS}`;
+            await fetch(URL_GET_ARTICLES)
                 .then(function (response) {
                     return response.json();
                 })

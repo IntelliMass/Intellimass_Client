@@ -3,7 +3,7 @@ import "./ArticleList.scss";
 import {Avatar, List, Space} from "antd";
 import {LikeOutlined, MessageOutlined, StarOutlined} from "@ant-design/icons";
 import { useAppSelector, useAppDispatch } from "../../../hooks/hooks"
-import {ArticleOfList, Author, getArticleDetail, getArticles} from "../../../actions/ArticleActions";
+import {ArticleOfList, Author, getArticles} from "../../../actions/ArticleActions";
 
 
 // @ts-ignore
@@ -26,12 +26,13 @@ type ArticleListProps = {};
 
 export const ArticleList: React.FC<ArticleListProps> = () => {
 // @ts-ignore
-    const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.articles)
-    const dispatch = useAppDispatch()
+    const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.articles);
+    const query = useAppSelector<string>(state => state.query.query);
+    const dispatch = useAppDispatch();
 
     useEffect(()=>{
         // @ts-ignore
-        dispatch(getArticles());
+        dispatch(getArticles(query));
     },[])
 
     useEffect(()=>{
