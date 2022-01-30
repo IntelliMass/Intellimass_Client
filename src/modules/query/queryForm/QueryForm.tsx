@@ -55,7 +55,7 @@ export const DefinitionForm = () => {
             strategy: values.strategy
         }
         dispatch(createQuery(newQuery))
-        history.replace('/search')
+        history.replace('/')
     };
 
     const onReset = () => {
@@ -89,16 +89,30 @@ export const DefinitionForm = () => {
             <Form.Item label="Title" style={{color:"gray", fontWeight:"bold"}}>
                 <span className="ant-form-text">Searching Query</span>
             </Form.Item>
+            {/*<Form.Item*/}
+            {/*    name="query"*/}
+            {/*    label="Query"*/}
+            {/*    rules={[{ required: true, message: 'Missing search input', type: 'array' }]}*/}
+            {/*>*/}
+            {/*    <Select mode="multiple" placeholder="Please type subject" >*/}
+            {/*        <Option value="IOT">IOT</Option>*/}
+            {/*        <Option value="green">Green</Option>*/}
+            {/*        <Option value="blue">Blue</Option>*/}
+            {/*    </Select>*/}
+            {/*</Form.Item>*/}
+
+
             <Form.Item
                 name="query"
                 label="Query"
-                rules={[{ required: true, message: 'Missing search input', type: 'array' }]}
+                rules={[{ required: true, message: 'Missing search input', type: 'string' }]}
             >
-                <Select mode="multiple" placeholder="Please type subject" >
-                    <Option value="IOT">IOT</Option>
-                    <Option value="green">Green</Option>
-                    <Option value="blue">Blue</Option>
-                </Select>
+                <Input placeholder="Basic usage" />
+            {/*    <Select mode="multiple" placeholder="Please type subject" >*/}
+            {/*        <Option value="IOT">IOT</Option>*/}
+            {/*        <Option value="green">Green</Option>*/}
+            {/*        <Option value="blue">Blue</Option>*/}
+            {/*    </Select>*/}
             </Form.Item>
             <div style={{marginLeft: "19.5%"}}>
                 <Space key="first_key" align="baseline"  style={{marginRight: 40, width: 550}}>
@@ -163,22 +177,22 @@ export const DefinitionForm = () => {
                 rules={[{ required: true, message: 'Missing source input' }]}
             >
                 <Select placeholder="Please select a source">
-                    <Option value="google">Google scholar</Option>
+                    <Option value="google">Semantic scholar</Option>
                     <Option value="file">System's database</Option>
                 </Select>
             </Form.Item>
 
-            <Form.Item
-                name="strategy"
-                label="Strategy"
-                rules={[{ required: true, message: 'Missing strategy input' }]}
-            >
-                <Radio.Group>
-                    <Radio.Button value="suggestions">Suggestion</Radio.Button>
-                    <Radio.Button value="search">Search AI</Radio.Button>
-                    <Radio.Button value="user">User AI</Radio.Button>
-                </Radio.Group>
-            </Form.Item>
+            {/*<Form.Item*/}
+            {/*    name="strategy"*/}
+            {/*    label="Strategy"*/}
+            {/*    rules={[{ required: true, message: 'Missing strategy input' }]}*/}
+            {/*>*/}
+            {/*    <Radio.Group>*/}
+            {/*        <Radio.Button value="suggestions">Suggestion</Radio.Button>*/}
+            {/*        <Radio.Button value="search">Search AI</Radio.Button>*/}
+            {/*        <Radio.Button value="user">User AI</Radio.Button>*/}
+            {/*    </Radio.Group>*/}
+            {/*</Form.Item>*/}
 
             <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
                 <Button type="primary" htmlType="submit">
