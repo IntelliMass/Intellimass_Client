@@ -1,0 +1,32 @@
+:root {
+  --app-background: #EDF0F7;
+  --app-secondary-background: #f8f8fc77;
+  --app-white: #ffffff;
+  --app-purple: #436ace;
+  --app-purple-border: #436ace33;
+  --btn-primary-hover: #3B5EB8;
+  --btn-primary-focus: #2C4CA2;
+  --plain-text: #565B75;
+  --disabled-text: #c7c7d4;
+  --divider: #c8d2f0;
+  --light-grey: #F1F1F1;
+  --lighter-grey: #F8F8F8;
+  --hover-background: #f5f7fc;
+  --hover-border: #bbcffa;
+  --grey-background: #ECF0FA;
+  --yellow: #FFA52B;
+  --red: #F66060;
+  --critical-red: #E22B2B;
+  --info-blue: #17B0E0;
+  --border: lightslategrey;
+
+  --background-dark-theme: #001529;
+  --background-white-theme: #f4f6f8;
+  --background-pop: #f0f0f0;
+  --selected: #1890ff;
+
+  --selected-purple: rgba(67, 106, 206, 0.1);
+  --selected-light-purple: rgba(236, 240, 250, 0.4);
+  --selected-med-purple: rgb(182, 186, 204);
+  --bg-grad-1: linear-gradient(180deg, rgba(224,226,255,0.08) 0, rgba(140,172,253,0.08) 95%);
+}

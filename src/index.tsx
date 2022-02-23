@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import RouterApplication from "./routes/router";
 import { BrowserRouter } from "react-router-dom";
