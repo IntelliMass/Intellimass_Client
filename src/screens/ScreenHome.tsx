@@ -9,9 +9,10 @@ type HomeScreenProps = {};
 
 const HomeScreen: React.FC<HomeScreenProps> = (props) => {
     // @ts-ignore
-    const articles = useAppSelector<ArticleOfList>(state => state.article.articles)
+    const articles = useAppSelector<ArticleOfList>(state => state.article.articles);
     // @ts-ignore
-    const articleDetail = useAppSelector<ArticleDetail>(state => state.article.articleDetail)
+    const articleDetail = useAppSelector<ArticleDetail>(state => state.article.articleDetail);
+    const theme = useAppSelector<string>(state => state.shared.theme);
     const dispatch = useAppDispatch()
 
     // useEffect(()=>{
@@ -24,10 +25,9 @@ const HomeScreen: React.FC<HomeScreenProps> = (props) => {
     // },[articleDetail])
 
   return (
-    <>
-        <MenuComponent/>
+    <div className={`screen home ${theme}`}>
         <ArticleList/>
-    </>
+    </div>
   );
 };
 

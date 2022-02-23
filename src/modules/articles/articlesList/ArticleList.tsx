@@ -5,7 +5,6 @@ import {LikeOutlined, MessageOutlined, StarOutlined} from "@ant-design/icons";
 import { useAppSelector, useAppDispatch } from "../../../hooks/hooks"
 import {ArticleOfList, Author, getArticles} from "../../../actions/ArticleActions";
 
-
 // @ts-ignore
 const IconText = ({ icon, text }) => (
     <Space>
@@ -28,6 +27,7 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
 // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.articles);
     const query = useAppSelector<string>(state => state.query.query);
+    const theme = useAppSelector<string>(state => state.shared.theme);
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
@@ -40,7 +40,7 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
     },[ articles])
 
     return (
-        <div className="Article-list">
+        <div className={`Article-list ${theme}`}>
             <List
                 itemLayout="vertical"
                 size="large"
@@ -51,13 +51,10 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
                     pageSize: 3,
                 }}
                 dataSource={articles}
-                footer={
-                    <div>
-                        <b>ant design</b> footer part
-                    </div>
-                }
+                className={`${theme}`}
                 renderItem={item => (
                     <List.Item
+                        className={`${theme}`}
                         key={item.title + item.abstract}
                         actions={[
                             <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
@@ -68,6 +65,7 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
                         <List.Item.Meta
                             title={item.title}
                             description={ listAuthorsToString(item.authors)}
+                            className={`${theme}`}
                         />
                         {item.abstract}
                     </List.Item>
