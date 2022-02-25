@@ -1,7 +1,11 @@
 .metadata-list-container{
-  height: 800px;
+  height: 400px;
   width: 500px;
   display: flex;
   flex-wrap: wrap;
-  background-color: #69c0ff;
+  align-items: stretch;
+  background-color: #FFFCFC;
+  margin-left: 10%;
+  margin-top: 3%;
+  padding: 20px;
 }

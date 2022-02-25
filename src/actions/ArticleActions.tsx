@@ -90,19 +90,18 @@ let OFFSET = 10;
 let LIMIT = 100;
 let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
 
-
 /**
  * Get Articles from the server
  * @return {dispatch} Type + payload.
  */
 export const getArticles = (query:string): (dispatch: any) => Promise<void> =>
         async dispatch => {
-            let URL_GET_ARTICLES = `${URL2}?query=${query}&offset=${OFFSET.toString()}&limit=${LIMIT.toString()}&fields=${FIELDS}`;
-            await fetch(URL_GET_ARTICLES)
+            //let URL_GET_ARTICLES = `${URL2}?query=${query}&offset=${OFFSET.toString()}&limit=${LIMIT.toString()}&fields=${FIELDS}`;
+            await fetch(URL1)
                 .then(function (response) {
                     return response.json();
                 })
-                .then(function (recivedArticles:WSResponse) {
+                .then(function (recivedArticles:any) {
                     dispatch({type: "GET_ARTICLES",
                         payload: recivedArticles.data
                     });
@@ -127,6 +126,7 @@ export const getArticleDetail = (): (dispatch: any) => Promise<void> =>
                 return response.json();
             })
             .then(function (recivedArticle:ArticleDetail) {
+                console.log(recivedArticle)
                 dispatch({type: "GET_ARTICLE_DETAIL",
                     payload:  recivedArticle
                 });
