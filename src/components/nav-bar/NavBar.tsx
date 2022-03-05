@@ -58,8 +58,7 @@ const NavBar = (props: INavBarProps) => {
                         {!MenuDrawerVisible? <AppstoreOutlined style={{fontSize:25, color: "cadetblue"}} onClick={showDrawer}/>:
                             <CloseOutlined style={{fontSize:25, color: "cadetblue"}} onClick={onClose}/>}
                     </div>
-                    <img style={{height:60, width:100}} src={"https://i.ibb.co/jvSmCXj/output-onlinepngtools.png"}/>
-                    <div className="app-name">IntelliMass</div>
+                    <img style={{height:35, width:110, marginBottom: 15}} src={"https://i.ibb.co/Pj4dtmP/Whats-App-Image-2022-01-13-at-15-33-32.jpg"}/>
 
                 </div>
                 <NavigationMenu handleClick={handleClick} current={current}/>

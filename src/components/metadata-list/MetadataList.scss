@@ -1,0 +1,62 @@
+.metadata-list-container{
+  height: 770px;
+  width: 500px;
+  background-color: #FFFCFC;
+  margin-left: 5%;
+  margin-top: 3%;
+
+  .metadata-header{
+    height: 75px;
+
+    .metadata-header-label{
+      color: gray;
+      font-weight: 500;
+      display: inline-block;
+      width: 90px;
+      font-size: 14px;
+      margin-left: 10px;
+      margin-top: 5px;
+    }
+
+    .metadata-search{
+      margin: 0px 20px 0px 0px;
+      width: 300px;
+    }
+
+    .metadata-select-rank{
+      margin-top: 10px;
+      width: 150px;
+    }
+
+    .metadata-number-rank{
+      margin-left: 10px;
+      margin-top: 10px;
+      width: 140px;
+    }
+  }
+
+  .ant-divider-inner-text{
+    color: #3B5EB8;
+  }
+
+  .metadata-list{
+    height: 200px;
+    width: 500px;
+    display: block;
+    padding: 0px 20px;
+    overflow:hidden;
+    overflow-y:auto;
+  }
+
+  .metadata-footer{
+    height: 60px;
+    display: flex;
+
+    .ant-btn{
+      margin: 10px;
+    }
+    .save-saved-metadata{
+      margin-left: 40px;
+    }
+  }
+}

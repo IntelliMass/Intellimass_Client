@@ -11,7 +11,7 @@ import ScreenError404 from "../screens/ScreenError404";
 import ScreenError401 from "../screens/ScreenError401";
 import ScreenError500 from "../screens/ScreenError500";
 import ScreenResearches from "../screens/ScreenResearches";
-import {ScreenQuestions} from "../screens/ScreenQuestions";
+import {ScreenQuery} from "../screens/ScreenQuery";
 
 
 function RouterApplication() {
@@ -36,8 +36,8 @@ function RouterApplication() {
           <ScreenResearches />
         </Route>
 
-        <Route path="/questions">
-          <ScreenQuestions />
+        <Route path="/query">
+          <ScreenQuery />
         </Route>
 
         <Route path="/unauthorized">
