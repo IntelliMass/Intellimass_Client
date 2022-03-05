@@ -1,6 +1,9 @@
 import React, {useEffect} from "react";
 import {useAppSelector} from "../hooks/hooks";
 import "../index.scss"
+import {Metadata} from "../components/metadata/Metadata";
+import {MetadataList} from "../components/metadata-list/MetadataList";
+
 
 type ScreenProfileProps = {};
 
@@ -9,7 +12,7 @@ const ScreenProfile: React.FC<ScreenProfileProps> = () => {
 
   return (
       <div className={`screen profile ${theme}`}>
-        <h1 className={`${theme}`}>PROFILE Screen</h1>
+        <MetadataList items={[1, 2, 3, 4]} />
       </div>
   );
 };

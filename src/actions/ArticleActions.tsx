@@ -85,11 +85,9 @@ export interface ArticleOfList {
 
 let URL1 = "https://api.semanticscholar.org/v1/paper/0796f6cd7f0403a854d67d525e9b32af3b277331";
 let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
-let QUERY="literature+graph";
 let OFFSET = 10;
 let LIMIT = 100;
 let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
-
 
 /**
  * Get Articles from the server
@@ -102,7 +100,7 @@ export const getArticles = (query:string): (dispatch: any) => Promise<void> =>
                 .then(function (response) {
                     return response.json();
                 })
-                .then(function (recivedArticles:WSResponse) {
+                .then(function (recivedArticles:any) {
                     dispatch({type: "GET_ARTICLES",
                         payload: recivedArticles.data
                     });
@@ -127,6 +125,7 @@ export const getArticleDetail = (): (dispatch: any) => Promise<void> =>
                 return response.json();
             })
             .then(function (recivedArticle:ArticleDetail) {
+                console.log(recivedArticle)
                 dispatch({type: "GET_ARTICLE_DETAIL",
                     payload:  recivedArticle
                 });
