@@ -1,54 +1,49 @@
 import React from "react";
 import './Metadata.scss';
 import {Badge, Tag} from "antd";
-import {getArticleDetail} from "../../actions/ArticleActions";
+import {CloseOutlined} from "@ant-design/icons";
 
 export type IMetadata = {
     title: string;
     rank: number;
     isSelected: boolean;
+    id: string;
 }
 
 type MetadataProps = {
     metadata: IMetadata;
-    onClose: Function;
     index: number;
+    listName: string;
+    onMetadataChange: Function;
 };
 
 export const Metadata: React.FC<MetadataProps> = (props) => {
-    const { metadata, index, onClose  } = props;
+    const { metadata, index, listName, onMetadataChange  } = props;
 
     const removeTag = () => {
-        onClose(index);
+        onMetadataChange(listName, "REMOVE_SAVED_METADATA", metadata.id);
     }
-    fetch("https://api.semanticscholar.org/v1/paper/0796f6cd7f0403a854d67d525e9b32af3b277331")
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (recivedArticles:any) {
-            console.log(recivedArticles)
-        })
-        .catch(function (error) {
-            console.log(
-                "There has been a problem with your fetch operation: " + error.message
-            );
-            throw error;
-        });
-    getArticleDetail();
+
+    const selectTag = () => {
+        onMetadataChange(listName, "SELECT_UNSAVED_METADATA", metadata.id);
+    }
 
     const MetadataTag = (title:string) => {
-        if(metadata.isSelected){
-            return <Tag closable color="blue" onClose={removeTag} >
+        if(listName === "SAVED"){
+            return <Tag onClose={removeTag} color="pink" >
+                {title} <CloseOutlined onClick={removeTag}/>
+            </Tag>
+        }
+        else if(metadata.isSelected){
+            return <Tag color="blue"  >
                 {title}
             </Tag>
         } else {
-            return <Tag closable onClose={removeTag}  >
+            return <Tag >
                 {title}
             </Tag>
         }
     };
-
-
 
     const UniqeBadge = () => {
         if(metadata.rank < 10){
@@ -75,7 +70,7 @@ export const Metadata: React.FC<MetadataProps> = (props) => {
         }
     };
     return (
-        <div className="metadata">
+        <div onClick={selectTag} className="metadata">
             {UniqeBadge()}
         </div>
     );

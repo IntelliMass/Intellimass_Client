@@ -1,12 +1,9 @@
 import React, { useState} from 'react';
 import {Drawer} from 'antd';
 import './Drawer.scss'
-import {useHistory} from "react-router-dom"
 
 
 export const MenuDrawer = (props: { visible: boolean, onClose: (e: any) => void }) => {
-    console.log(props.visible)
-    const history = useHistory();
     return (
         <Drawer
             placement="left"
@@ -21,7 +18,5 @@ export const MenuDrawer = (props: { visible: boolean, onClose: (e: any) => void 
             title={"Collection list"}
         >
             <p>Drawer</p>
-
-
         </Drawer>)
 }
