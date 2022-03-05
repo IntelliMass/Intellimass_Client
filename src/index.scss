@@ -1,4 +1,5 @@
 @import '~antd/dist/antd.css';
+@import './styles/colors';
 
 body {
   margin: 0;
@@ -52,4 +53,22 @@ code {
   to {
     transform: rotate(360deg);
   }
+}
+
+.screen{
+  display: flex;
+  align-items: stretch;
+  height: 1200px;
+}
+
+.light{
+  background: var(--background-white-theme) !important;
+  color: var(--background-dark-theme) !important;
+  transition: 0.7s;
+}
+
+.dark{
+  background: var(--background-dark-theme) !important;
+  color: var(--background-white-theme) !important;
+  transition: 0.7s;
 }

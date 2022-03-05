@@ -1,0 +1,16 @@
+.metadata{
+  display: inline-block;
+  padding: 25px;
+  flex: 1;
+  cursor: pointer;
+  height: 30px;
+
+  .ant-badge{
+    .ant-tag{
+      height: 30px;
+      font-size:15px;
+      min-width:30px;
+      max-width: 150px;
+    }
+  }
+}
