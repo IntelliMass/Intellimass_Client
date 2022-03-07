@@ -142,5 +142,3 @@ export const Network = () => {
         </div>
     );
 };
-
-// ReactDOM.render(<App />, document.getElementById("container"));
