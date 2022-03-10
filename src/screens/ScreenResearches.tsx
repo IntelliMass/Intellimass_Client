@@ -1,13 +1,14 @@
 import React from "react";
+import {NetworkContainer} from "../components/network-container/NetworkContainer";
 
 type ResearchesScreenProps = {};
 
 const ScreenResearches: React.FC<ResearchesScreenProps> = () => {
 
     return (
-        <>
-            <h1>Researches Screen</h1>
-       </>
+        <div >
+            <NetworkContainer/>
+       </div>
     );
 };
 

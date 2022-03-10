@@ -1,4 +1,5 @@
 const data = {
+    // NODE = SMALL NODE
     nodes: [
         {
             id: "0",
@@ -2047,6 +2048,8 @@ const data = {
             degrees: 2
         }
     ],
+
+    // LINK = CONNECTION BETWEEN BIG NODE AND SMALL NODE
     links: [
         {
             source: "0",
@@ -3418,7 +3421,22 @@ const data = {
             source: "10",
             target: "2"
         }
-    ]
+    ],
+    // CLUSTER = BIG NODES
+    clusters: [
+        {
+            id: "0",
+            isClusterNode: true,
+            name: "project, idea, user",
+            size: 9.785932721712538
+        },
+        {
+            id: "1",
+            isClusterNode: true,
+            name: "like,source,share",
+            size: 9.174311926605505
+        }
+    ],
 };
 
 
