@@ -54,8 +54,9 @@ export const DefinitionForm = () => {
             source: values.source,
             strategy: values.strategy
         }
-        dispatch(createQuery(newQuery))
-        history.replace('/')
+        // @ts-ignore
+        dispatch(createQuery(newQuery));
+        history.replace('/');
     };
 
     const onReset = () => {

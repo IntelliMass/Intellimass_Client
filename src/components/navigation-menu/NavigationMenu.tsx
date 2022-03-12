@@ -33,6 +33,9 @@ const NavigationMenu: React.FC<any> = (props: IProps) => {
                 <Menu.Item key="profile">
                     <NavLink to={"/profile"}>Profile</NavLink>
                 </Menu.Item>
+                <Menu.Item key="article">
+                    <NavLink to={"/article"}>Article</NavLink>
+                </Menu.Item>
             </Menu>
         </div>
     );

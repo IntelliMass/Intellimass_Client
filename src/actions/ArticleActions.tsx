@@ -83,7 +83,7 @@ export interface ArticleOfList {
     year: number
 }
 
-let URL1 = "https://api.semanticscholar.org/v1/paper/0796f6cd7f0403a854d67d525e9b32af3b277331";
+let URL1 = "https://api.semanticscholar.org/v1/paper/";
 let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
 let OFFSET = 10;
 let LIMIT = 100;
@@ -118,9 +118,9 @@ export const getArticles = (query:string): (dispatch: any) => Promise<void> =>
  * Get single article data from the server
  * @return {dispatch} Type + payload.
  */
-export const getArticleDetail = (): (dispatch: any) => Promise<void> =>
+export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        await fetch(URL1)
+        await fetch(URL1+articleId)
             .then(function (response) {
                 return response.json();
             })

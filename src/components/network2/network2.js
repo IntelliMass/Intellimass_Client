@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-// import ReactDOM from "react-dom";
 import ForceGraph2D from "react-force-graph-2d";
-import { data, clusterIds, clusters } from "./exampleData";
-// import * as d3 from "d3";
+import { data, clusterIds, clusters } from "./networkData";
 
-export const Network = () => {
+export const Network2 = () => {
     const [initialCenter, setInitialCenter] = useState(true);
     const [collapsedClusters, setCollapsedClusters] = useState(clusterIds);
     const [hiddenClusters, setHiddenClusters] = useState([]);
@@ -28,6 +26,10 @@ export const Network = () => {
             setCollapsedClusters([...collapsedClusters, clusterId]);
         }
     };
+
+    // ZOOM CONTROL
+    // SIZE CONTROL
+    // COLOR CONTROL
 
     const handleNodeClick = (node) => {
         toggleClusterCollapse(node.id);
@@ -100,7 +102,7 @@ export const Network = () => {
                     }}
                     nodeCanvasObjectMode={() => "after"}
                     nodeCanvasObject={(node, ctx, globalScale) => {
-                        const label = node.name;
+                        const label = node.title? node.title : node.name;
                         const fontSize = node.isClusterNode
                             ? 14 * (node.val / 1500)
                             : 14 / (globalScale * 1.2);

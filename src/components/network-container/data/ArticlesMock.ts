@@ -1,35 +1,24 @@
-import {ArticleOfList} from "../../../actions/ArticleActions";
+import {ArticleOfList, Author} from "../../../actions/ArticleActions";
 
 export interface Cluster {
-    id: string,
-    isClusterNode: boolean,
-    name: string,
-    size: number,
-    color?: string;
-    article?: ArticleOfList;
+    article: ArticleOfList;
+    size: number;
+    color: string;
 }
 
 export interface Link {
     source: string;
     target: string;
     value?: object;
+    type: string;
 }
 
-
-
-export const CLUSTERS: Array<Cluster> = [
-    {
-        id: "0",
-        isClusterNode: true,
-        name: "project, idea, user",
-        size: 9.785932721712538,
-    },
-];
-
-export const ARTICLES_NODES:any = {
-
+export interface Node {
+    paperId: string;
+    authors: Author[];
+    size: number;
+    color: string;
 }
-
 
 export const ARTICLES_DATA:ArticleOfList[] = [
     {
@@ -91,7 +80,7 @@ export const ARTICLES_DATA:ArticleOfList[] = [
         isOpenAccess: false,
         authors:[
             {authorId: '144901889', name: 'B. Gupta'},
-            {authorId: '51359574', name: 'Megha Quamara'}
+            {authorId: '51359574', name: 'Megha Quamara'},
         ]
     }
     ,{
@@ -141,7 +130,8 @@ export const ARTICLES_DATA:ArticleOfList[] = [
             {authorId: '5265167', name: 'V. Saxena'},
             {authorId: '150076442', name: 'Divyansh Jain'},
             {authorId: '150259972', name: 'Pranav Goyal'},
-            {authorId: '48440849', name: 'B. Sikdar'}
+            {authorId: '48440849', name: 'B. Sikdar'},
+            {authorId: '112838836', name: 'Zhong Fan'}
         ]
 
     }
@@ -191,19 +181,154 @@ export const ARTICLES_DATA:ArticleOfList[] = [
             {authorId: '3001662', name: 'L. Maglaras'}
         ]
     }
-]
+];
 
-export const ARTICLES_LINKS:any = [
+export const ARTICLES_LINKS_BY_AUTHORS:any = [
     {
-        source: "0",
-        target: "project"
+        source: "e6e1989b2df588a6ece0e4dd520f34b20ac5cf14",
+        target: "893644d781fcbcad807f97a8494c14f66c0684e5",
+        type: "AUTHOR",
+        value: {authorId: '47772997', name: 'Behnam Zakeri'}
     },
     {
-        source: "0",
-        target: "idea"
+        source: "e6e1989b2df588a6ece0e4dd520f34b20ac5cf14",
+        target: "893644d781fcbcad807f97a8494c14f66c0684e5",
+        type: "AUTHOR",
+        value: {authorId: '39889166', name: 'J. Hunt'},
     },
     {
-        source: "0",
-        target: "user"
+        source: "e6e1989b2df588a6ece0e4dd520f34b20ac5cf14",
+        target: "893644d781fcbcad807f97a8494c14f66c0684e5",
+        type: "AUTHOR",
+        value: {authorId: '1580864830', name: 'Mahsa Mohammadrezaei'}
+    },
+    {
+        source: "e6e1989b2df588a6ece0e4dd520f34b20ac5cf14",
+        target: "893644d781fcbcad807f97a8494c14f66c0684e5",
+        type: "AUTHOR",
+        value: {authorId: '47772997', name: 'Behnam Zakeri'}
+    },
+    {
+        source: "30d65fbc8d71ac202ee8d7d5f0e58c63a6c6a957",
+        target: "8d208c08c9fea2793085a6da625b8e4f5ebe7695",
+        type: "AUTHOR",
+        value: {authorId: '112838836', name: 'Zhong Fan'}
     }
 ];
+
+export const CLUSTERS: Array<Cluster> = [
+    {
+        article: ARTICLES_DATA[0],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[1],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[2],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[3],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[4],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[5],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[6],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[7],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[8],
+        size: 10,
+        color: "#B0C4DE"
+    },
+    {
+        article: ARTICLES_DATA[9],
+        size: 10,
+        color: "#B0C4DE"
+    },
+];
+
+export const ARTICLES_NODES_AUTHORS = [
+    {
+        paperId: ARTICLES_DATA[0].paperId,
+        authors: ARTICLES_DATA[0].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[1].paperId,
+        authors: ARTICLES_DATA[1].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[2].paperId,
+        authors: ARTICLES_DATA[2].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[3].paperId,
+        authors: ARTICLES_DATA[3].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[4].paperId,
+        authors: ARTICLES_DATA[4].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[5].paperId,
+        authors: ARTICLES_DATA[5].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[6].paperId,
+        authors: ARTICLES_DATA[6].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[7].paperId,
+        authors: ARTICLES_DATA[7].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[8].paperId,
+        authors: ARTICLES_DATA[8].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+    {
+        paperId: ARTICLES_DATA[9].paperId,
+        authors: ARTICLES_DATA[9].authors,
+        color: "#7B68EE",
+        size: 2,
+    },
+];
+

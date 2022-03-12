@@ -12,6 +12,7 @@ import ScreenError401 from "../screens/ScreenError401";
 import ScreenError500 from "../screens/ScreenError500";
 import ScreenResearches from "../screens/ScreenResearches";
 import {ScreenQuery} from "../screens/ScreenQuery";
+import {ScreenArticleDetail} from "../screens/ScreenArticleDetails";
 
 
 function RouterApplication() {
@@ -46,6 +47,10 @@ function RouterApplication() {
 
         <Route path="/server">
           <ScreenError500 />
+        </Route>
+
+        <Route path="/article">
+          <ScreenArticleDetail  />
         </Route>
 
         <Route path="/*">
