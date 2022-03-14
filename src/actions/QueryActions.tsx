@@ -1,4 +1,4 @@
-import {QueryState} from "../reducers/QueryReducer"
+import {joinQuery, QueryState} from "../reducers/QueryReducer"
 type QueryCreateAction = {type: "CREATE_QUERY", payload: QueryState}
 type QueryUpdateKeywordsAction = {type: "UPDATE_KEYWORDS", payload: Array<KeywordsListObject>}
 export type QueryAction = QueryCreateAction | QueryUpdateKeywordsAction;
@@ -21,11 +21,15 @@ const URL_GET = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/arti
  * @return {dispatch} Type + payload.
  */
 export const  createQuery = (queryParams:QueryState): (dispatch: any) => Promise<void> =>{
-    const query = queryParams.first_keyword + ',' + queryParams.extra_keywords.join();
+    const query = joinQuery(queryParams.first_keyword, queryParams.extra_keywords);
     const body = {query: query, feature: queryParams.connection};
     return async dispatch => {
         await fetch(URL_POST, {
             method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(body)
         })
             .then(function (response) {

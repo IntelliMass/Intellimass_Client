@@ -1,10 +1,10 @@
-import {Form, Select, Radio, Button, Space, Input} from 'antd';
+import {Form, Select, Radio, Button, Space, Input, Divider} from 'antd';
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import { OperatorTag } from "../../../components/tag/OperatorTag"
 import {useHistory} from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks'
 import { createQuery, KeywordsListObject } from "../../../actions/QueryActions";
-import {joinQuery, QueryState} from "../../../reducers/QueryReducer";
+import {joinQuery, joinQueryString, QueryState} from "../../../reducers/QueryReducer";
 import {useEffect} from "react";
 import "./QueryForm.scss"
 
@@ -36,25 +36,26 @@ export const DefinitionForm = () => {
         });
     },[])
 
-    const makeKeywordsTemplate = (keyeords:Array<{keyword: string, operator:string}>, source:string):Array<KeywordsListObject> =>  {
+    const makeKeywordsTemplate = (keyeords:Array<{keyword: string, operator:string}>):Array<KeywordsListObject> =>  {
         let newExtraKeywords:Array<KeywordsListObject> = [];
         keyeords.forEach((item) => {
-            newExtraKeywords.push({keyword: item.keyword, operator: item.operator, source: source})
+            newExtraKeywords.push({keyword: item.keyword, operator: item.operator})
         })
         return newExtraKeywords;
     }
 
     const onFinish = (values: any) => {
-        console.log('validation + sending ', values);
         const newKeywords = values.keywords || [];
+        console.log(values)
         const newQuery:QueryState = {
-            query: joinQuery(values.first_keyword, makeKeywordsTemplate(newKeywords, "user")),
+            query: joinQuery(values.first_keyword, makeKeywordsTemplate(newKeywords)),
             first_keyword: values.first_keyword,
             first_operator: values.first_operator,
-            extra_keywords: makeKeywordsTemplate(newKeywords, "user"),
-            connection: values.authors,
+            extra_keywords: makeKeywordsTemplate(newKeywords),
+            connection: values.connection,
             //strategy: values.strategy
         }
+        console.log(newQuery)
         // @ts-ignore
         dispatch(createQuery(newQuery));
         history.replace('/');
@@ -72,6 +73,7 @@ export const DefinitionForm = () => {
             connection: 'authors',
             //strategy: 'suggestions',
         });
+        console.log(form.getFieldsValue())
     };
 
     const onCleanFirst = () => {
@@ -90,8 +92,18 @@ export const DefinitionForm = () => {
                 onFinish={onFinish}
                 className="query-form"
             >
-                <Form.Item label="Title" style={{color:"gray", fontWeight:"bold"}}>
-                    <span className="ant-form-text">Searching Query</span>
+                <span className="form-title">Searching Query</span>
+                <Divider/>
+                <Form.Item
+                    name="connection"
+                    label="Connection Type"
+                    hasFeedback
+                    rules={[{ required: true, message: 'Missing connection type input' }]}
+                    className="connection-select"
+                >
+                    <Select placeholder="Please select a connection">
+                        <Option value="authors">Authors - Who referenced who</Option>
+                    </Select>
                 </Form.Item>
                 {/*<Form.Item*/}
                 {/*    name="query"*/}
@@ -118,27 +130,28 @@ export const DefinitionForm = () => {
                 {/*        <Option value="blue">Blue</Option>*/}
                 {/*    </Select>*/}
                 {/*</Form.Item>*/}
-                <div style={{marginLeft: "19.5%"}}>
-                    <Space key="first_key" align="baseline"  style={{marginRight: 40, width: 550}}>
-                    <Form.Item
-                        style={{width:350}}
-                        name="first_keyword"
-                        label="keyword:"
-                        rules={[{ required: true, message: 'Missing keyword' }]}
-                    >
-                        <Input style={{marginLeft:10}}/>
-                    </Form.Item>
-                    <Form.Item label="Operator" name="first_operator" style={{width:250}}>
-                        <Select style={{marginLeft:14, width:100}}>
-                            <Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>
-                            <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>
-                            <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
-                        </Select>
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => onCleanFirst()} />
-                </Space>
+                <div className="select-keyword-container">
+                    <div className="select-keyword">
+                        <Space key="first_key" align="baseline"  style={{marginRight: 40, width: 550}}>
+                        <Form.Item
+                            style={{width:350}}
+                            name="first_keyword"
+                            label="keyword:"
+                            rules={[{ required: true, message: 'Missing keyword' }]}
+                        >
+                            <Input style={{marginLeft:10}}/>
+                        </Form.Item>
+                        <Form.Item label="Operator" name="first_operator" style={{width:250}}>
+                            <Select style={{marginLeft:14, width:100}}>
+                                <Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>
+                                <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>
+                                <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
+                            </Select>
+                        </Form.Item>
+                        <MinusCircleOutlined onClick={() => onCleanFirst()} />
+                    </Space>
                 </div>
-                <div style={{marginLeft: "19.5%"}}>
+                <div className="select-keyword">
                     <Form.List name="keywords">
                         {(fields, { add, remove }) => (
                             <>
@@ -165,7 +178,7 @@ export const DefinitionForm = () => {
                                     </Space>
                                 ))}
 
-                                <Form.Item style={{marginLeft:"7%"}}>
+                                <Form.Item style={{marginLeft:"7px"}}>
                                     <Button style={{width: 140}} type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                                         Add keywords
                                     </Button>
@@ -174,16 +187,7 @@ export const DefinitionForm = () => {
                         )}
                     </Form.List>
                 </div>
-                <Form.Item
-                    name="connection"
-                    label="Connection Type"
-                    hasFeedback
-                    rules={[{ required: true, message: 'Missing connection type input' }]}
-                >
-                    <Select placeholder="Please select a connection">
-                        <Option value="authors">Authors - Who referenced who</Option>
-                    </Select>
-                </Form.Item>
+                </div>
 
                 {/*<Form.Item*/}
                 {/*    name="strategy"*/}
@@ -196,15 +200,15 @@ export const DefinitionForm = () => {
                 {/*        <Radio.Button value="user">User AI</Radio.Button>*/}
                 {/*    </Radio.Group>*/}
                 {/*</Form.Item>*/}
-
-                <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                    <Button type="primary" htmlType="submit">
+                <Divider/>
+                <Form.Item className="action-form-buttons" wrapperCol={{ span: 12, offset: 6 }}>
+                    <Button className="action-form-button" type="primary" htmlType="submit">
                         Search
                     </Button>
-                    <Button htmlType="reset" style={{marginLeft:10}} onClick={onReset}>
+                    <Button className="action-form-button" htmlType="reset"  onClick={onReset}>
                         Clear
                     </Button>
-                    <Button type="link" htmlType="button" onClick={onFill}>
+                    <Button className="action-form-button" type="link" htmlType="button" onClick={onFill}>
                         Fill form
                     </Button>
                 </Form.Item>

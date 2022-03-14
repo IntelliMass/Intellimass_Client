@@ -26,8 +26,9 @@ export const joinQueryString = (firstKeyword: string, allKeywords: Array<string>
 export const joinQuery = (firstKeyword: string, allKeywords:Array<{keyword: string, operator:string}>) => {
     let keyWords:Array<string> = [];
     allKeywords.forEach(item=>keyWords.push(item.keyword));
-
-    return  joinQueryString(firstKeyword, keyWords);
+    const items = joinQueryString(firstKeyword, keyWords);
+    console.log(items)
+    return items;
 }
 
 
