@@ -18,21 +18,21 @@ const NavigationMenu: React.FC<any> = (props: IProps) => {
             <Menu onClick={handleClick}
                   selectedKeys={[current]}
                   mode="horizontal">
-                <Menu.Item key="researches">
-                    <NavLink to={"/researches"}>My Researches</NavLink>
-                </Menu.Item>
+                {/*<Menu.Item key="researches">*/}
+                {/*    <NavLink to={"/researches"}>My Researches</NavLink>*/}
+                {/*</Menu.Item>*/}
                 <Menu.Item key="query">
-                    <NavLink to={"/query"}>Query</NavLink>
+                    <NavLink to={"/"}>Query</NavLink>
                 </Menu.Item>
                 <Menu.Item key="home">
-                    <NavLink to={"/"}>Home</NavLink>
+                    <NavLink to={"/articles"}>Articles</NavLink>
                 </Menu.Item>
                 <Menu.Item key="search">
                     <NavLink to={"/search"}>Research</NavLink>
                 </Menu.Item>
-                <Menu.Item key="profile">
-                    <NavLink to={"/profile"}>Profile</NavLink>
-                </Menu.Item>
+                {/*<Menu.Item key="profile">*/}
+                {/*    <NavLink to={"/profile"}>Profile</NavLink>*/}
+                {/*</Menu.Item>*/}
                 <Menu.Item key="article">
                     <NavLink to={"/article"}>Article</NavLink>
                 </Menu.Item>

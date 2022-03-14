@@ -21,7 +21,8 @@ const URL_GET = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/arti
  * @return {dispatch} Type + payload.
  */
 export const  createQuery = (queryParams:QueryState): (dispatch: any) => Promise<void> =>{
-    const body = {query: queryParams.query, feature: "Authors"};
+    const query = queryParams.first_keyword + ',' + queryParams.extra_keywords.join();
+    const body = {query: query, feature: queryParams.connection};
     return async dispatch => {
         await fetch(URL_POST, {
             method: 'post',

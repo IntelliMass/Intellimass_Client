@@ -22,6 +22,10 @@ function RouterApplication() {
      <NavBar/>
       <Switch>
         <Route path="/" exact>
+          <ScreenQuery />
+        </Route>
+
+        <Route path="/articles" >
           <ScreenHome />
         </Route>
 
@@ -35,10 +39,6 @@ function RouterApplication() {
 
         <Route path="/researches">
           <ScreenResearches />
-        </Route>
-
-        <Route path="/query">
-          <ScreenQuery />
         </Route>
 
         <Route path="/unauthorized">

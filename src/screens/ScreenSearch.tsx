@@ -1,14 +1,20 @@
 import React from "react";
 import {Network} from "../components/network/Network";
+import {SimpleNet} from "../components/network2/SimpleNet";
+import { useAppSelector, useAppDispatch } from "../hooks/hooks"
 
 type ScreenSearchProps = {};
 
 const ScreenSearch: React.FC<ScreenSearchProps> = () => {
-  return (
-      <>
-        <h1>SEARCH Screen</h1>
-        <Network/>
-      </>
+    const theme = useAppSelector<string>(state => state.shared.theme);
+
+    return (
+      <div className={`screen home ${theme}`}>
+        {/*<Network/>*/}
+          {/*<MetadataList items={[1, 2, 3, 4]} />*/}
+          {/*  <Network2/>*/}
+          <SimpleNet/>
+      </div>
   );
 };
 
