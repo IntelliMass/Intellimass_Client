@@ -46,19 +46,18 @@ export const DefinitionForm = () => {
 
     const onFinish = (values: any) => {
         const newKeywords = values.keywords || [];
-        console.log(values)
         const newQuery:QueryState = {
             query: joinQuery(values.first_keyword, makeKeywordsTemplate(newKeywords)),
             first_keyword: values.first_keyword,
             first_operator: values.first_operator,
             extra_keywords: makeKeywordsTemplate(newKeywords),
             connection: values.connection,
+            queryId: ''
             //strategy: values.strategy
         }
-        console.log(newQuery)
         // @ts-ignore
         dispatch(createQuery(newQuery));
-        history.replace('/');
+        history.replace('/articles');
     };
 
     const onReset = () => {
@@ -73,7 +72,6 @@ export const DefinitionForm = () => {
             connection: 'authors',
             //strategy: 'suggestions',
         });
-        console.log(form.getFieldsValue())
     };
 
     const onCleanFirst = () => {

@@ -31,9 +31,10 @@ export const  createQuery = (queryParams:QueryState): (dispatch: any) => Promise
             .then(function (response) {
                 return response.json();
             })
-            .then(function (res:any) {
+            .then(function (res:{message: string, queryId: string}) {
+                console.log(res);
                 dispatch({ type: "CREATE_QUERY",
-                    payload: queryParams
+                    payload: { ...queryParams, queryID: res.queryId}
                 });
             })
             .catch(function (error) {

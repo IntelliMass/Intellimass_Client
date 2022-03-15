@@ -7,6 +7,7 @@ export interface QueryState {
     first_operator: string,
     extra_keywords: Array<KeywordsListObject>,
     connection: string,
+    queryId: string,
     //strategy: string
 }
 
@@ -16,6 +17,7 @@ const initState = {
     first_operator: 'AND',
     extra_keywords: [{keyword: "Architecture", operator: "Not", source: "user"}],
     connection: 'authors',
+    queryId: ''
     //strategy: 'suggestions'
 };
 
@@ -41,6 +43,7 @@ const QueryReducer = (state: QueryState = initState, action:QueryAction) => {
                 first_operator: action.payload.first_operator,
                 extra_keywords: action.payload.extra_keywords,
                 connection: action.payload.connection,
+                queryId: action.payload.queryId
                 //strategy: action.payload.strategy
             };
 
