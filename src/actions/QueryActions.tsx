@@ -26,10 +26,6 @@ export const  createQuery = (queryParams:QueryState): (dispatch: any) => Promise
     return async dispatch => {
         await fetch(URL_POST, {
             method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(body)
         })
             .then(function (response) {

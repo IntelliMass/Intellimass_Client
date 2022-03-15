@@ -20,14 +20,13 @@ const initState = {
 };
 
 export const joinQueryString = (firstKeyword: string, allKeywords: Array<string>) => {
-    return firstKeyword + ',' + allKeywords.join();
+    return firstKeyword + '+' + allKeywords.join();
 }
 
 export const joinQuery = (firstKeyword: string, allKeywords:Array<{keyword: string, operator:string}>) => {
     let keyWords:Array<string> = [];
     allKeywords.forEach(item=>keyWords.push(item.keyword));
     const items = joinQueryString(firstKeyword, keyWords);
-    console.log(items)
     return items;
 }
 
