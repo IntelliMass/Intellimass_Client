@@ -25,7 +25,7 @@ const NavBar = (props: INavBarProps) => {
     // STATES
     const location = useLocation();
     const routeName = location.pathname.replace('/', '');
-    const [current, setCurrent] = useState(routeName || 'home');
+    const [current, setCurrent] = useState(routeName || 'query');
     const [MenuDrawerVisible, setMenuDrawerVisible] = useState<boolean>(false);
     const handleClick = (e: any) => {
         setCurrent(e.key);
@@ -35,7 +35,7 @@ const NavBar = (props: INavBarProps) => {
     useEffect(() => {
         const newLocation = location.pathname.replace('/', '');
         if (newLocation !== current) {
-            const currentRoute = newLocation.length ? newLocation : 'home';
+            const currentRoute = newLocation.length ? newLocation : 'query';
             setCurrent(currentRoute);
         }
     }, [location, current]);
@@ -63,8 +63,8 @@ const NavBar = (props: INavBarProps) => {
                 </div>
                 <NavigationMenu handleClick={handleClick} current={current}/>
                 <div className="tab-button" onClick={() => {}}>
-                    <Switch checked={theme === "dark"} onChange={()=>onChangingTheme(theme)} checkedChildren="Dark" unCheckedChildren="Light" />
-                    <span style={{fontWeight:"bold", marginLeft:10}}>Mode</span>
+                    {/*<Switch checked={theme === "dark"} onChange={()=>onChangingTheme(theme)} checkedChildren="Dark" unCheckedChildren="Light" />*/}
+                    {/*<span style={{fontWeight:"bold", marginLeft:10}}>Mode</span>*/}
                     <ImportOutlined style={{marginLeft:15, fontSize:25, color: "cadetblue"}}/>
                 </div>
             </div>

@@ -1,34 +1,29 @@
 import React, {useEffect} from "react";
-import MenuComponent from "../layout/menu";
 import {ArticleList} from "../modules/articles/articlesList/ArticleList";
-import { getArticleDetail} from "../actions/ArticleActions";
 import { useAppSelector, useAppDispatch } from "../hooks/hooks"
 import {ArticleDetail, ArticleOfList} from "../actions/ArticleActions";
+import {ArticlesContainer} from "../components/articles-container/ArticleContainer";
+import {log} from "util";
 
 type HomeScreenProps = {};
 
 const HomeScreen: React.FC<HomeScreenProps> = (props) => {
-    // @ts-ignore
-    const articles = useAppSelector<ArticleOfList>(state => state.article.articles);
-    // @ts-ignore
-    const articleDetail = useAppSelector<ArticleDetail>(state => state.article.articleDetail);
     const theme = useAppSelector<string>(state => state.shared.theme);
-    const dispatch = useAppDispatch()
+    // @ts-ignore
+    const articles = useAppSelector<string>(state => state.article.articles);
+    const queryId = useAppSelector<string>(state => state.query.queryId);
 
-    // useEffect(()=>{
-    //     // @ts-ignore
-    //     dispatch(getArticleDetail());
-    // },[])
-    //
-    // useEffect(()=>{
-    //     console.log(articleDetail)
-    // },[articleDetail])
+    useEffect(()=>{
+        console.log(articles)
+        console.log(queryId)
 
-  return (
-    <div className={`screen home ${theme}`}>
-        <ArticleList/>
-    </div>
-  );
+    },[articles, queryId])
+
+    return (
+        <div className={`screen home ${theme}`}>
+           <ArticlesContainer/>
+        </div>
+      );
 };
 
 export default HomeScreen;

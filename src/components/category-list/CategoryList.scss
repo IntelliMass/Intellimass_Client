@@ -1,0 +1,30 @@
+.categories-list-container{
+  height: 600px;
+  width: 800px;
+  margin-left: 20%;
+  margin-top: 20%;
+  display: block;
+  background-color: white;
+
+  .categories-list{
+    height: 450px;
+    margin: 5%;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding-top: 30px;
+  }
+
+  .categories-action{
+    height: 70px;
+    margin: 5%;
+
+    .metadata-footer{
+      margin-left: 220px;
+
+      .save-saved-metadata{
+        margin-right: 20px;
+      }
+    }
+  }
+}

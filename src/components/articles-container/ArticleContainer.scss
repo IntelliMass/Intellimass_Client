@@ -1,0 +1,22 @@
+.articles-screen-container{
+  width: 100%;
+  display: flex;
+
+  .metadata-left-container{
+    width: 30%;
+
+    .screen-options-buttons{
+      margin-top: 2%;
+      margin-left: 25%;
+    }
+  }
+
+  .articles-right-container{
+    width: 70%;
+
+  }
+
+  .network-right-container{
+
+  }
+}
