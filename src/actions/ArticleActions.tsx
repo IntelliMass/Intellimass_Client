@@ -85,6 +85,7 @@ export interface ArticleOfList {
 
 let URL1 = "https://api.semanticscholar.org/v1/paper/";
 let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
+let URL3 = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
 let OFFSET = 10;
 let LIMIT = 100;
 let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
@@ -93,16 +94,18 @@ let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOp
  * Get Articles from the server
  * @return {dispatch} Type + payload.
  */
-export const getArticles = (query:string): (dispatch: any) => Promise<void> =>
+export const getArticles = (id:string): (dispatch: any) => Promise<void> =>
         async dispatch => {
-            let URL_GET_ARTICLES = `${URL2}?query=${query}&offset=${OFFSET.toString()}&limit=${LIMIT.toString()}&fields=${FIELDS}`;
+            //let URL_GET_ARTICLES = `${URL2}?query=${query}&offset=${OFFSET.toString()}&limit=${LIMIT.toString()}&fields=${FIELDS}`;
+            let URL_GET_ARTICLES = `${URL3}?id=${id}&count=${LIMIT.toString()}`;
+            // let URL_GET_ARTICLES = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles?id=b3859f83-bed9-4fbc-869c-0ad80ec10a36&count=2"
             await fetch(URL_GET_ARTICLES)
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (recivedArticles:any) {
                     dispatch({type: "GET_ARTICLES",
-                        payload: recivedArticles.data
+                        payload: recivedArticles
                     });
                 })
                 .catch(function (error) {

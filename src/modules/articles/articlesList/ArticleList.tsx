@@ -25,14 +25,15 @@ type ArticleListProps = {};
 
 export const ArticleList: React.FC<ArticleListProps> = () => {
 // @ts-ignore
-    const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.articles);
+    const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
     const query = useAppSelector<string>(state => state.query.query);
+    const queryId = useAppSelector<string>(state => state.query.queryId);
     const theme = useAppSelector<string>(state => state.shared.theme);
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
         // @ts-ignore
-        dispatch(getArticles(query));
+        dispatch(getArticles(queryId));
     },[])
 
     useEffect(()=>{
@@ -43,12 +44,12 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
         <div className={`Article-list ${theme}`}>
             <List
                 itemLayout="vertical"
-                size="large"
+                size="small"
                 pagination={{
                     onChange: page => {
                         console.log(page);
                     },
-                    pageSize: 3,
+                    pageSize: 10,
                 }}
                 dataSource={articles}
                 className={`${theme}`}
