@@ -37,11 +37,11 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     };
 
     const onClear = () => {
-
+        setCategories([])
     }
 
     const onSave = () => {
-
+        // DISPATCH PATCH RESPONSE
     }
 
 

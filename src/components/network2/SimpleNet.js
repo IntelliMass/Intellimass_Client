@@ -135,7 +135,7 @@ export function SimpleNet() {
     const NodeHover = () => {
         return(
             <div className="node-hover">
-                <ArticlePopover/>
+                {/*<ArticlePopover/>*/}
             </div>
         );
     };

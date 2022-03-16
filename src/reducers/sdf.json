@@ -1,0 +1,16 @@
+{
+  "mostCommonTopics":
+    {"Cyber-physical system": 52,
+      "Computer security": 38,
+      "Sensor": 19,
+      "Algorithm": 19,
+      "Requirement": 16
+    },
+  "mostCommonAuthors":
+    {"Cyril Onwubiko": 3,
+      "Michael P. Wellman": 3,
+      "Abel Yeboah-Ofori": 3,
+      "Linan Huang": 2,
+      "Quanyan Zhu": 2
+    }
+}

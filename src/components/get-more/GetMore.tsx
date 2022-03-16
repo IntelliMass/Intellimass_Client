@@ -15,11 +15,11 @@ export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
     const dispatch = useAppDispatch();
 
     function handleMenuClick(e:any) {
-        console.log('click', e);
+        console.log(e.item);
         // @ts-ignore
         dispatch(getArticleDetail(paperId));
         // set selected article
-        history.replace('/articles');
+        history.replace('/article');
     }
 
     const GetMoreMenu = (

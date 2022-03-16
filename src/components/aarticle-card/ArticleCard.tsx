@@ -8,6 +8,7 @@ import { Author } from "../../actions/ArticleActions";
 import {UserOutlined} from "@ant-design/icons";
 import {CategoryTag} from "../category-tags/CategoryTag";
 import {useHistory} from "react-router-dom";
+import {GetMoreButton} from "../get-more/GetMore";
 
 type ArticleCardProps = {
     article: any;
@@ -41,9 +42,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = (props) => {
     return (
         <div className="card-article-container">
             <Card title={`${article.title}`} extra={
-                <Button type="text" danger onClick={showDetail}>
-                    More
-                </Button>
+                // <Button type="text" danger onClick={showDetail}>
+                //     More
+                // </Button>
+                <GetMoreButton paperId={article.paperId}/>
                 } style={{ width: 500 }}
             >
                 <p>
