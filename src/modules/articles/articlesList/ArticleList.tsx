@@ -4,6 +4,7 @@ import {Avatar, List, Space} from "antd";
 import {LikeOutlined, MessageOutlined, StarOutlined} from "@ant-design/icons";
 import { useAppSelector, useAppDispatch } from "../../../hooks/hooks"
 import {ArticleOfList, Author, getArticles} from "../../../actions/ArticleActions";
+import {GetMoreButton} from "../../../components/get-more/GetMore";
 
 // @ts-ignore
 const IconText = ({ icon, text }) => (
@@ -57,11 +58,7 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
                     <List.Item
                         className={`${theme}`}
                         key={item.title + item.abstract}
-                        actions={[
-                            <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                            <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                            <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                        ]}
+                        actions={[<GetMoreButton paperId={item.paperId}/>]}
                     >
                         <List.Item.Meta
                             title={item.title}
@@ -75,5 +72,3 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
         </div>
     );
 };
-
-ArticleList.defaultProps = {};

@@ -1,11 +1,11 @@
-import {Form, Select, Radio, Button, Space, Input, Divider} from 'antd';
+import {Form, Select, Radio, Button, Space, Input, Divider, Spin} from 'antd';
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import { OperatorTag } from "../../../components/tag/OperatorTag"
 import {useHistory} from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks'
 import { createQuery, KeywordsListObject } from "../../../actions/QueryActions";
 import {joinQuery, joinQueryString, QueryState} from "../../../reducers/QueryReducer";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import "./QueryForm.scss"
 
 const { Option } = Select;
@@ -16,13 +16,14 @@ const formItemLayout = {
 };
 
 export const DefinitionForm = () => {
+    const [isLoader, setIsLoader] = useState<boolean>(false);
     const [form] = Form.useForm();
     const history = useHistory();
     const query = useAppSelector<string>(state => state.query.query)
     const first_keyword = useAppSelector<string>(state => state.query.first_keyword)
     const first_operator = useAppSelector<string>(state => state.query.first_operator)
     const extra_keywords = useAppSelector<Array<KeywordsListObject>>(state => state.query.extra_keywords)
-    const source = useAppSelector<string>(state => state.query.connection)
+    const connection = useAppSelector<string>(state => state.query.connection)
     // const strategy = useAppSelector<string>(state => state.query.strategy)
     const dispatch = useAppDispatch()
 
@@ -31,7 +32,8 @@ export const DefinitionForm = () => {
             query: query,
             first_keyword: first_keyword,
             first_operator: first_operator,
-            source: source,
+            connection: connection,
+            extra_keywords:extra_keywords
             // strategy: strategy,
         });
     },[])
@@ -44,7 +46,12 @@ export const DefinitionForm = () => {
         return newExtraKeywords;
     }
 
+    const loaderHandler = () => {
+        setIsLoader(!isLoader);
+    };
+
     const onFinish = (values: any) => {
+        setIsLoader(true);
         const newKeywords = values.keywords || [];
         const newQuery:QueryState = {
             query: joinQuery(values.first_keyword, makeKeywordsTemplate(newKeywords)),
@@ -56,7 +63,7 @@ export const DefinitionForm = () => {
             //strategy: values.strategy
         }
         // @ts-ignore
-        dispatch(createQuery(newQuery));
+        dispatch(createQuery(newQuery, loaderHandler ));
         history.replace('/articles');
     };
 
@@ -211,6 +218,9 @@ export const DefinitionForm = () => {
                     </Button>
                 </Form.Item>
             </Form>
+            {isLoader && <div className="loader-container">
+                <Spin size="large" />
+            </div>}
         </div>
     );
 };

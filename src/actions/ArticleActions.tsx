@@ -1,16 +1,7 @@
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
 type GetArticlesAction = {type: "GET_ARTICLES", payload: ArticleOfList }
 type GetArticleDetailAction = {type: "GET_ARTICLE_DETAIL", payload: ArticleDetail}
 
 export type ArticleAction = GetArticlesAction|  GetArticleDetailAction;
-
-export interface WSResponse {
-    data: Array<ArticleOfList>,
-    offset: number,
-    next: number,
-    total: number
-}
 
 export interface ArticleDetail {
     title: string,

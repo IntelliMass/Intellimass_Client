@@ -5,6 +5,7 @@ import "./ArticleContainer.scss"
 import {Button} from "antd";
 import {SimpleNet} from "../network2/SimpleNet";
 import {MetadataList} from "../metadata-list/MetadataList";
+import {CategoriesList} from "../category-list/CategoryList";
 
 type ArticlesContainerProps = {};
 
@@ -33,7 +34,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
             </div>
 
             {selectedPosition.type === "Categories" && <div className="categories-right-container">
-                Categories
+                <CategoriesList/>
             </div>}
             {selectedPosition.type === "List" && <div className="articles-right-container">
                 <ArticleList/>
