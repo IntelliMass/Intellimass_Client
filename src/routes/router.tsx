@@ -12,6 +12,7 @@ import ScreenError401 from "../screens/ScreenError401";
 import ScreenError500 from "../screens/ScreenError500";
 import ScreenResearches from "../screens/ScreenResearches";
 import {ScreenQuery} from "../screens/ScreenQuery";
+import {ScreenArticleDetail} from "../screens/ScreenArticleDetails";
 
 
 function RouterApplication() {
@@ -21,6 +22,10 @@ function RouterApplication() {
      <NavBar/>
       <Switch>
         <Route path="/" exact>
+          <ScreenQuery />
+        </Route>
+
+        <Route path="/articles" >
           <ScreenHome />
         </Route>
 
@@ -36,16 +41,16 @@ function RouterApplication() {
           <ScreenResearches />
         </Route>
 
-        <Route path="/query">
-          <ScreenQuery />
-        </Route>
-
         <Route path="/unauthorized">
           <ScreenError401 />
         </Route>
 
         <Route path="/server">
           <ScreenError500 />
+        </Route>
+
+        <Route path="/article">
+          <ScreenArticleDetail  />
         </Route>
 
         <Route path="/*">

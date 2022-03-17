@@ -6,18 +6,32 @@ export interface QueryState {
     first_keyword: string,
     first_operator: string,
     extra_keywords: Array<KeywordsListObject>,
-    source: string,
-    strategy: string
+    connection: string,
+    queryId: string,
+    //strategy: string
 }
 
 const initState = {
-    query: 'IOT',
+    query: 'IOT,cyber',
     first_keyword: 'cyber',
     first_operator: 'AND',
     extra_keywords: [{keyword: "Architecture", operator: "Not", source: "user"}],
-    source: 'file',
-    strategy: 'suggestions'
+    connection: 'authors',
+    queryId: ''
+    //strategy: 'suggestions'
 };
+
+export const joinQueryString = (firstKeyword: string, allKeywords: Array<string>) => {
+    return firstKeyword + '+' + allKeywords.join();
+}
+
+export const joinQuery = (firstKeyword: string, allKeywords:Array<{keyword: string, operator:string}>) => {
+    let keyWords:Array<string> = [];
+    allKeywords.forEach(item=>keyWords.push(item.keyword));
+    const items = joinQueryString(firstKeyword, keyWords);
+    return items;
+}
+
 
 const QueryReducer = (state: QueryState = initState, action:QueryAction) => {
     switch (action.type) {
@@ -28,8 +42,9 @@ const QueryReducer = (state: QueryState = initState, action:QueryAction) => {
                 first_keyword: action.payload.first_keyword,
                 first_operator: action.payload.first_operator,
                 extra_keywords: action.payload.extra_keywords,
-                source: action.payload.source,
-                strategy: action.payload.strategy
+                connection: action.payload.connection,
+                queryId: action.payload.queryId
+                //strategy: action.payload.strategy
             };
 
 

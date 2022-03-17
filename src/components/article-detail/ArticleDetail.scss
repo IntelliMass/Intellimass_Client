@@ -1,0 +1,58 @@
+.article-container {
+  background-color: var(--background-white-theme);
+
+  .left-details {
+    width: 30%;
+    position: fixed;
+    left: 0;
+    height: 80%;
+  }
+
+  .right-details {
+    width: 70%;
+    position: fixed;
+    right: 0;
+    height: 80%;
+
+    .citations-list {
+      overflow: auto;
+      height: 500px;
+    }
+
+  }
+
+  .footer-details {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 15%;
+
+    .reference-container {
+      height: 200px;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+
+      .reference-card {
+        display: inline-block;
+        width: 500px;
+        min-width: 300px;
+        animation: slide 15s linear infinite;
+        display: inline-block;
+        border: 1px solid gray;
+      }
+    }
+
+  }
+}
+
+
+
+@keyframes slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-1500px, 0, 0); /* The image width */
+  }
+}

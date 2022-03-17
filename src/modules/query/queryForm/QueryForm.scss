@@ -1,0 +1,51 @@
+.query-form-container {
+  height:100%;
+  width:100%;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  .query-form {
+    display: block;
+    background-color: white;
+    border: 0.1px solid gray;
+    width: 800px;
+    height: 470px;
+    margin: 0 auto;
+
+    .form-title{
+      color: #1890ff;
+      font-weight: 500;
+      font-size: 18px;
+      margin-left: 40px;
+    }
+
+    .connection-select{
+      margin-left: -40px;
+    }
+
+    .select-keyword-container{
+      height: 200px;
+      overflow: auto;
+
+      .select-keyword{
+        margin-left: 27px;
+      }
+    }
+  }
+
+  .action-form-buttons{
+    margin-top: 30px;
+    margin-left: 100px;
+
+    .action-form-button{
+      margin-right: 10px;
+    }
+  }
+}
+
+.loader-container{
+  position: absolute;
+  margin-left: 49%;
+}
