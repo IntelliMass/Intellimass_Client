@@ -32,11 +32,11 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
 
     const dispatch = useAppDispatch();
 
-    useEffect(()=>{
-        // if(queryId !== '')
-            // @ts-ignore
-            // dispatch(getMetadata(queryId));
-    },[queryId]);
+    // useEffect(()=>{
+    //     if(queryId !== '')
+    //         // @ts-ignore
+    //         dispatch(getMetadata(queryId));
+    // },[queryId]);
 
     useEffect(() => {
         const items = [...metadataList];

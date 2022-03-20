@@ -6,6 +6,8 @@ import {Button} from "antd";
 import {SimpleNet} from "../network2/SimpleNet";
 import {MetadataList} from "../metadata-list/MetadataList";
 import {CategoriesList} from "../category-list/CategoryList";
+import {INetwork} from "../../reducers/NetworkReducer";
+import {getNetwork} from "../../actions/NetworkAction";
 
 type ArticlesContainerProps = {};
 
@@ -15,11 +17,25 @@ type ArticlesPosition = {
 
 export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     const theme = useAppSelector<string>(state => state.shared.theme);
+    // @ts-ignore
+    const network = useAppSelector<any>(state => state.network.network);
+    const queryId = useAppSelector<string>(state => state.query.queryId);
+
     const screenPosition: Array<ArticlesPosition> = [{type:"Categories"}, {type:"List"}, {type:"Network"} ]
     const [selectedPosition, setSelectedPosition] = useState<ArticlesPosition>({type:"Categories"});
 
+    const dispatch = useAppDispatch()
+
+    useEffect(()=>{
+        console.log(network);
+    },[network])
+
     const onPositionChange = (value: string) => {
         setSelectedPosition({type: value});
+        if (value === "Network"){
+            // @ts-ignore
+            dispatch(getNetwork(queryId));
+        }
     }
 
     return (
@@ -40,7 +56,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                 <ArticleList/>
             </div>}
             {selectedPosition.type === "Network" && <div className="network-right-container">
-                <SimpleNet/>
+                <SimpleNet network={network}/>
             </div>}
         </div>
     );
