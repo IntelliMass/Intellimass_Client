@@ -4,6 +4,7 @@ export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction;
 
 let URL_GET_CATALOG = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/categories";
 let URL_PATCH_CATEGORIES = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/categories";
+let URL_GET_CATEGORIES_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/categories";
 
 
 /**
@@ -12,7 +13,7 @@ let URL_PATCH_CATEGORIES = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.c
  */
 export const getCatalog = (id:string): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        const url = `${URL_GET_CATALOG}?id=${id}`;
+        const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=100`;
         await fetch(url)
             .then(function (response) {
                 return response.json();

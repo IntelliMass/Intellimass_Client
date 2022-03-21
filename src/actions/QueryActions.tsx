@@ -12,6 +12,7 @@ export interface KeywordsListObject {
 
 const URL_POST = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/query";
 const URL_GET = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
+let URL_POST_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/query";
 
 
 /**
@@ -24,7 +25,7 @@ export const  createQuery = (queryParams:QueryState, loaderHandler: Function): (
     const query = joinQuery(queryParams.first_keyword, queryParams.extra_keywords);
     const body = {query: query, feature: queryParams.connection};
     return async dispatch => {
-        await fetch(URL_POST, {
+        await fetch(URL_POST_NEW, {
             method: 'post',
             body: JSON.stringify(body)
         })

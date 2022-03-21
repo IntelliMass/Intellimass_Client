@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./ArticleList.scss";
-import {Avatar, List, Space} from "antd";
+import {Avatar, List, Space, Spin} from "antd";
 import {LikeOutlined, MessageOutlined, StarOutlined} from "@ant-design/icons";
 import { useAppSelector, useAppDispatch } from "../../../hooks/hooks"
 import {ArticleOfList, Author, getArticles} from "../../../actions/ArticleActions";
@@ -22,9 +22,10 @@ const listAuthorsToString = (authors: Array<Author>):string=>{
     return stringAuthores;
 }
 
-type ArticleListProps = {};
+type ArticleListProps = {
+};
 
-export const ArticleList: React.FC<ArticleListProps> = () => {
+export const ArticleList: React.FC<ArticleListProps> = (props) => {
 // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
     const query = useAppSelector<string>(state => state.query.query);
@@ -33,12 +34,18 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
+
+        // setIsLoader(true);
+        console.log()
         // @ts-ignore
         dispatch(getArticles(queryId));
-    },[])
+    },[queryId, query])
 
     useEffect(()=>{
-        console.log(articles)
+        if (articles === [])
+            // setIsLoader(true);
+        console.log(articles);
+       // setIsLoader(false);
     },[ articles])
 
     return (
@@ -57,11 +64,11 @@ export const ArticleList: React.FC<ArticleListProps> = () => {
                 renderItem={item => (
                     <List.Item
                         className={`${theme}`}
-                        key={item.title + item.abstract}
+                        key={item.title}
                         actions={[<GetMoreButton paperId={item.paperId}/>]}
                     >
                         <List.Item.Meta
-                            title={item.title}
+                            title={item.year + ' | ' + item.title}
                             description={ listAuthorsToString(item.authors)}
                             className={`${theme}`}
                         />

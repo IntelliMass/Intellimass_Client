@@ -30,8 +30,8 @@ export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
         </Menu>
     );
     return (
-        <div className="get-more-button">
-            <Dropdown.Button overlay={GetMoreMenu}>Actions</Dropdown.Button>
+        <div className="get-more-button" style={{marginLeft: -30, marginBottom:20}}>
+            <Dropdown.Button overlay={GetMoreMenu}></Dropdown.Button>
         </div>
     );
 };

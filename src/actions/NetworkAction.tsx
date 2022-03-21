@@ -5,7 +5,9 @@ export type NetworkAction = getNetworkAction|  getFilteredNetworkAction;
 
 
 let URL_GET_NETWORK = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/network";
-let URL_GET_FILTERED_NETWORK = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/filter-nettwork";
+let URL_GET_FILTERED_NETWORK = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/filter-network";
+let URL_GET_NETWORK_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/network";
+
 
 //f3b3b7a0-eed7-49e0-a21a-d540d6cc22db
 // https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/network?id=3cf608e5-a8aa-4eed-a2dd-832f51fc4fb3&size=100&feature=Authors
@@ -59,7 +61,7 @@ export const customLinks = (links: Array<any>):Array<any> => {
  */
 export const getNetwork = (id:string): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        const url = `${URL_GET_NETWORK}?id=${id}&size=100&feature=Authors`;
+        const url = `${URL_GET_NETWORK_NEW}?id=${id}&size=100&feature=Authors`;
         await fetch(url)
             .then(function (response) {
                 return response.json();
