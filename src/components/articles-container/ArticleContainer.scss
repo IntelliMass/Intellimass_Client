@@ -4,19 +4,56 @@
 
   .metadata-left-container{
     width: 30%;
+    border: 0.5px solid gray;
+
+  }
+
+  .metadata-right-container {
+    width: 70%;
+    border: 1px solid gray;
+
+    .count-items{
+      position: absolute;
+      margin-left: -27%;
+      font-weight: 500;
+      color: #3b5eb8;
+      margin-top: 5px;
+      font-size: 15px;
+    }
 
     .screen-options-buttons{
-      margin-top: 2%;
-      margin-left: 25%;
+      margin-top: 1%;
+      margin-left: 40%;
+    }
+
+    .expandable-topbar-container-div{
+      min-height: 72px;
+      width: 98%;
+      margin-left: 1%;
+      margin-top: 1%;
+    }
+
+    .articles-right-container {
+      //margin-top: 2%;
+    }
+
+    .network-right-container {
     }
   }
 
-  .articles-right-container{
-    width: 70%;
+  .loader-container{
+    position: absolute;
+    margin-left: 34%;
+    margin-top: 20%;
 
-  }
+    .loader-details{
+      margin-left: -30%;
+      width: 300px;
+    }
 
-  .network-right-container{
-
+    .loader-articles-details{
+      margin-left: -17%;
+      width: 300px;
+    }
   }
 }

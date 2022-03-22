@@ -1,19 +1,29 @@
 import React, {useEffect, useState} from "react";
 import './MetadataList.scss';
 import { IMetadata, Metadata} from "../metadata/Metadata";
-import {Button, Divider, Select} from "antd";
+import {Button, Divider, Select, Spin} from "antd";
 import Search from "antd/es/input/Search";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getMetadata} from "../../actions/MeatadataAction";
+import {SimpleNet} from "../network2/SimpleNet";
+import {getArticleDetail, getFilteredArticles} from "../../actions/ArticleActions";
 const { Option } = Select;
 
 type MetadataListProps = {
-    items: any[];
+    metadataList: any[];
+    savedMetadataList: any[];
 };
 
 export const FUNCTION_TYPE = "REMOVE_SAVED_METADATA" || "SELECT_UNSAVED_METADATA";
 export const LIST_TYPE = "SAVED" || "UN_SAVED";
 
+export const getTitlesFromMetadata = (metadataList:Array<IMetadata>) => {
+    let titles: Array<string> = [];
+    metadataList.forEach(metadata => {
+        titles.push(metadata.title);
+    })
+    return titles;
+}
 
 export const MetadataList: React.FC<MetadataListProps> = (props) => {
     // @ts-ignore
@@ -30,14 +40,25 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
     const [filterTitle, setTitle] = useState<string>("");
     const [filterRank, setRank] = useState<string>("0");
 
+    const [isLoader, setIsLoader] = useState<boolean>(false);
+    const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
+
     const dispatch = useAppDispatch();
 
-    useEffect(()=>{
-        // if(queryId !== '')
-            // @ts-ignore
-            // dispatch(getMetadata(queryId));
-    },[queryId]);
+    /*
+    * LISTENER TO SERVER METADATA
+    */
+    useEffect(() => {
+        console.log(state_metadataList)
+        console.log(state_savedMetadataList)
+        setMetadataList([...state_metadataList]);
+        setSavedMetadataList([...state_savedMetadataList]);
+        setIsLoader(false);
+    },[state_metadataList]);
 
+    /*
+    * LISTENER TO LOCAL METADATA
+    */
     useEffect(() => {
         const items = [...metadataList];
         const newItems = checkFilters(items);
@@ -48,6 +69,12 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
         const items = [...savedMetadataList];
         const newItems = checkFilters(items);
         setFilteredSavedMetadataList([...newItems]);
+        // PATCH
+        if (isSubmitSelected){
+            setIsSubmitSelected(false);
+            // @ts-ignore
+            dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
+        }
     },[savedMetadataList])
 
     const checkFilters = (items: IMetadata[]) => {
@@ -143,6 +170,7 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
     }
 
     const onSave = () => {
+        setIsSubmitSelected(true);
         const selectedMetadataList = [...metadataList];
         const newSavedMetadataList:IMetadata[] = [];
         const newUnsavedMetadataList:IMetadata[] = [];
@@ -156,6 +184,8 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
         });
         setMetadataList([...newUnsavedMetadataList]);
         setSavedMetadataList([...filteredSavedMetadataList,...newSavedMetadataList]);
+        // FILTER
+
     }
 
     const onMetadataChange = (listName: string, changeType: string, id:string ) => {
@@ -197,40 +227,48 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
 
     return (
         <div className="metadata-list-container">
-            <Divider orientation="left">Filter Metadata</Divider>
-            <div className="metadata-header">
+            {isLoader ? <div className="loader-container">
+                <Spin size="large" />
+                <h4 className="loader-details">Creating yours articles network</h4>
+            </div> :
+                <>
+                <Divider orientation="left">Filter Metadata</Divider>
+                <div className="metadata-header">
                 <span className="metadata-header-label">Topic Filter</span>
                 <Search value={filterTitle} onChange={titleHandler} placeholder="Filter articles common topics" onSearch={onFilterByTitle} className="metadata-search" />
                 <span className="metadata-header-label">Rank Filter</span>
                 <Select defaultValue="ALL" className="metadata-select-rank" onChange={onRankSelectChange}>
-                    <Option value="ALL">All</Option>
-                    <Option value="MORE">More</Option>
-                    <Option value="EQUAL">Equal</Option>
-                    <Option value="LESS">Less</Option>
+                <Option value="ALL">All</Option>
+                <Option value="MORE">More</Option>
+                <Option value="EQUAL">Equal</Option>
+                <Option value="LESS">Less</Option>
                 </Select>
                 <Search value={filterRank} onChange={rankHandler} placeholder="Filter ranks" onSearch={onFilterByRank} className="metadata-number-rank" />
-            </div>
-            <Divider orientation="left">Saved Metadata</Divider>
-            <div className="metadata-list">
+                </div>
+                <Divider orientation="left">Saved Metadata ( {savedMetadataList.length} )</Divider>
+                <div className="metadata-list">
             {filteredSavedMetadataList.map((metadata, index) => {
                 return(
-                    <Metadata metadata={metadata} index={index} listName="SAVED" onMetadataChange={onMetadataChange}/>
+                <Metadata metadata={metadata} index={index} listName="SAVED" onMetadataChange={onMetadataChange}/>
                 )
             })}
-        </div>
-            <Divider orientation="left">New Metadata</Divider>
-            <div className="metadata-list">
-                {filteredMetadataList.map((metadata, index) => {
-                    return(
-                        <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
-                    )
-                })}
-            </div>
-            <Divider orientation="left">Actions</Divider>
-            <div className="metadata-footer">
+                </div>
+                <Divider orientation="left">New Metadata ( {metadataList.length} )</Divider>
+                <div className="metadata-list">
+            {filteredMetadataList.map((metadata, index) => {
+                return(
+                <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                )
+            })}
+                </div>
+                <Divider orientation="left">Actions</Divider>
+                <div className="metadata-footer">
                 <Button onClick={onSave} type="primary" className="save-saved-metadata">Save selected</Button>
                 <Button onClick={onClear}>Clear selected</Button>
-            </div>
+                </div>
+                </>
+            }
+
         </div>
     );
 };

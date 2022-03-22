@@ -1,0 +1,51 @@
+.expandable-topbar-container {
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+  height: 0;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+
+  &.padded-topbar {
+    position: relative;
+    box-shadow: none;
+    margin: 20px 0;
+    height: auto;
+  }
+  &.padded-topbar.expanded {
+    height: auto;
+  }
+  &.expanded {
+    height: 100%;
+  }
+
+  & .panel {
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+
+    & .fixed-element {
+      position: relative;
+    }
+
+    & .expanding-element {
+      position: relative;
+      background: white;
+
+      &:after {
+        content: "";
+        width: 45px;
+        height: 45px;
+        z-index: 1;
+        background: var(--app-white);
+        position: absolute;
+        bottom: -21px;
+        left: 50%;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+
+      &.expanded:after {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      }
+    }
+  }
+}

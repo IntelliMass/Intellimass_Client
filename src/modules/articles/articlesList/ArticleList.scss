@@ -1,6 +1,13 @@
 .Article-list{
-  width: 80%;
-  margin-left: 10%;
+  margin-top: 2%;
+  width: 90%;
+  margin-left: 5%;
   height: 800px;
   overflow: auto;
+
+  .loader-article-list{
+    position: absolute;
+    margin-top: 20%;
+    margin-left: 25%;
+  }
 }

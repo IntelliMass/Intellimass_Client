@@ -18,7 +18,7 @@ import {ScreenArticleDetail} from "../screens/ScreenArticleDetails";
 function RouterApplication() {
 
   return (
-    <>
+    <div className="app-container">
      <NavBar/>
       <Switch>
         <Route path="/" exact>
@@ -57,7 +57,7 @@ function RouterApplication() {
           <ScreenError404 />
         </Route>
       </Switch>
-    </>
+    </div>
   );
 }
 

@@ -1,7 +1,8 @@
 .card-article-container{
+  z-index: 1000;
 
   .abstract-container{
-    overflow: hidden;
+    overflow: auto;
     display: flex;
     height: 200px;
   }

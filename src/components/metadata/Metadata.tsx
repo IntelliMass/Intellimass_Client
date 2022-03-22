@@ -46,25 +46,25 @@ export const Metadata: React.FC<MetadataProps> = (props) => {
     };
 
     const UniqeBadge = () => {
-        if(metadata.rank < 10){
+        if(metadata.rank <= 10){
             return (
-                <Badge style={{ backgroundColor: "firebrick" }} count={99}>
+                <Badge style={{ backgroundColor: "firebrick" }} count={metadata.rank}>
                     {MetadataTag(metadata.title)}
                 </Badge>
             );
         }
-        else if(metadata.rank > 10 && metadata.rank < 50){
-            return <Badge style={{ backgroundColor: "orange" }} count={50}>
+        else if(metadata.rank > 10 && metadata.rank <= 50){
+            return <Badge style={{ backgroundColor: "orange" }} count={metadata.rank}>
                 {MetadataTag(metadata.title)}
             </Badge>
         }
         else if(metadata.rank > 50 && metadata.rank < 100){
-            return <Badge style={{ backgroundColor: "cadetblue" }} count={100}>
+            return <Badge style={{ backgroundColor: "cadetblue" }} count={metadata.rank}>
                 {MetadataTag(metadata.title)}
             </Badge>
         }
         else{
-            return <Badge style={{ backgroundColor: "forestgreen" }} count={1000} overflowCount={100}>
+            return <Badge style={{ backgroundColor: "forestgreen" }} count={metadata.rank}>
                 {MetadataTag(metadata.title)}
             </Badge>
         }

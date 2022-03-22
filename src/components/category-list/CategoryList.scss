@@ -1,10 +1,10 @@
 .categories-list-container{
-  height: 600px;
+  height: 620px;
   width: 800px;
   margin-left: 20%;
-  margin-top: 20%;
+  margin-top: 5%;
   display: block;
-  background-color: white;
+  border: 0.1px solid gray;
 
   .categories-list{
     height: 450px;
@@ -16,8 +16,8 @@
   }
 
   .categories-action{
-    height: 70px;
-    margin: 5%;
+    height: 110px;
+    margin-left: 5%;
 
     .metadata-footer{
       margin-left: 220px;
