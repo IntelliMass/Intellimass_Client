@@ -2,13 +2,13 @@ import React, {useState, useEffect} from "react";
 import {ArticleList} from "../../modules/articles/articlesList/ArticleList";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks"
 import "./ArticleContainer.scss"
-import {Button, Spin} from "antd";
+import {Button, Form, Select, Spin} from "antd";
 import {SimpleNet} from "../network2/SimpleNet";
-import {MetadataList} from "../metadata-list/MetadataList";
+import {getTitlesFromMetadata, MetadataList} from "../metadata-list/MetadataList";
 import {CategoriesList} from "../category-list/CategoryList";
 import {INetwork} from "../../reducers/NetworkReducer";
 import {getNetwork} from "../../actions/NetworkAction";
-import {ArticleOfList, getArticleDetail, getArticles} from "../../actions/ArticleActions";
+import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles} from "../../actions/ArticleActions";
 import {ExpandableTopBar} from "../expended-bar/ExpandedBar";
 import {ServiceSummary} from "../expand-stattistic-panel/ExpandStatisticPanel";
 import {IMetadata} from "../metadata/Metadata";
@@ -86,7 +86,8 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
             dispatch(getNetwork(queryId));
         } else if (value === "List"){
             // @ts-ignore
-            dispatch(getArticles(queryId));
+            dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
+            // dispatch(getArticles(queryId));
         }
     }
 
@@ -147,7 +148,31 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                     {isLoader ? <div className="loader-container">
                         <Spin size="large" />
                         <h4 className="loader-articles-details">Searching for articles</h4>
-                    </div> :  <ArticleList articles={articles} queryId={queryId} query={query}/>}
+                    </div> :
+                        <div>
+                            <div>
+                                {/*<Form*/}
+                                {/*    form={form}*/}
+                                {/*    name="validate_other"*/}
+                                {/*    {...formItemLayout}*/}
+                                {/*    onFinish={onFinish}*/}
+                                {/*    className="query-form"*/}
+                                {/*>*/}
+                                {/*</Form>*/}
+                                {/*<Form.Item*/}
+                                {/*    name="connection"*/}
+                                {/*    label="Connection Type"*/}
+                                {/*    hasFeedback*/}
+                                {/*    rules={[{ required: true, message: 'Missing connection type input' }]}*/}
+                                {/*    className="connection-select"*/}
+                                {/*>*/}
+                                {/*    <Select placeholder="Please select a connection">*/}
+                                {/*        <Option value="authors">Authors</Option>*/}
+                                {/*    </Select>*/}
+                                {/*</Form.Item>*/}
+                            </div>
+                            <ArticleList articles={articles} queryId={queryId} query={query}/>
+                        </div>}
                 </div>}
 
                 {selectedPosition.type === "Network" && <div className="network-right-container">

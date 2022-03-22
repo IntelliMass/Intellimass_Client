@@ -6,6 +6,7 @@ import Search from "antd/es/input/Search";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getMetadata} from "../../actions/MeatadataAction";
 import {SimpleNet} from "../network2/SimpleNet";
+import {getArticleDetail, getFilteredArticles} from "../../actions/ArticleActions";
 const { Option } = Select;
 
 type MetadataListProps = {
@@ -16,6 +17,13 @@ type MetadataListProps = {
 export const FUNCTION_TYPE = "REMOVE_SAVED_METADATA" || "SELECT_UNSAVED_METADATA";
 export const LIST_TYPE = "SAVED" || "UN_SAVED";
 
+export const getTitlesFromMetadata = (metadataList:Array<IMetadata>) => {
+    let titles: Array<string> = [];
+    metadataList.forEach(metadata => {
+        titles.push(metadata.title);
+    })
+    return titles;
+}
 
 export const MetadataList: React.FC<MetadataListProps> = (props) => {
     // @ts-ignore
@@ -33,23 +41,24 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
     const [filterRank, setRank] = useState<string>("0");
 
     const [isLoader, setIsLoader] = useState<boolean>(false);
+    const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
 
     const dispatch = useAppDispatch();
 
-    // useEffect(()=>{
-    //         setIsLoader(true);
-    //     // @ts-ignore
-    //         dispatch(getMetadata(queryId));
-    // },[queryId]);
-
+    /*
+    * LISTENER TO SERVER METADATA
+    */
     useEffect(() => {
         console.log(state_metadataList)
         console.log(state_savedMetadataList)
         setMetadataList([...state_metadataList]);
         setSavedMetadataList([...state_savedMetadataList]);
         setIsLoader(false);
-    },[state_metadataList])
+    },[state_metadataList]);
 
+    /*
+    * LISTENER TO LOCAL METADATA
+    */
     useEffect(() => {
         const items = [...metadataList];
         const newItems = checkFilters(items);
@@ -60,6 +69,12 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
         const items = [...savedMetadataList];
         const newItems = checkFilters(items);
         setFilteredSavedMetadataList([...newItems]);
+        // PATCH
+        if (isSubmitSelected){
+            setIsSubmitSelected(false);
+            // @ts-ignore
+            dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
+        }
     },[savedMetadataList])
 
     const checkFilters = (items: IMetadata[]) => {
@@ -155,6 +170,7 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
     }
 
     const onSave = () => {
+        setIsSubmitSelected(true);
         const selectedMetadataList = [...metadataList];
         const newSavedMetadataList:IMetadata[] = [];
         const newUnsavedMetadataList:IMetadata[] = [];
@@ -168,6 +184,8 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
         });
         setMetadataList([...newUnsavedMetadataList]);
         setSavedMetadataList([...filteredSavedMetadataList,...newSavedMetadataList]);
+        // FILTER
+
     }
 
     const onMetadataChange = (listName: string, changeType: string, id:string ) => {

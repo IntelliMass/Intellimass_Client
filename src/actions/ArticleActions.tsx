@@ -79,6 +79,8 @@ let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
 let URL3 = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
 let URL_GET_ARTICLES_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/articles";
 let URL_GET_ARTICLE_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/getOne";
+let URL_GET_FILTERED_ARTICLES = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/articles";
+
 
 let OFFSET = 10;
 let LIMIT = 100;
@@ -90,9 +92,7 @@ let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOp
  */
 export const getArticles = (id:string): (dispatch: any) => Promise<void> =>
         async dispatch => {
-            //let URL_GET_ARTICLES = `${URL2}?query=${query}&offset=${OFFSET.toString()}&limit=${LIMIT.toString()}&fields=${FIELDS}`;
             let URL_GET_ARTICLES = `${URL_GET_ARTICLES_NEW}?id=${id}&count=${LIMIT.toString()}`;
-            // let URL_GET_ARTICLES = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles?id=b3859f83-bed9-4fbc-869c-0ad80ec10a36&count=2"
             await fetch(URL_GET_ARTICLES)
                 .then(function (response) {
                     return response.json();
@@ -111,6 +111,8 @@ export const getArticles = (id:string): (dispatch: any) => Promise<void> =>
         }
 
 
+
+
 /**
  * Get single article data from the server
  * @return {dispatch} Type + payload.
@@ -126,6 +128,32 @@ export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<v
                 console.log(recivedArticle)
                 dispatch({type: "GET_ARTICLE_DETAIL",
                     payload:  recivedArticle
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
+    }
+
+
+
+/**
+ * Get Articles from the server
+ * @return {dispatch} Type + payload.
+ */
+export const getFilteredArticles = (id:string, filterItems: Array<string>, filterType: string = 'frequentWords'): (dispatch: any) => Promise<void> =>
+    async dispatch => {
+        let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${LIMIT.toString()}&filterFeature=${filterType}&filterList=${filterItems}`;
+        await fetch(URL_GET_ARTICLES)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (recivedArticles:any) {
+                dispatch({type: "GET_ARTICLES",
+                    payload: recivedArticles.articles
                 });
             })
             .catch(function (error) {
