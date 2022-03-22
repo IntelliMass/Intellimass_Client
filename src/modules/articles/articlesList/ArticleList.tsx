@@ -23,29 +23,18 @@ const listAuthorsToString = (authors: Array<Author>):string=>{
 }
 
 type ArticleListProps = {
+    articles: Array<ArticleOfList>,
+    query: string,
+    queryId: string
 };
 
 export const ArticleList: React.FC<ArticleListProps> = (props) => {
-// @ts-ignore
-    const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
-    const query = useAppSelector<string>(state => state.query.query);
-    const queryId = useAppSelector<string>(state => state.query.queryId);
+    const {articles, query, queryId} = props;
     const theme = useAppSelector<string>(state => state.shared.theme);
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
-
-        // setIsLoader(true);
-        console.log()
-        // @ts-ignore
-        dispatch(getArticles(queryId));
-    },[queryId, query])
-
-    useEffect(()=>{
-        if (articles === [])
-            // setIsLoader(true);
         console.log(articles);
-       // setIsLoader(false);
     },[ articles])
 
     return (

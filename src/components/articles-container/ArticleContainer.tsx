@@ -8,7 +8,11 @@ import {MetadataList} from "../metadata-list/MetadataList";
 import {CategoriesList} from "../category-list/CategoryList";
 import {INetwork} from "../../reducers/NetworkReducer";
 import {getNetwork} from "../../actions/NetworkAction";
-import {ArticleOfList} from "../../actions/ArticleActions";
+import {ArticleOfList, getArticleDetail, getArticles} from "../../actions/ArticleActions";
+import {ExpandableTopBar} from "../expended-bar/ExpandedBar";
+import {ServiceSummary} from "../expand-stattistic-panel/ExpandStatisticPanel";
+import {IMetadata} from "../metadata/Metadata";
+import {getMetadata} from "../../actions/MeatadataAction";
 
 type ArticlesContainerProps = {};
 
@@ -26,19 +30,53 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
     const query = useAppSelector<string>(state => state.query.query);
 
+    // @ts-ignore
+    const catalog = useAppSelector<Array<string>>(state => state.catalog.catalogs);
+    const categories = useAppSelector<Array<string>>(state => state.catalog.selectedCategories);
+
+    const metadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.metadataList);
+    const savedMetadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.savedMetadataList);
+
     const screenPosition: Array<ArticlesPosition> = [{type:"Categories"}, {type:"List"}, {type:"Network"} ]
     const [selectedPosition, setSelectedPosition] = useState<ArticlesPosition>({type:"Categories"});
     const [isLoader, setIsLoader] = useState<boolean>(false);
+    const [isMetadataLoader, setIsMetadataLoader] = useState<boolean>(false);
 
-    const [categoriesCount, setCategoriesCount] = useState<number>(0);
-
+    const [selectedNode, setSelectedNode] = useState<any>(null);
 
     const dispatch = useAppDispatch()
+
+    useEffect(()=>{
+        setIsMetadataLoader(true);
+        // @ts-ignore
+        dispatch(getMetadata(queryId));
+    },[queryId]);
 
     useEffect(()=>{
         console.log(network);
         setIsLoader(false);
     },[network])
+
+    useEffect(()=>{
+        console.log(articles);
+        setIsLoader(false);
+    },[articles])
+
+    useEffect(() => {
+        console.log(metadataList)
+        console.log(savedMetadataList)
+        setIsMetadataLoader(false);
+    },[metadataList])
+
+    useEffect(()=>{
+        if (selectedNode){
+            if (selectedNode.paperId){
+                // @ts-ignore
+                dispatch(getArticleDetail(selectedNode.paperId));
+            }
+        }
+    },[selectedNode])
+
 
     const onPositionChange = (value: string) => {
         setSelectedPosition({type: value});
@@ -46,33 +84,58 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         if (value === "Network"){
             // @ts-ignore
             dispatch(getNetwork(queryId));
+        } else if (value === "List"){
+            // @ts-ignore
+            dispatch(getArticles(queryId));
         }
+    }
+
+    const nodeHandler = (article:any) => {
+        console.log(article);
+        setSelectedNode({...article});
     }
 
     const ItemCurrentCount = () => {
         if (selectedPosition.type === "Categories"){
             return(
-                <span className="count-items"> Categories ( {} ) </span>
+                <span className="count-items"> Categories ( {catalog.length || '0'} ) </span>
             );
-        } else if (selectedPosition.type === "Categories"){
-
+        } else if (selectedPosition.type === "List"){
+            return(
+                <span className="count-items"> Articles ( {articles.length || '0'} ) </span>
+            );
         }
         else {
-
+            return(
+                <span className="count-items"> Articles-nodes ( {network.nodes.length || '0'} ) | Nodes-connections ( {network.links.length || '0'} ) </span>
+            );
         }
     }
 
     return (
         <div className="articles-screen-container">
             <div className="metadata-left-container">
-                <MetadataList items={[1, 2, 3, 4]} />
+                {isMetadataLoader ? <div className="loader-container">
+                    <Spin size="large" />
+                    <h4 className="loader-details">Searching for metadata</h4>
+                </div> :   <MetadataList metadataList={metadataList} savedMetadataList={savedMetadataList} />}
             </div>
             <div className="metadata-right-container">
                 <div className="screen-options-buttons">
+                    <ItemCurrentCount/>
                     {screenPosition.map((position)=>(
                         <Button key={position.type} onClick={()=>{onPositionChange(position.type)}}>{position.type}</Button>
                     ))}
-                    {/*<span className="count-items">{selectedPosition.type} {} items </span>*/}
+                </div>
+                <div className="expandable-topbar-container-div">
+                    <ExpandableTopBar contractedHeight={72} expandedHeight={500} isPadded={true}>
+                        <div>
+                            <ServiceSummary article={selectedNode}/>
+                        </div>
+                        <div>
+                            <Button>temp</Button>
+                        </div>
+                    </ExpandableTopBar>
                 </div>
                 {selectedPosition.type === "Categories" && <div className="categories-right-container">
                     {isLoader ? <div className="loader-container">
@@ -84,14 +147,14 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                     {isLoader ? <div className="loader-container">
                         <Spin size="large" />
                         <h4 className="loader-articles-details">Searching for articles</h4>
-                    </div> :  <ArticleList/>}
+                    </div> :  <ArticleList articles={articles} queryId={queryId} query={query}/>}
                 </div>}
 
                 {selectedPosition.type === "Network" && <div className="network-right-container">
                     {isLoader ? <div className="loader-container">
                         <Spin size="large" />
                         <h4 className="loader-details">Creating yours articles network</h4>
-                    </div> : <SimpleNet network={network}/>}
+                    </div> : <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler}/>}
                 </div>}
             </div>
         </div>

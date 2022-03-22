@@ -1,0 +1,17 @@
+@import './colors';
+
+@mixin line-clamp($noOfLines){
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $noOfLines;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+@mixin control-label-top() {
+  margin-bottom: 8px;
+}
+
+@mixin control-label-inline() {
+  padding-right: 10px;
+}

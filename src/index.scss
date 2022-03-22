@@ -76,3 +76,10 @@ code {
 .home{
   height: 910px;
 }
+
+
+.app-container {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+}

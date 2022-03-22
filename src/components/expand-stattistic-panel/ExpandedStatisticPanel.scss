@@ -1,0 +1,18 @@
+@import "../../styles/mixins";
+
+.service-summary-container {
+  height: 72px;
+  position: relative;
+  background-color: var(--app-white);
+  color: var(--app-purple);
+  font-weight: normal;
+  padding: 20px;
+  .service-row {
+    justify-content: space-between;
+    .text {
+      .icon {
+        margin-left: 15px;
+      }
+    }
+  }
+}

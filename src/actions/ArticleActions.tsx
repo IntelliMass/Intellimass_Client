@@ -78,6 +78,7 @@ let URL1 = "https://api.semanticscholar.org/v1/paper/";
 let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
 let URL3 = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
 let URL_GET_ARTICLES_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/articles";
+let URL_GET_ARTICLE_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/getOne";
 
 let OFFSET = 10;
 let LIMIT = 100;
@@ -116,7 +117,8 @@ export const getArticles = (id:string): (dispatch: any) => Promise<void> =>
  */
 export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        await fetch(URL1+articleId)
+        const url = URL_GET_ARTICLE_NEW + `?id=${articleId}`
+        await fetch(url)
             .then(function (response) {
                 return response.json();
             })

@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks'
 import { createQuery, KeywordsListObject } from "../../../actions/QueryActions";
 import {joinQuery, joinQueryString, QueryState} from "../../../reducers/QueryReducer";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./QueryForm.scss"
 
 const { Option } = Select;
@@ -17,13 +17,15 @@ const formItemLayout = {
 
 export const DefinitionForm = () => {
     const [isLoader, setIsLoader] = useState<boolean>(false);
+    const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
     const [form] = Form.useForm();
     const history = useHistory();
-    const query = useAppSelector<string>(state => state.query.query)
-    const first_keyword = useAppSelector<string>(state => state.query.first_keyword)
-    const first_operator = useAppSelector<string>(state => state.query.first_operator)
-    const extra_keywords = useAppSelector<Array<KeywordsListObject>>(state => state.query.extra_keywords)
-    const connection = useAppSelector<string>(state => state.query.connection)
+    const query = useAppSelector<string>(state => state.query.query);
+    const first_keyword = useAppSelector<string>(state => state.query.first_keyword);
+    const first_operator = useAppSelector<string>(state => state.query.first_operator);
+    const extra_keywords = useAppSelector<Array<KeywordsListObject>>(state => state.query.extra_keywords);
+    const connection = useAppSelector<string>(state => state.query.connection);
+    const queryId = useAppSelector<string>(state => state.query.queryId);
     // const strategy = useAppSelector<string>(state => state.query.strategy)
     const dispatch = useAppDispatch()
 
@@ -36,7 +38,17 @@ export const DefinitionForm = () => {
             extra_keywords:extra_keywords
             // strategy: strategy,
         });
-    },[])
+    },[]);
+
+    useEffect(()=>{
+        console.log(queryId);
+        setIsLoader(false);
+        if (isSubmitSelected){
+            setIsSubmitSelected(false);
+            history.replace('/articles');
+        }
+    },[queryId]);
+
 
     const makeKeywordsTemplate = (keyeords:Array<{keyword: string, operator:string}>):Array<KeywordsListObject> =>  {
         let newExtraKeywords:Array<KeywordsListObject> = [];
@@ -46,12 +58,9 @@ export const DefinitionForm = () => {
         return newExtraKeywords;
     }
 
-    const loaderHandler = () => {
-        setIsLoader(!isLoader);
-    };
-
     const onFinish = (values: any) => {
         setIsLoader(true);
+        setIsSubmitSelected(true);
         const newKeywords = values.keywords || [];
         const newQuery:QueryState = {
             query: joinQuery(values.first_keyword, makeKeywordsTemplate(newKeywords)),
@@ -63,8 +72,7 @@ export const DefinitionForm = () => {
             //strategy: values.strategy
         }
         // @ts-ignore
-        dispatch(createQuery(newQuery, loaderHandler ));
-        history.replace('/articles');
+        dispatch(createQuery(newQuery ));
     };
 
     const onReset = () => {
@@ -107,7 +115,7 @@ export const DefinitionForm = () => {
                     className="connection-select"
                 >
                     <Select placeholder="Please select a connection">
-                        <Option value="authors">Authors - Who referenced who</Option>
+                        <Option value="authors">Authors</Option>
                     </Select>
                 </Form.Item>
                 {/*<Form.Item*/}
@@ -148,8 +156,8 @@ export const DefinitionForm = () => {
                         </Form.Item>
                         <Form.Item label="Operator" name="first_operator" style={{width:250}}>
                             <Select style={{marginLeft:14, width:100}}>
-                                <Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>
-                                <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>
+                                {/*<Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>*/}
+                                {/*<Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>*/}
                                 <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
                             </Select>
                         </Form.Item>
@@ -174,8 +182,8 @@ export const DefinitionForm = () => {
                                         <Form.Item label="Operator" name={[field.name, 'operator']}
                                                    style={{width:250}}>
                                             <Select style={{marginLeft:14, width:100}}>
-                                                <Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>
-                                                <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>
+                                                {/*<Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>*/}
+                                                {/*<Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>*/}
                                                 <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
                                             </Select>
                                         </Form.Item>
@@ -220,7 +228,8 @@ export const DefinitionForm = () => {
             </Form>
             {isLoader && <div className="loader-container">
                 <Spin size="large" />
-            </div>}
+                <h4 className="loader-details">Building search query to get articles</h4>
+                </div>}
         </div>
     );
 };
