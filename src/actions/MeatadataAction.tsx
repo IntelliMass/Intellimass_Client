@@ -40,6 +40,7 @@ export const getMetadata = (id:string): (dispatch: any) => Promise<void> =>
             .then(function (metadata:any) {
                 dispatch({type: "UPDATE_METADATA",
                     payload: customMetadata(metadata.mostCommonFrequentWords)
+                    // payload: customMetadata(metadata.mostCommonTopics)
                 });
             })
             .catch(function (error) {

@@ -25,7 +25,7 @@ export const customNodes = (nodes: Array<any>):Array<any> => {
     nodes.forEach(node => {
         newNode = {};
         newNode = {...node,
-            id: node.paperId,
+            id: node.title,
             isClusterNode: true,
             name: node.title,
             size: 10,
@@ -59,9 +59,9 @@ export const customLinks = (links: Array<any>):Array<any> => {
  * Get Network from the server
  * @return {dispatch} Type + payload.
  */
-export const getNetwork = (id:string, filterType:string="frequentWords", filterItems:string="", feature:string="Authors"): (dispatch: any) => Promise<void> =>
+export const getNetwork = (id:string, filterType:string="topics", filterItems:string="", feature:string="Authors", count:number=100): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        const url = `${URL_GET_NETWORK_NEW}?id=${id}&size=100&feature=${feature}&filterFeature=${filterType}&filterList=${filterItems}`;
+        const url = `${URL_GET_NETWORK_NEW}?id=${id}&size=${count}&feature=${feature}&filterFeature=${filterType}&filterList=${filterItems}`;
         await fetch(url)
             .then(function (response) {
                 return response.json();

@@ -56,6 +56,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
 
     const [selectedNode, setSelectedNode] = useState<any>(null);
     const [localCount, setCount] = useState<number>(count);
+    const [localConnectionType, setConnectionType] = useState<string>(connectionType);
 
     const dispatch = useAppDispatch()
 
@@ -83,9 +84,13 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     },[metadataList])
 
     useEffect(()=>{
-        console.log(savedMetadataList)
         console.log(connectionType)
-    },[savedMetadataList, connectionType])
+        setConnectionType(connectionType);
+    },[connectionType])
+
+    useEffect(()=>{
+        console.log(savedMetadataList)
+    },[savedMetadataList])
 
     useEffect(()=>{
         console.log(count)
@@ -107,7 +112,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         setIsLoader(true);
         if (value === "Network"){
             // @ts-ignore
-            dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), 'Authors'));
+            dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, localCount));
         } else if (value === "List"){
             // @ts-ignore
             dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', localCount));
@@ -139,7 +144,8 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     }
 
     function handleChange(value:string) {
-        console.log(`selected ${value}`);
+        // @ts-ignore
+        dispatch(updateConnectionType(value));
     }
 
     function plus() {
