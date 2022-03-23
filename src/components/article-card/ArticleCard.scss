@@ -6,4 +6,22 @@
     display: flex;
     height: 200px;
   }
+  .article-card{
+    padding: 20px;
+
+    .article-title{
+      font-weight: 500;
+      margin-top: 5px;
+      font-size: 20px;
+      display: inline;
+    }
+    .more-data{
+      margin-left: 95%;
+      margin-top: -2%;
+    }
+    .abstract-container{
+      height: 150px;
+      overflow: auto;
+    }
+  }
 }

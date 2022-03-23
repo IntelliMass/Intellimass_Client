@@ -24,10 +24,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = (props) => {
     const [isGetDetail, setIsGetDetail] = useState<boolean>(false);
     const [localArticleDetail, setLocalArticleDetail] = useState<any>(articleDetail);
 
-    useEffect(()=>{
-        // @ts-ignore
-        dispatch(getArticleDetail(article.paperId));
-    },[])
+    // useEffect(()=>{
+    //     // @ts-ignore
+    //     dispatch(getArticleDetail(article.paperId));
+    // },[])
 
     useEffect(()=>{
        const newArticle = {...articleDetail};
@@ -41,15 +41,15 @@ export const ArticleCard: React.FC<ArticleCardProps> = (props) => {
 
     return (
         <div className="card-article-container">
-            <Card title={`${article.title}`} extra={
-                // <Button type="text" danger onClick={showDetail}>
-                //     More
-                // </Button>
-                <GetMoreButton paperId={article.paperId}/>
-                } style={{ width: 500 }}
-            >
+            <div className="article-card">
+                <div className="article-title">
+                    <span>{article.title}</span>
+                    <div className="more-data">
+                        <GetMoreButton paperId={article.paperId}/>
+                    </div>
+                </div>
+                <Divider orientation="left">Authors</Divider>
                 <p>
-                    <b>Authors: </b>
                     {article.authors.map((author:Author)=>{
                         return(
                             <Tag icon={<UserOutlined />} color="default">
@@ -61,14 +61,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = (props) => {
                 <div>
                     <Divider orientation="left">Categories</Divider>
                     <CategoryTag article={article}/>
-
                 </div>
                 <Divider orientation="left">Abstract</Divider>
                 <div className="abstract-container">
                     {article.abstract}
                 </div>
-                <Divider/>
-            </Card>
+            </div>
         </div>
     );
 };

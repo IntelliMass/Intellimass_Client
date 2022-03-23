@@ -1,7 +1,11 @@
+import {SharedAction} from "./SharedAction";
+
 type GetArticlesAction = {type: "GET_ARTICLES", payload: ArticleOfList }
 type GetArticleDetailAction = {type: "GET_ARTICLE_DETAIL", payload: ArticleDetail}
+type UpdateConnectionAction = {type: "UPDATE_CONNECTION_TYPE", payload: string}
+type UpdateCountAction = {type: "UPDATE_ARTICLES_COUNT", payload: number}
 
-export type ArticleAction = GetArticlesAction|  GetArticleDetailAction;
+export type ArticleAction = GetArticlesAction|  GetArticleDetailAction | UpdateConnectionAction | UpdateCountAction;
 
 export interface ArticleDetail {
     title: string,
@@ -85,16 +89,15 @@ let URL_GET_FILTERED_ARTICLES = "http://ec2-18-168-84-104.eu-west-2.compute.amaz
 
 
 let OFFSET = 10;
-let LIMIT = 100;
 let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
 
 /**
  * Get Articles from the server
  * @return {dispatch} Type + payload.
  */
-export const getArticles = (id:string): (dispatch: any) => Promise<void> =>
+export const getArticles = (id:string, limit: number = 100 ): (dispatch: any) => Promise<void> =>
         async dispatch => {
-            let URL_GET_ARTICLES = `${URL_GET_ARTICLES_NEW}?id=${id}&count=${LIMIT.toString()}`;
+            let URL_GET_ARTICLES = `${URL_GET_ARTICLES_NEW}?id=${id}&count=${limit.toString()}`;
             await fetch(URL_GET_ARTICLES)
                 .then(function (response) {
                     return response.json();
@@ -146,9 +149,9 @@ export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<v
  * Get Articles from the server
  * @return {dispatch} Type + payload.
  */
-export const getFilteredArticles = (id:string, filterItems: Array<string>, filterType: string = 'frequentWords'): (dispatch: any) => Promise<void> =>
+export const getFilteredArticles = (id:string, filterItems: Array<string>, filterType: string = 'frequentWords', limit:number=100): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${LIMIT.toString()}&filterFeature=${filterType}&filterList=${filterItems}`;
+        let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filterFeature=${filterType}&filterList=${filterItems}`;
         await fetch(URL_GET_ARTICLES)
             .then(function (response) {
                 return response.json();
@@ -165,3 +168,18 @@ export const getFilteredArticles = (id:string, filterItems: Array<string>, filte
                 throw error;
             });
     }
+
+
+export function updateCount(count:number) {
+    return {
+        type: "UPDATE_ARTICLES_COUNT",
+        payload: count,
+    };
+}
+
+export function updateConnectionType(type:string) {
+    return {
+        type: "UPDATE_CONNECTION_TYPE",
+        payload: type,
+    };
+}

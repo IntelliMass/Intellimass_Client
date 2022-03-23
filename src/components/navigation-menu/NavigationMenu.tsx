@@ -24,12 +24,12 @@ const NavigationMenu: React.FC<any> = (props: IProps) => {
                 <Menu.Item key="query">
                     <NavLink to={"/"}>Query</NavLink>
                 </Menu.Item>
-                <Menu.Item key="home">
+                <Menu.Item key="articles">
                     <NavLink to={"/articles"}>Articles</NavLink>
                 </Menu.Item>
-                <Menu.Item key="search">
-                    <NavLink to={"/search"}>Research</NavLink>
-                </Menu.Item>
+                {/*<Menu.Item key="search">*/}
+                {/*    <NavLink to={"/search"}>Research</NavLink>*/}
+                {/*</Menu.Item>*/}
                 {/*<Menu.Item key="profile">*/}
                 {/*    <NavLink to={"/profile"}>Profile</NavLink>*/}
                 {/*</Menu.Item>*/}

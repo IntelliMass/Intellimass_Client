@@ -24,7 +24,7 @@ export const DefinitionForm = () => {
     const first_keyword = useAppSelector<string>(state => state.query.first_keyword);
     const first_operator = useAppSelector<string>(state => state.query.first_operator);
     const extra_keywords = useAppSelector<Array<KeywordsListObject>>(state => state.query.extra_keywords);
-    const connection = useAppSelector<string>(state => state.query.connection);
+    //const connection = useAppSelector<string>(state => state.query.connection);
     const queryId = useAppSelector<string>(state => state.query.queryId);
     // const strategy = useAppSelector<string>(state => state.query.strategy)
     const dispatch = useAppDispatch()
@@ -34,7 +34,7 @@ export const DefinitionForm = () => {
             query: query,
             first_keyword: first_keyword,
             first_operator: first_operator,
-            connection: connection,
+            //connection: connection,
             extra_keywords:extra_keywords
             // strategy: strategy,
         });
@@ -67,7 +67,7 @@ export const DefinitionForm = () => {
             first_keyword: values.first_keyword,
             first_operator: values.first_operator,
             extra_keywords: makeKeywordsTemplate(newKeywords),
-            connection: values.connection,
+            //connection: values.connection,
             queryId: ''
             //strategy: values.strategy
         }
@@ -84,7 +84,7 @@ export const DefinitionForm = () => {
             query: 'IOT',
             first_keyword: 'cyber',
             first_operator: 'AND',
-            connection: 'authors',
+           // connection: 'authors',
             //strategy: 'suggestions',
         });
     };
@@ -106,18 +106,18 @@ export const DefinitionForm = () => {
                 className="query-form"
             >
                 <span className="form-title">Searching Query</span>
-                <Divider/>
-                <Form.Item
-                    name="connection"
-                    label="Connection Type"
-                    hasFeedback
-                    rules={[{ required: true, message: 'Missing connection type input' }]}
-                    className="connection-select"
-                >
-                    <Select placeholder="Please select a connection">
-                        <Option value="authors">Authors</Option>
-                    </Select>
-                </Form.Item>
+                <Divider className="divider-title-form"/>
+                {/*<Form.Item*/}
+                {/*    name="connection"*/}
+                {/*    label="Connection Type"*/}
+                {/*    hasFeedback*/}
+                {/*    rules={[{ required: true, message: 'Missing connection type input' }]}*/}
+                {/*    className="connection-select"*/}
+                {/*>*/}
+                {/*    <Select placeholder="Please select a connection">*/}
+                {/*        <Option value="authors">Authors</Option>*/}
+                {/*    </Select>*/}
+                {/*</Form.Item>*/}
                 {/*<Form.Item*/}
                 {/*    name="query"*/}
                 {/*    label="Query"*/}
