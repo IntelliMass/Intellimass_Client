@@ -71,7 +71,9 @@ export interface ArticleOfList {
     isOpenAccess: boolean,
     paperId: string,
     venue:string,
-    year: number
+    year: number,
+    topics?: any[],
+    references?: any[]
 }
 
 let URL1 = "https://api.semanticscholar.org/v1/paper/";

@@ -37,8 +37,12 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     const metadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.metadataList);
     const savedMetadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.savedMetadataList);
 
-    const screenPosition: Array<ArticlesPosition> = [{type:"Categories"}, {type:"List"}, {type:"Network"} ]
-    const [selectedPosition, setSelectedPosition] = useState<ArticlesPosition>({type:"Categories"});
+    const screenPosition: Array<ArticlesPosition> = [
+        // {type:"Categories"},
+        {type:"List"},
+        {type:"Network"}
+    ]
+    const [selectedPosition, setSelectedPosition] = useState<ArticlesPosition>({type:"List"});
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [isMetadataLoader, setIsMetadataLoader] = useState<boolean>(false);
 
@@ -50,6 +54,8 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         setIsMetadataLoader(true);
         // @ts-ignore
         dispatch(getMetadata(queryId));
+        // @ts-ignore
+        dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
     },[queryId]);
 
     useEffect(()=>{
@@ -64,9 +70,12 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
 
     useEffect(() => {
         console.log(metadataList)
-        console.log(savedMetadataList)
         setIsMetadataLoader(false);
     },[metadataList])
+
+    useEffect(()=>{
+        console.log(savedMetadataList)
+    },[savedMetadataList])
 
     useEffect(()=>{
         if (selectedNode){
@@ -83,7 +92,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         setIsLoader(true);
         if (value === "Network"){
             // @ts-ignore
-            dispatch(getNetwork(queryId));
+            dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), 'Authors'));
         } else if (value === "List"){
             // @ts-ignore
             dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
@@ -97,11 +106,12 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     }
 
     const ItemCurrentCount = () => {
-        if (selectedPosition.type === "Categories"){
-            return(
-                <span className="count-items"> Categories ( {catalog.length || '0'} ) </span>
-            );
-        } else if (selectedPosition.type === "List"){
+        // if (selectedPosition.type === "Categories"){
+        //     return(
+        //         <span className="count-items"> Categories ( {catalog.length || '0'} ) </span>
+        //     );
+        // } else
+        if (selectedPosition.type === "List"){
             return(
                 <span className="count-items"> Articles ( {articles.length || '0'} ) </span>
             );
@@ -138,12 +148,12 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                         </div>
                     </ExpandableTopBar>
                 </div>
-                {selectedPosition.type === "Categories" && <div className="categories-right-container">
-                    {isLoader ? <div className="loader-container">
-                        <Spin size="large" />
-                        <h4 className="loader-details">Searching for articles categories</h4>
-                    </div> :  <CategoriesList/>}
-                </div>}
+                {/*{selectedPosition.type === "Categories" && <div className="categories-right-container">*/}
+                {/*    {isLoader ? <div className="loader-container">*/}
+                {/*        <Spin size="large" />*/}
+                {/*        <h4 className="loader-details">Searching for articles categories</h4>*/}
+                {/*    </div> :  <CategoriesList/>}*/}
+                {/*</div>}*/}
                 {selectedPosition.type === "List" && <div className="articles-right-container">
                     {isLoader ? <div className="loader-container">
                         <Spin size="large" />

@@ -4,9 +4,10 @@ import { IMetadata, Metadata} from "../metadata/Metadata";
 import {Button, Divider, Select, Spin} from "antd";
 import Search from "antd/es/input/Search";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
-import {getMetadata} from "../../actions/MeatadataAction";
+import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
 import {SimpleNet} from "../network2/SimpleNet";
 import {getArticleDetail, getFilteredArticles} from "../../actions/ArticleActions";
+import {getNetwork} from "../../actions/NetworkAction";
 const { Option } = Select;
 
 type MetadataListProps = {
@@ -27,12 +28,16 @@ export const getTitlesFromMetadata = (metadataList:Array<IMetadata>) => {
 
 export const MetadataList: React.FC<MetadataListProps> = (props) => {
     // @ts-ignore
+    // SERVER
     const state_metadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.metadataList);
     const state_savedMetadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.savedMetadataList);
     const queryId = useAppSelector<string>(state => state.query.queryId);
 
+    // STATE
     const [metadataList, setMetadataList] = useState<Array<IMetadata>>([...state_metadataList]);
     const [savedMetadataList, setSavedMetadataList] = useState<Array<IMetadata>>([...state_savedMetadataList]);
+
+    // FILTERED
     const [filteredMetadataList, setFilteredMetadataList] = useState<Array<IMetadata>>([...metadataList]);
     const [filteredSavedMetadataList, setFilteredSavedMetadataList] = useState<Array<IMetadata>>([...savedMetadataList]);
 
@@ -74,6 +79,13 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
             setIsSubmitSelected(false);
             // @ts-ignore
             dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
+
+
+            // @ts-ignore
+            dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), 'Authors'));
+
+            // @ts-ignore
+            dispatch(patchMetadata(filteredSavedMetadataList));
         }
     },[savedMetadataList])
 
