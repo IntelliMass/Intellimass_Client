@@ -2,17 +2,21 @@ import React, {useState, useEffect} from "react";
 import {ArticleList} from "../../modules/articles/articlesList/ArticleList";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks"
 import "./ArticleContainer.scss"
-import {Button, Form, Select, Spin} from "antd";
+import {Button, Form, InputNumber, Spin} from "antd";
 import {SimpleNet} from "../network2/SimpleNet";
 import {getTitlesFromMetadata, MetadataList} from "../metadata-list/MetadataList";
 import {CategoriesList} from "../category-list/CategoryList";
 import {INetwork} from "../../reducers/NetworkReducer";
 import {getNetwork} from "../../actions/NetworkAction";
-import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles} from "../../actions/ArticleActions";
+import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles, updateConnectionType, updateCount} from "../../actions/ArticleActions";
 import {ExpandableTopBar} from "../expended-bar/ExpandedBar";
 import {ServiceSummary} from "../expand-stattistic-panel/ExpandStatisticPanel";
 import {IMetadata} from "../metadata/Metadata";
 import {getMetadata} from "../../actions/MeatadataAction";
+import { Select } from 'antd';
+import {PlusOutlined, MinusOutlined} from "@ant-design/icons";
+import {ArticleCard} from "../article-card/ArticleCard";
+const { Option } = Select;
 
 type ArticlesContainerProps = {};
 
@@ -21,7 +25,6 @@ type ArticlesPosition = {
 }
 
 export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
-    const theme = useAppSelector<string>(state => state.shared.theme);
     // @ts-ignore
     const network = useAppSelector<any>(state => state.network.network);
     const queryId = useAppSelector<string>(state => state.query.queryId);
@@ -29,6 +32,11 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
     const query = useAppSelector<string>(state => state.query.query);
+    // @ts-ignore
+    const count = useAppSelector<number>(state => state.article.count);
+    // @ts-ignore
+    const connectionType = useAppSelector<string>(state => state.article.connectionType);
+
 
     // @ts-ignore
     const catalog = useAppSelector<Array<string>>(state => state.catalog.catalogs);
@@ -37,12 +45,18 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     const metadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.metadataList);
     const savedMetadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.savedMetadataList);
 
-    const screenPosition: Array<ArticlesPosition> = [{type:"Categories"}, {type:"List"}, {type:"Network"} ]
-    const [selectedPosition, setSelectedPosition] = useState<ArticlesPosition>({type:"Categories"});
+    const screenPosition: Array<ArticlesPosition> = [
+        // {type:"Categories"},
+        {type:"List"},
+        {type:"Network"}
+    ]
+    const [selectedPosition, setSelectedPosition] = useState<ArticlesPosition>({type:"List"});
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [isMetadataLoader, setIsMetadataLoader] = useState<boolean>(false);
 
     const [selectedNode, setSelectedNode] = useState<any>(null);
+    const [localCount, setCount] = useState<number>(count);
+    const [localConnectionType, setConnectionType] = useState<string>(connectionType);
 
     const dispatch = useAppDispatch()
 
@@ -50,6 +64,8 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         setIsMetadataLoader(true);
         // @ts-ignore
         dispatch(getMetadata(queryId));
+        // @ts-ignore
+        dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', localCount));
     },[queryId]);
 
     useEffect(()=>{
@@ -64,9 +80,22 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
 
     useEffect(() => {
         console.log(metadataList)
-        console.log(savedMetadataList)
         setIsMetadataLoader(false);
     },[metadataList])
+
+    useEffect(()=>{
+        console.log(connectionType)
+        setConnectionType(connectionType);
+    },[connectionType])
+
+    useEffect(()=>{
+        console.log(savedMetadataList)
+    },[savedMetadataList])
+
+    useEffect(()=>{
+        console.log(count)
+        setCount(count);
+    },[ count])
 
     useEffect(()=>{
         if (selectedNode){
@@ -83,10 +112,10 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         setIsLoader(true);
         if (value === "Network"){
             // @ts-ignore
-            dispatch(getNetwork(queryId));
+            dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, localCount));
         } else if (value === "List"){
             // @ts-ignore
-            dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
+            dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', localCount));
             // dispatch(getArticles(queryId));
         }
     }
@@ -97,11 +126,12 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     }
 
     const ItemCurrentCount = () => {
-        if (selectedPosition.type === "Categories"){
-            return(
-                <span className="count-items"> Categories ( {catalog.length || '0'} ) </span>
-            );
-        } else if (selectedPosition.type === "List"){
+        // if (selectedPosition.type === "Categories"){
+        //     return(
+        //         <span className="count-items"> Categories ( {catalog.length || '0'} ) </span>
+        //     );
+        // } else
+        if (selectedPosition.type === "List"){
             return(
                 <span className="count-items"> Articles ( {articles.length || '0'} ) </span>
             );
@@ -113,6 +143,27 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         }
     }
 
+    function handleChange(value:string) {
+        // @ts-ignore
+        dispatch(updateConnectionType(value));
+    }
+
+    function plus() {
+        if(count === 1000){
+            return;
+        }
+        // @ts-ignore
+        dispatch(updateCount(count+100));
+    }
+
+    function minus() {
+        if(count === 100){
+            return;
+        }
+        // @ts-ignore
+        dispatch(updateCount(count-100));
+    }
+
     return (
         <div className="articles-screen-container">
             <div className="metadata-left-container">
@@ -122,55 +173,53 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                 </div> :   <MetadataList metadataList={metadataList} savedMetadataList={savedMetadataList} />}
             </div>
             <div className="metadata-right-container">
-                <div className="screen-options-buttons">
-                    <ItemCurrentCount/>
-                    {screenPosition.map((position)=>(
-                        <Button key={position.type} onClick={()=>{onPositionChange(position.type)}}>{position.type}</Button>
-                    ))}
+                <div className={"articles-container-actions"}>
+                    <span className="action-title"> Connection type: </span>
+                    <Select className="connection-type" onChange={handleChange} placeholder="Network connection type">
+                        <Option value="authors">Authors</Option>
+                        <Option value="frequentsWords">Frequents words</Option>
+                        <Option value="topics">Topics</Option>
+                    </Select>
+                    <span className="action-title"> Articles number </span>
+                    <Button
+                        icon={<PlusOutlined />}
+                        onClick={() => plus()}
+                    />
+                    <InputNumber min={10} max={1000} defaultValue={localCount}/>
+                    <Button
+                        icon={<MinusOutlined />}
+                        onClick={() => minus()}
+                    />
+                    <div className="screen-options-buttons">
+                        <span className="action-title"> Screen mode: </span>
+                        {screenPosition.map((position)=>(
+                            <Button key={position.type} onClick={()=>{onPositionChange(position.type)}}>{position.type}</Button>
+                        ))}
+                    </div>
                 </div>
                 <div className="expandable-topbar-container-div">
-                    <ExpandableTopBar contractedHeight={72} expandedHeight={500} isPadded={true}>
+                    <ExpandableTopBar contractedHeight={72} expandedHeight={600} isPadded={true}>
                         <div>
                             <ServiceSummary article={selectedNode}/>
                         </div>
                         <div>
-                            <Button>temp</Button>
+                            {selectedNode ? <ArticleCard article={selectedNode}/>:<span>No article selected.</span>}
                         </div>
                     </ExpandableTopBar>
                 </div>
-                {selectedPosition.type === "Categories" && <div className="categories-right-container">
-                    {isLoader ? <div className="loader-container">
-                        <Spin size="large" />
-                        <h4 className="loader-details">Searching for articles categories</h4>
-                    </div> :  <CategoriesList/>}
-                </div>}
+                {/*{selectedPosition.type === "Categories" && <div className="categories-right-container">*/}
+                {/*    {isLoader ? <div className="loader-container">*/}
+                {/*        <Spin size="large" />*/}
+                {/*        <h4 className="loader-details">Searching for articles categories</h4>*/}
+                {/*    </div> :  <CategoriesList/>}*/}
+                {/*</div>}*/}
+                <ItemCurrentCount/>
                 {selectedPosition.type === "List" && <div className="articles-right-container">
                     {isLoader ? <div className="loader-container">
                         <Spin size="large" />
                         <h4 className="loader-articles-details">Searching for articles</h4>
                     </div> :
                         <div>
-                            <div>
-                                {/*<Form*/}
-                                {/*    form={form}*/}
-                                {/*    name="validate_other"*/}
-                                {/*    {...formItemLayout}*/}
-                                {/*    onFinish={onFinish}*/}
-                                {/*    className="query-form"*/}
-                                {/*>*/}
-                                {/*</Form>*/}
-                                {/*<Form.Item*/}
-                                {/*    name="connection"*/}
-                                {/*    label="Connection Type"*/}
-                                {/*    hasFeedback*/}
-                                {/*    rules={[{ required: true, message: 'Missing connection type input' }]}*/}
-                                {/*    className="connection-select"*/}
-                                {/*>*/}
-                                {/*    <Select placeholder="Please select a connection">*/}
-                                {/*        <Option value="authors">Authors</Option>*/}
-                                {/*    </Select>*/}
-                                {/*</Form.Item>*/}
-                            </div>
                             <ArticleList articles={articles} queryId={queryId} query={query}/>
                         </div>}
                 </div>}

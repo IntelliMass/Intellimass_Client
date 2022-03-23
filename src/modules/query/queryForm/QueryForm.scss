@@ -1,7 +1,6 @@
 .query-form-container {
   height:100%;
   width:100%;
-
   display: flex;
   justify-items: center;
   align-items: center;
@@ -11,14 +10,19 @@
     background-color: white;
     border: 0.1px solid gray;
     width: 800px;
-    height: 470px;
+    height: 385px;
     margin: 0 auto;
 
     .form-title{
-      color: #1890ff;
+      color: #3b5eb8;
       font-weight: 500;
       font-size: 18px;
       margin-left: 40px;
+      margin-top: 15px;
+      position: absolute;
+    }
+    .divider-title-form{
+      margin-top: 60px;
     }
 
     .connection-select{
@@ -36,7 +40,7 @@
   }
 
   .action-form-buttons{
-    margin-top: 30px;
+    //margin-top: 5px;
     margin-left: 100px;
 
     .action-form-button{

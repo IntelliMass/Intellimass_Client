@@ -24,7 +24,7 @@ let URL_POST_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:500
 export const  createQuery = (queryParams:QueryState): (dispatch: any) => Promise<void> =>{
     const query = joinQuery(queryParams.first_keyword, queryParams.extra_keywords);
     const editedQuery = query.slice(0, -1);
-    const body = {query: editedQuery, feature: queryParams.connection};
+    const body = {query: editedQuery, feature: 'Authors'};
     return async dispatch => {
         await fetch(URL_POST_NEW, {
             method: 'post',

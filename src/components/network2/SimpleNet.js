@@ -47,12 +47,12 @@ export function SimpleNet(props) {
                 linkCurvature="curvature"
                 enablePointerInteraction={true}
                 enableNodeDrag={true}
-                linkDirectionalParticleWidth={1}
+                // linkDirectionalParticleWidth={1}
+                //
+                // linkDirectionalArrowRelPos={1}
+                // linkDirectionalArrowLength={4}
 
-                linkDirectionalArrowRelPos={1}
-                linkDirectionalArrowLength={4}
-
-                linkWidth={5}
+                linkWidth={3}
                 linkColor={"#FFA07A"}
 
                 ref={forceRef}

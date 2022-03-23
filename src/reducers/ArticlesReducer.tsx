@@ -1,5 +1,5 @@
 // ARTICLES STATE MANAGEMENT REDUCER
-import {ArticleAction, ArticleDetail, ArticleOfList, Author, Topic} from "../actions/ArticleActions";
+import {ArticleAction, ArticleDetail, ArticleOfList, Author, Reference, Topic} from "../actions/ArticleActions";
 
 type ServerArticle = {
     abstract: string,
@@ -10,12 +10,15 @@ type ServerArticle = {
     title: string,
     topics: Array<Topic>,
     year: number
+    references?: Array<Reference>
 }
 
 export interface ArticleState {
     articles: Array<ArticleOfList> | [],
-    articleDetail: ArticleDetail | {}
-    serverArticles: Array<ServerArticle> | []
+    articleDetail: ArticleDetail | {},
+    serverArticles: Array<ServerArticle> | [],
+    connectionType: string,
+    count: number,
 }
 
 
@@ -23,7 +26,9 @@ export interface ArticleState {
 const initState = {
     articles: [],
     serverArticles: [],
-    articleDetail: {}
+    articleDetail: {},
+    connectionType: "Authors",
+    count: 100,
 };
 
 const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) => {
@@ -40,6 +45,17 @@ const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) =
                 articleDetail: action.payload,
             };
 
+        case "UPDATE_CONNECTION_TYPE":
+            return {
+                ...state,
+                connectionType: action.payload,
+            };
+
+        case "UPDATE_ARTICLES_COUNT":
+            return {
+                ...state,
+                count: action.payload,
+            };
         default:
             return state;
     }

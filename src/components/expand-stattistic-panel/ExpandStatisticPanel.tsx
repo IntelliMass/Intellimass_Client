@@ -11,8 +11,6 @@ interface IProps {
 export interface IStatisticsColumnDefinition {
     displayName: string;
     order: number;
-    formatter?: Function;
-    getIcon?: Function;
 }
 
 export const colDefs: { [key: string]: IStatisticsColumnDefinition } = {
@@ -42,36 +40,40 @@ export const ServiceSummary = (props: IProps) => {
     const {article} = props;
     console.log(article)
 
-    const ReturnedValue = (item:any) => {
-        // TODO: GET ARTICLE DATA SOMEHOW
-        console.log(item);
-        return (
-            <span></span>
-        );
-    }
-
     if (article) {
         return (
             <div className="service-summary-container">
                 <Row className={'service-row'}>
-                    {Object.entries(article).map(function ([key, value], index) {
-                        return colDefs.hasOwnProperty(key) ? (
-                            <Col key={index} order={colDefs[key].order}>
-                                <UiTitle title={colDefs[key].displayName} type="medium" />
-                                <div className="value alerts-value">
-                                    <div className="text">
-                                        <ReturnedValue item={colDefs[key]}/>
-                                {/*            {(colDefs[key].formatter || dummyFunctions.formatter)(value)}*/}
-                                {/*        </span>*/}
-                                {/*        {colDefs[key].getIcon ? (*/}
-                                {/*            <span className={'icon'}>*/}
-                                {/*                {(colDefs[key].getIcon || dummyFunctions.getIcon)(value)}*/}
-                                {/*        ) : null}*/}
-                                    </div>
-                                </div>
-                            </Col>
-                        ) : null;
-                    })}
+                    <Col key={article.year} order={0}>
+                        <UiTitle title="Year" type="medium" />
+                        <div className="value alerts-value">
+                            {article.year}
+                        </div>
+                    </Col>
+                    <Col key={'authors'} order={1}>
+                        <UiTitle title="Authors" type="medium" />
+                        <div className="value alerts-value">
+                            {article.authors.length}
+                        </div>
+                    </Col>
+                    <Col key={'studyFields'} order={2}>
+                        <UiTitle title='Study field' type="medium" />
+                        <div className="value alerts-value">
+                            {article.fieldsOfStudy.length}
+                        </div>
+                    </Col>
+                    <Col key={'frequentWords'} order={3}>
+                        <UiTitle title="Frequent words" type="medium" />
+                        <div className="value alerts-value">
+                            {article.frequentWords.length}
+                        </div>
+                    </Col>
+                    <Col key={'isOpenAccess'} order={4}>
+                        <UiTitle title="Is open access" type="medium" />
+                        <div className="value alerts-value">
+                            {article.isOpenAccess ? 'Open' : 'Close'}
+                        </div>
+                    </Col>
                 </Row>
             </div>
         );

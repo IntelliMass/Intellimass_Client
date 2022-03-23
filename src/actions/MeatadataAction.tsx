@@ -1,4 +1,5 @@
 import {log} from "util";
+import {SharedAction} from "./SharedAction";
 
 type UpdateMetadataAction = {type: "UPDATE_METADATA", payload: any }
 type UpdateSelectedMetadataAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
@@ -39,6 +40,7 @@ export const getMetadata = (id:string): (dispatch: any) => Promise<void> =>
             .then(function (metadata:any) {
                 dispatch({type: "UPDATE_METADATA",
                     payload: customMetadata(metadata.mostCommonFrequentWords)
+                    // payload: customMetadata(metadata.mostCommonTopics)
                 });
             })
             .catch(function (error) {
@@ -54,22 +56,9 @@ export const getMetadata = (id:string): (dispatch: any) => Promise<void> =>
  * patch selected Metadata to filter articles
  * @return {dispatch} Type + payload.
  */
-export const patchMetadata = (categories:Array<string>): (dispatch: any) => Promise<void> =>
-    async dispatch => {
-        await fetch(URL_PATCH_METADATA)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (res: any) {
-                console.log(res)
-                dispatch({type: "UPDATE_SELECTED_METADATA",
-                    payload:  categories
-                });
-            })
-            .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
-                throw error;
-            });
-    }
+export function patchMetadata(categories:Array<string>) {
+    return {
+        type: "UPDATE_SELECTED_METADATA",
+        payload:  categories
+    };
+}
