@@ -25,7 +25,7 @@ export const customNodes = (nodes: Array<any>):Array<any> => {
     nodes.forEach(node => {
         newNode = {};
         newNode = {...node,
-            id: node.title,
+            id: node.paperId,
             isClusterNode: true,
             name: node.title,
             size: 10,

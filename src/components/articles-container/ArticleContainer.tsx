@@ -95,6 +95,14 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     useEffect(()=>{
         console.log(count)
         setCount(count);
+        // @ts-ignore
+        dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', count));
+
+        // @ts-ignore
+        dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
+
+        // @ts-ignore
+        dispatch(getMetadata(queryId));
     },[ count])
 
     useEffect(()=>{
@@ -154,6 +162,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         }
         // @ts-ignore
         dispatch(updateCount(count+100));
+
     }
 
     function minus() {
@@ -177,8 +186,8 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                     <span className="action-title"> Connection type: </span>
                     <Select className="connection-type" onChange={handleChange} placeholder="Network connection type">
                         <Option value="authors">Authors</Option>
-                        <Option value="frequentsWords">Frequents words</Option>
-                        <Option value="topics">Topics</Option>
+                        {/*<Option value="frequentsWords">Frequents words</Option>*/}
+                        {/*<Option value="topics">Topics</Option>*/}
                     </Select>
                     <span className="action-title"> Articles number </span>
                     <Button
