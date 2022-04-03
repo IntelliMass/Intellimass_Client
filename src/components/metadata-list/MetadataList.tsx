@@ -70,6 +70,7 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
         setFilteredMetadataList([...newItems]);
     },[metadataList])
 
+
     useEffect(() => {
         const items = [...savedMetadataList];
         const newItems = checkFilters(items);
@@ -84,8 +85,8 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
             // @ts-ignore
             dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), 'Authors'));
 
-            // @ts-ignore
-            dispatch(patchMetadata(filteredSavedMetadataList));
+            // // @ts-ignore
+            // dispatch(patchMetadata(filteredSavedMetadataList));
         }
     },[savedMetadataList])
 
@@ -194,10 +195,12 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
             else
                 newUnsavedMetadataList.push(metadata);
         });
-        setMetadataList([...newUnsavedMetadataList]);
-        setSavedMetadataList([...filteredSavedMetadataList,...newSavedMetadataList]);
+        // setMetadataList([...newUnsavedMetadataList]);
+        // setSavedMetadataList([...filteredSavedMetadataList,...newSavedMetadataList]);
         // FILTER
 
+        // @ts-ignore
+        dispatch(patchMetadata(metadataList, savedMetadataList));
     }
 
     const onMetadataChange = (listName: string, changeType: string, id:string ) => {

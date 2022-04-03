@@ -17,7 +17,6 @@ export interface ArticleState {
     articles: Array<ArticleOfList> | [],
     articleDetail: ArticleDetail | {},
     serverArticles: Array<ServerArticle> | [],
-    connectionType: string,
     count: number,
 }
 
@@ -27,7 +26,6 @@ const initState = {
     articles: [],
     serverArticles: [],
     articleDetail: {},
-    connectionType: "Authors",
     count: 100,
 };
 
@@ -43,12 +41,6 @@ const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) =
             return {
                 ...state,
                 articleDetail: action.payload,
-            };
-
-        case "UPDATE_CONNECTION_TYPE":
-            return {
-                ...state,
-                connectionType: action.payload,
             };
 
         case "UPDATE_ARTICLES_COUNT":

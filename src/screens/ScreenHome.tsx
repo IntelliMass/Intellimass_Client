@@ -4,24 +4,25 @@ import { useAppSelector, useAppDispatch } from "../hooks/hooks"
 import {ArticleDetail, ArticleOfList} from "../actions/ArticleActions";
 import {ArticlesContainer} from "../components/articles-container/ArticleContainer";
 import {log} from "util";
+import {useHistory} from "react-router-dom";
 
 type HomeScreenProps = {};
 
 const HomeScreen: React.FC<HomeScreenProps> = (props) => {
     const theme = useAppSelector<string>(state => state.shared.theme);
-    // @ts-ignore
-    const articles = useAppSelector<string>(state => state.article.articles);
     const queryId = useAppSelector<string>(state => state.query.queryId);
+    const history = useHistory();
 
     useEffect(()=>{
-        console.log(articles)
-        console.log(queryId)
+        if (queryId === ''){
+            history.replace('/');
+        }
+    },[queryId])
 
-    },[articles, queryId])
 
     return (
         <div className={`screen home ${theme}`}>
-           <ArticlesContainer/>
+            {queryId !== '' && <ArticlesContainer/>}
         </div>
       );
 };

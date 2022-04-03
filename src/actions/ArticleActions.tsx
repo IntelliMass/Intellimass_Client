@@ -2,10 +2,9 @@ import {SharedAction} from "./SharedAction";
 
 type GetArticlesAction = {type: "GET_ARTICLES", payload: ArticleOfList }
 type GetArticleDetailAction = {type: "GET_ARTICLE_DETAIL", payload: ArticleDetail}
-type UpdateConnectionAction = {type: "UPDATE_CONNECTION_TYPE", payload: string}
 type UpdateCountAction = {type: "UPDATE_ARTICLES_COUNT", payload: number}
 
-export type ArticleAction = GetArticlesAction|  GetArticleDetailAction | UpdateConnectionAction | UpdateCountAction;
+export type ArticleAction = GetArticlesAction|  GetArticleDetailAction  | UpdateCountAction;
 
 export interface ArticleDetail {
     title: string,
@@ -177,9 +176,3 @@ export function updateCount(count:number) {
     };
 }
 
-export function updateConnectionType(type:string) {
-    return {
-        type: "UPDATE_CONNECTION_TYPE",
-        payload: type,
-    };
-}

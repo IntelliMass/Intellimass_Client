@@ -2,4 +2,8 @@
   ul.ant-menu.ant-menu-root.ant-menu-horizontal {
       margin: 0 20px;
     }
+
+  .disabled-menu-item{
+    cursor: not-allowed;
+    margin: 0 20px;  }
 }

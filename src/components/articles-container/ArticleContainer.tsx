@@ -7,8 +7,8 @@ import {SimpleNet} from "../network2/SimpleNet";
 import {getTitlesFromMetadata, MetadataList} from "../metadata-list/MetadataList";
 import {CategoriesList} from "../category-list/CategoryList";
 import {INetwork} from "../../reducers/NetworkReducer";
-import {getNetwork} from "../../actions/NetworkAction";
-import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles, updateConnectionType, updateCount} from "../../actions/ArticleActions";
+import {getNetwork, updateConnectionType} from "../../actions/NetworkAction";
+import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles, updateCount} from "../../actions/ArticleActions";
 import {ExpandableTopBar} from "../expended-bar/ExpandedBar";
 import {ServiceSummary} from "../expand-stattistic-panel/ExpandStatisticPanel";
 import {IMetadata} from "../metadata/Metadata";
@@ -35,7 +35,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     // @ts-ignore
     const count = useAppSelector<number>(state => state.article.count);
     // @ts-ignore
-    const connectionType = useAppSelector<string>(state => state.article.connectionType);
+    const connectionType = useAppSelector<string>(state => state.network.connectionType);
 
 
     // @ts-ignore
@@ -106,6 +106,21 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     },[ count])
 
     useEffect(()=>{
+        console.log(connectionType)
+        setConnectionType(connectionType);
+
+        // @ts-ignore
+        dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
+
+        // @ts-ignore
+        dispatch(getMetadata(queryId));
+    },[ connectionType])
+
+    useEffect(()=>{
+        console.log(localCount)
+    },[localCount])
+
+    useEffect(()=>{
         if (selectedNode){
             if (selectedNode.paperId){
                 // @ts-ignore
@@ -136,17 +151,17 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     const ItemCurrentCount = () => {
         // if (selectedPosition.type === "Categories"){
         //     return(
-        //         <span className="count-items"> Categories ( {catalog.length || '0'} ) </span>
+        //         <span className="count-items"> Categories number ( {catalog.length || '0'} ) </span>
         //     );
         // } else
         if (selectedPosition.type === "List"){
             return(
-                <span className="count-items"> Articles ( {articles.length || '0'} ) </span>
+                <span className="count-items"> Filtered articles number ( {articles.length || '0'} ) </span>
             );
         }
         else {
             return(
-                <span className="count-items"> Articles-nodes ( {network.nodes.length || '0'} ) | Nodes-connections ( {network.links.length || '0'} ) </span>
+                <span className="count-items"> Articles-nodes number ( {network.nodes.length || '0'} ) | Nodes-connections ( {network.links.length || '0'} ) </span>
             );
         }
     }
@@ -186,15 +201,14 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                     <span className="action-title"> Connection type: </span>
                     <Select className="connection-type" onChange={handleChange} placeholder="Network connection type">
                         <Option value="authors">Authors</Option>
-                        {/*<Option value="frequentsWords">Frequents words</Option>*/}
-                        {/*<Option value="topics">Topics</Option>*/}
+                        <Option value="frequentWords">Frequent words</Option>
+                        <Option value="topics">Topics</Option>
                     </Select>
-                    <span className="action-title"> Articles number </span>
+                    <span className="action-title"> Original Articles number ( {localCount} )</span>
                     <Button
                         icon={<PlusOutlined />}
                         onClick={() => plus()}
                     />
-                    <InputNumber min={10} max={1000} defaultValue={localCount}/>
                     <Button
                         icon={<MinusOutlined />}
                         onClick={() => minus()}
