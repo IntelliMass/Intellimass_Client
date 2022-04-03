@@ -8,7 +8,7 @@ export interface CatalogState {
 }
 
 const initState = {
-    catalogs: ['Computer Science', 'Academy', 'Servers', 'Business', 'Data Science'],
+    catalogs: ['Computer Science', 'Academy', 'Business', 'Data Science'],
     selectedCategories: ['Computer Science', 'Academy']
 };
 

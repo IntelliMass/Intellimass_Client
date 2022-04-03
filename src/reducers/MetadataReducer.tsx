@@ -5,11 +5,13 @@ import {MetadataAction} from "../actions/MeatadataAction";
 export interface MetadataState {
     metadataList : Array<IMetadata>;
     savedMetadataList: Array<IMetadata>;
+    metadataType: string;
 }
 
 const initState = {
     metadataList: [],
-    savedMetadataList: []
+    savedMetadataList: [],
+    metadataType: 'frequentWords'
 };
 
 const MetadataReducer = (state: MetadataState = initState, action:MetadataAction) => {
@@ -26,6 +28,12 @@ const MetadataReducer = (state: MetadataState = initState, action:MetadataAction
                 ...state,
                 metadataList: [...action.payload.metadata],
                 savedMetadataList: [...action.payload.savedMetadata]
+            };
+
+        case "UPDATE_METADATA_TYPE":
+            return {
+                ...state,
+                metadataType: action.payload,
             };
 
         default:

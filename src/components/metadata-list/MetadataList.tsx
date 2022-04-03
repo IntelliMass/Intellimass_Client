@@ -42,6 +42,7 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
     const [filteredSavedMetadataList, setFilteredSavedMetadataList] = useState<Array<IMetadata>>([...savedMetadataList]);
 
     const [filterTypeRank, setFilterTypeRank] = useState<string>("ALL");
+    const [metadataType, setMetadataType] = useState<string>("FREQUENT_WORDS");
     const [filterTitle, setTitle] = useState<string>("");
     const [filterRank, setRank] = useState<string>("0");
 
@@ -135,6 +136,11 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
     const onRankSelectChange = (value:any) => {
         setFilterTypeRank(value);
     }
+
+    const onTypeSelectChange = (value:any) => {
+        setMetadataType(value);
+    }
+
 
     const onFilterByRank = (value:string) => {
         const items = [...metadataList];
@@ -247,7 +253,12 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
                 <h4 className="loader-details">Creating yours articles network</h4>
             </div> :
                 <>
-                <Divider orientation="left">Filter Metadata</Divider>
+                    <Divider orientation="left">Metadata Type</Divider>
+                    <Select defaultValue="FREQUENT_WORDS" className="metadata-select-rank" onChange={onTypeSelectChange}>
+                        <Option value="FREQUENT_WORDS">Frequent words</Option>
+                        <Option value="TOPICS">Topics</Option>
+                    </Select>
+                    <Divider orientation="left">Filter Metadata</Divider>
                 <div className="metadata-header">
                 <span className="metadata-header-label">Topic Filter</span>
                 <Search value={filterTitle} onChange={titleHandler} placeholder="Filter articles common topics" onSearch={onFilterByTitle} className="metadata-search" />

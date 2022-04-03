@@ -1,3 +1,5 @@
+import {INetwork} from "../reducers/NetworkReducer";
+
 type getNetworkAction = {type: "GET_NETWORK", payload: any }
 type getFilteredNetworkAction = {type: "GET_FILTERED_NETWORK", payload: any}
 type UpdateConnectionAction = {type: "UPDATE_CONNECTION_TYPE", payload: string}
@@ -54,7 +56,29 @@ export const customLinks = (links: Array<any>):Array<any> => {
 }
 
 
+export const customNodesSize = (network: INetwork) => {
+    // COUNT OF CONNECTION ON EACH NODE
+    let nodesNewSizes: Array<string> = [];
+    let nodesCounter: Array<number> = [];
+    let nodesCount = 0;
 
+    network.links.forEach(link => {
+        let newNode = link.target;
+        if (nodesNewSizes && nodesNewSizes.findIndex(newNode)) {
+            nodesCounter[nodesNewSizes.findIndex(newNode)]++;
+        } else {
+            nodesNewSizes.push(newNode);
+            nodesCounter.push(0);
+            nodesCount++;
+        }
+    })
+
+    console.log(nodesNewSizes);
+    console.log(nodesCounter)
+
+    // RUN ON THE NODES AND CHANGE THE SIZE TO NUMBER OF COUNT
+
+}
 
 
 /**
