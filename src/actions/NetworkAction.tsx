@@ -1,6 +1,8 @@
 type getNetworkAction = {type: "GET_NETWORK", payload: any }
 type getFilteredNetworkAction = {type: "GET_FILTERED_NETWORK", payload: any}
-export type NetworkAction = getNetworkAction|  getFilteredNetworkAction;
+type UpdateConnectionAction = {type: "UPDATE_CONNECTION_TYPE", payload: string}
+
+export type NetworkAction = getNetworkAction| UpdateConnectionAction|  getFilteredNetworkAction;
 
 
 
@@ -61,7 +63,7 @@ export const customLinks = (links: Array<any>):Array<any> => {
  */
 export const getNetwork = (id:string, filterType:string="topics", filterItems:string="", feature:string="Authors", count:number=100): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        const url = `${URL_GET_NETWORK_NEW}?id=${id}&size=${count}&feature=${feature}&filterFeature=${filterType}&filterList=${filterItems}`;
+        const url = `${URL_GET_NETWORK_NEW}?id=${id}&count=${count}&feature=${feature}&filterFeature=${filterType}&filterList=${filterItems}`;
         await fetch(url)
             .then(function (response) {
                 return response.json();
@@ -107,3 +109,10 @@ export const getFilteredNetwork = (categories:Array<string>): (dispatch: any) =>
                 throw error;
             });
     }
+
+export function updateConnectionType(type:string) {
+    return {
+        type: "UPDATE_CONNECTION_TYPE",
+        payload: type,
+    };
+}

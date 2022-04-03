@@ -40,7 +40,7 @@ export function SimpleNet(props) {
             {hoveredNode? <NodeHover/> : null}
             <ForceGraph2D
                 graphData={network}
-                nodeLabel="paperId"
+                nodeLabel="title"
                 height={700}
                 width={1000}
 
@@ -48,7 +48,6 @@ export function SimpleNet(props) {
                 enablePointerInteraction={true}
                 enableNodeDrag={true}
                 // linkDirectionalParticleWidth={1}
-                //
                 // linkDirectionalArrowRelPos={1}
                 // linkDirectionalArrowLength={4}
 

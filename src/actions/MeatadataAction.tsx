@@ -1,5 +1,4 @@
-import {log} from "util";
-import {SharedAction} from "./SharedAction";
+import {IMetadata} from "../components/metadata/Metadata";
 
 type UpdateMetadataAction = {type: "UPDATE_METADATA", payload: any }
 type UpdateSelectedMetadataAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
@@ -56,9 +55,12 @@ export const getMetadata = (id:string): (dispatch: any) => Promise<void> =>
  * patch selected Metadata to filter articles
  * @return {dispatch} Type + payload.
  */
-export function patchMetadata(categories:Array<string>) {
+export function patchMetadata(metadata:Array<IMetadata>, savedMetadata:Array<IMetadata> ) {
     return {
         type: "UPDATE_SELECTED_METADATA",
-        payload:  categories
+        payload:  {
+            metadata: metadata,
+            savedMetadata: savedMetadata
+        }
     };
 }

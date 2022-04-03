@@ -8861,6 +8861,12 @@ const NetworkReducer = (state: NetworkState = realInitState, action:NetworkActio
                 savedMetadataList: [...action.payload.savedMetadataList]
             };
 
+        case "UPDATE_CONNECTION_TYPE":
+            return {
+                ...state,
+                connectionType: action.payload,
+            };
+
         default:
             return state;
     }

@@ -16,6 +16,8 @@ interface INavBarProps {
 const NavBar = (props: INavBarProps) => {
     // REDUCER
     const theme = useAppSelector<string>(state => state.shared.theme)
+    const queryId = useAppSelector<string>(state => state.query.queryId)
+
     const dispatch = useAppDispatch()
 
     const onChangingTheme = (currentTheme:string) => {
@@ -27,6 +29,7 @@ const NavBar = (props: INavBarProps) => {
     const routeName = location.pathname.replace('/', '');
     const [current, setCurrent] = useState(routeName || 'query');
     const [MenuDrawerVisible, setMenuDrawerVisible] = useState<boolean>(false);
+
     const handleClick = (e: any) => {
         setCurrent(e.key);
         setMenuDrawerVisible(false);
@@ -39,6 +42,10 @@ const NavBar = (props: INavBarProps) => {
             setCurrent(currentRoute);
         }
     }, [location, current]);
+
+    useEffect(()=>{
+
+    },[queryId])
 
 
     const onClose  = () => {
@@ -61,7 +68,7 @@ const NavBar = (props: INavBarProps) => {
                     <img style={{height:35, width:110, marginBottom: 15}} src={"https://i.ibb.co/Pj4dtmP/Whats-App-Image-2022-01-13-at-15-33-32.jpg"}/>
 
                 </div>
-                <NavigationMenu handleClick={handleClick} current={current}/>
+                <NavigationMenu handleClick={handleClick} current={current} isDisabled={queryId === ''}/>
                 <div className="tab-button" onClick={() => {}}>
                     {/*<Switch checked={theme === "dark"} onChange={()=>onChangingTheme(theme)} checkedChildren="Dark" unCheckedChildren="Light" />*/}
                     {/*<span style={{fontWeight:"bold", marginLeft:10}}>Mode</span>*/}
