@@ -2,7 +2,6 @@ import React from 'react';
 import './ExpandedStatisticPanel.scss';
 import { UiTitle } from '../ui-title/UiTitle';
 import { Col, Row } from 'antd';
-import {log} from "util";
 
 interface IProps {
     article: any;
@@ -33,6 +32,10 @@ export const colDefs: { [key: string]: IStatisticsColumnDefinition } = {
     isOpenAccess: {
         order: 5,
         displayName: 'Is open access',
+    },
+    connections: {
+        order: 6,
+        displayName: 'Connections',
     },
 };
 
@@ -72,6 +75,12 @@ export const ServiceSummary = (props: IProps) => {
                         <UiTitle title="Is open access" type="medium" />
                         <div className="value alerts-value">
                             {article.isOpenAccess ? 'Open' : 'Close'}
+                        </div>
+                    </Col>
+                    <Col key={'connections'} order={4}>
+                        <UiTitle title="Connections" type="medium" />
+                        <div className="value alerts-value">
+                            {article.nodeRelSize}
                         </div>
                     </Col>
                 </Row>

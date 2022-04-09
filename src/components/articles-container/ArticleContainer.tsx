@@ -64,7 +64,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     useEffect(()=>{
         setIsMetadataLoader(true);
         // @ts-ignore
-        dispatch(getMetadata(queryId));
+       // dispatch(getMetadata(queryId));
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', localCount));
     },[queryId]);
@@ -72,7 +72,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     useEffect(()=>{
         console.log(network);
         setIsLoader(false);
-        //customNodesSize(network);
+        customNodesSize(network);
     },[network])
 
     useEffect(()=>{
@@ -104,7 +104,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
 
         // @ts-ignore
-        dispatch(getMetadata(queryId));
+        //dispatch(getMetadata(queryId));
     },[ count])
 
     useEffect(()=>{
@@ -115,7 +115,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
 
         // @ts-ignore
-        dispatch(getMetadata(queryId));
+      //  dispatch(getMetadata(queryId));
     },[ connectionType])
 
     useEffect(()=>{
