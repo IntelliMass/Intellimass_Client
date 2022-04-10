@@ -32,7 +32,7 @@ export const customNodes = (nodes: Array<any>):Array<any> => {
             id: node.title,
             isClusterNode: true,
             name: node.title,
-            nodeRelSize: 300,
+            size: 300,
             color: "#B0C4DE",
         };
         newNodes.push(newNode);
@@ -76,18 +76,14 @@ export const customNodesSize = (network: INetwork) => {
             }
         })
     }
-    console.log(nodesNewSizes);
-    console.log(nodesCounter)
-    //
+
+
     let networkNewNodes = [...network.nodes];
     // RUN ON THE NODES AND CHANGE THE SIZE TO NUMBER OF COUNT
     nodesNewSizes.forEach((newNode, index) => {
         let place = networkNewNodes.findIndex(foundNode => foundNode.title == newNode);
-        console.log(place)
-        networkNewNodes[place].nodeRelSize = nodesCounter[index];
-        console.log(networkNewNodes[place].nodeRelSize)
+        networkNewNodes[place].size = nodesCounter[index];
     });
-    console.log(networkNewNodes);
     return networkNewNodes;
 }
 
