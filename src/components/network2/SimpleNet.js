@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import ForceGraph2D from "react-force-graph-2d";
+import ForceGraph3D from "react-force-graph-3d";
 import "./SimpleNet.scss"
 import {ArticleCard} from "../article-card/ArticleCard";
 
@@ -25,6 +25,14 @@ export function SimpleNet(props) {
         );
     };
 
+    function nodePaint({ id, x, y }, color, ctx, size) {
+        console.log('yo')
+        ctx.fillStyle = color;
+        console.log(size)
+        [
+            () => { ctx.beginPath(); ctx.arc(x, y, size, 0, 2 * Math.PI, false); ctx.fill(); } // circle
+        ][id%4]();
+    }
 
     const NodeClicked = () => {
         return(
@@ -38,19 +46,24 @@ export function SimpleNet(props) {
         <div className="network-wrapper">
             {selectedNode? <NodeClicked/> : null}
             {hoveredNode? <NodeHover/> : null}
-            <ForceGraph2D
+            <ForceGraph3D
                 graphData={network}
                 nodeLabel="title"
                 height={700}
                 width={1000}
-
+                backgroundColor={'#f4f6f8'}
                 linkCurvature="curvature"
                 enablePointerInteraction={true}
                 enableNodeDrag={true}
                 // linkDirectionalParticleWidth={1}
                 // linkDirectionalArrowRelPos={1}
                 // linkDirectionalArrowLength={4}
-
+                //nodeRelSize="nodeRelSize"
+                nodeCanvasObject={(node, ctx) =>  {
+                    console.log('hey')
+                    nodePaint(node, node.color, ctx, node.size)
+                }}
+                //nodePointerAreaPaint={nodePaint}
                 linkWidth={3}
                 linkColor={"#FFA07A"}
 

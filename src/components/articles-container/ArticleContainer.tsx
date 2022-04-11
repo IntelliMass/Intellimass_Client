@@ -2,12 +2,12 @@ import React, {useState, useEffect} from "react";
 import {ArticleList} from "../../modules/articles/articlesList/ArticleList";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks"
 import "./ArticleContainer.scss"
-import {Button, Form, InputNumber, Spin} from "antd";
+import {Alert, Button, Col, Form, InputNumber, Row, Spin} from "antd";
 import {SimpleNet} from "../network2/SimpleNet";
 import {getTitlesFromMetadata, MetadataList} from "../metadata-list/MetadataList";
 import {CategoriesList} from "../category-list/CategoryList";
 import {INetwork} from "../../reducers/NetworkReducer";
-import {getNetwork, updateConnectionType} from "../../actions/NetworkAction";
+import {customNodesSize, getNetwork, updateConnectionType} from "../../actions/NetworkAction";
 import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles, updateCount} from "../../actions/ArticleActions";
 import {ExpandableTopBar} from "../expended-bar/ExpandedBar";
 import {ServiceSummary} from "../expand-stattistic-panel/ExpandStatisticPanel";
@@ -16,6 +16,7 @@ import {getMetadata} from "../../actions/MeatadataAction";
 import { Select } from 'antd';
 import {PlusOutlined, MinusOutlined} from "@ant-design/icons";
 import {ArticleCard} from "../article-card/ArticleCard";
+import {typeGeneretor} from "../category-tags/CategoryTag";
 const { Option } = Select;
 
 type ArticlesContainerProps = {};
@@ -63,7 +64,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     useEffect(()=>{
         setIsMetadataLoader(true);
         // @ts-ignore
-        dispatch(getMetadata(queryId));
+       // dispatch(getMetadata(queryId));
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', localCount));
     },[queryId]);
@@ -71,6 +72,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     useEffect(()=>{
         console.log(network);
         setIsLoader(false);
+        customNodesSize(network);
     },[network])
 
     useEffect(()=>{
@@ -102,7 +104,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
 
         // @ts-ignore
-        dispatch(getMetadata(queryId));
+        //dispatch(getMetadata(queryId));
     },[ count])
 
     useEffect(()=>{
@@ -113,7 +115,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
 
         // @ts-ignore
-        dispatch(getMetadata(queryId));
+      //  dispatch(getMetadata(queryId));
     },[ connectionType])
 
     useEffect(()=>{
@@ -247,7 +249,19 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                         </div>}
                 </div>}
 
-                {selectedPosition.type === "Network" && <div className="network-right-container">
+                {selectedPosition.type === "Network" &&
+                <div className="network-right-container">
+                    <div className="categories-selection-container">
+                        <Row gutter={20}>
+                            {catalog.map((field:string, index:number)=>{
+                                return(
+                                    <Col span={4} >
+                                        <Alert message={field} type={typeGeneretor(index)} />
+                                    </Col>
+                                );
+                            })}
+                        </Row>
+                    </div>
                     {isLoader ? <div className="loader-container">
                         <Spin size="large" />
                         <h4 className="loader-details">Creating yours articles network</h4>

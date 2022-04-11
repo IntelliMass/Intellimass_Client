@@ -2,7 +2,9 @@ import {IMetadata} from "../components/metadata/Metadata";
 
 type UpdateMetadataAction = {type: "UPDATE_METADATA", payload: any }
 type UpdateSelectedMetadataAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
-export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction;
+type UpdateMetadataTypeAction = {type: "UPDATE_METADATA_TYPE", payload: any}
+
+export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction | UpdateMetadataTypeAction;
 
 let URL_GET_METADATA = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/metadata";
 let URL_PATCH_METADATA = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/categories";
@@ -62,5 +64,16 @@ export function patchMetadata(metadata:Array<IMetadata>, savedMetadata:Array<IMe
             metadata: metadata,
             savedMetadata: savedMetadata
         }
+    };
+}
+
+/**
+ * patch selected Metadata type
+ * @return {dispatch} Type + payload.
+ */
+export function patchMetadataType(metadataType: string) {
+    return {
+        type: "UPDATE_METADATA_TYPE",
+        payload:  metadataType
     };
 }
