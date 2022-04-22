@@ -6,7 +6,7 @@ import {getNetwork} from "../actions/NetworkAction";
 
 type ScreenSearchProps = {};
 
-const ScreenSearch: React.FC<ScreenSearchProps> = () => {
+const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     const theme = useAppSelector<string>(state => state.shared.theme);
     // @ts-ignore
     const network = useAppSelector<INetwork>(state => state.network.network);
@@ -34,6 +34,6 @@ const ScreenSearch: React.FC<ScreenSearchProps> = () => {
   );
 };
 
-export default ScreenSearch;
+export default ScreenNetwork;
 
-ScreenSearch.defaultProps = {};
+ScreenNetwork.defaultProps = {};

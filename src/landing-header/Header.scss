@@ -1,0 +1,33 @@
+.white-text{
+  font-weight: 300;
+  font-size: 18px;
+  color: white;
+}
+
+.features-grid-container{
+  display: grid;
+  grid-template-columns: auto auto auto;
+
+  .feature-card{
+    margin: 20px;
+    cursor: default;
+  }
+
+  .feature-icon{
+    color: #3b5eb8;
+    font-size: 40px;
+    margin-top: 10px;
+  }
+}
+
+.landing-page-title{
+  margin-left: 20px;
+  opacity: 1;
+  transform: translateZ(0);
+  transition-duration: 3s;
+  transition-timing-function: ease;
+  transition-property: opacity,transform;
+  font-size: 3rem;
+  color: #554DDE;
+  margin-bottom: -10px;
+}

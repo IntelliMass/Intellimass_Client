@@ -1,9 +1,13 @@
 .navigation-menu {
+  width: 1000px;
+
   ul.ant-menu.ant-menu-root.ant-menu-horizontal {
-      margin: 0 20px;
-    }
+    margin: 0 20px;
+    width: 1000px;
+
+  }
 
   .disabled-menu-item{
     cursor: not-allowed;
-    margin: 0 20px;  }
+    margin: 0 50px;  }
 }

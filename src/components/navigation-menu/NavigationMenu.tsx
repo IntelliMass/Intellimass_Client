@@ -2,6 +2,13 @@ import React, {useContext, useEffect, useState} from 'react';
 import './NavigationMenu.scss';
 import {Menu} from 'antd';
 import {Link, NavLink} from 'react-router-dom';
+import {
+    FileSearchOutlined,
+    HomeOutlined,
+    NodeIndexOutlined,
+    SearchOutlined,
+    UnorderedListOutlined
+} from "@ant-design/icons";
 // import {AppStateContext, IAppState} from '../../contexts/AppStateContext';
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -18,30 +25,36 @@ const NavigationMenu: React.FC<any> = (props: IProps) => {
             <Menu onClick={handleClick}
                   selectedKeys={[current]}
                   mode="horizontal">
-                <Menu.Item key="query">
-                    <NavLink to={"/"}>Query</NavLink>
-                </Menu.Item>
                 {isDisabled ? <
-                    span className={isDisabled ? `disabled-menu-item`: ''}>Articles</span> :  <
+                    span className={isDisabled ? `disabled-menu-item`: ''}><HomeOutlined className={"navigation-icon"}/> Home</span> :  <
+                    Menu.Item key="home">
+                    <NavLink to={"/home"}><HomeOutlined className={"navigation-icon"}/> Home</NavLink>
+                </Menu.Item>
+                }
+                {isDisabled ? <
+                    span className={isDisabled ? `disabled-menu-item`: ''}><SearchOutlined className={"navigation-icon"}/>Query</span> :   <Menu.Item key="query">
+                    <NavLink to={"/query"}><SearchOutlined className={"navigation-icon"}/> Query</NavLink>
+                </Menu.Item>
+                }
+
+                {isDisabled ? <
+                    span className={isDisabled ? `disabled-menu-item`: ''}><UnorderedListOutlined className={"navigation-icon"}/> Articles</span> :  <
                         Menu.Item key="articles">
-                            <NavLink to={"/articles"}>Articles</NavLink>
+                            <NavLink to={"/articles"}><UnorderedListOutlined className={"navigation-icon"}/> Articles</NavLink>
                         </Menu.Item>
                 }
                 {isDisabled ? <
-                    span className={isDisabled ? `disabled-menu-item`: ''}>Article</span> :  <
-                    Menu.Item key="article">
-                    <NavLink to={"/article"}>Article</NavLink>
+                    span className={isDisabled ? `disabled-menu-item`: ''}><NodeIndexOutlined className={"navigation-icon"}/> Network</span> :  <
+                    Menu.Item key="network">
+                    <NavLink to={"/network"}><NodeIndexOutlined className={"navigation-icon"}/> Network</NavLink>
                 </Menu.Item>
                 }
-                {/*<Menu.Item key="search">*/}
-                {/*    <NavLink to={"/search"}>Research</NavLink>*/}
-                {/*</Menu.Item>*/}
-                {/*<Menu.Item key="profile">*/}
-                {/*    <NavLink to={"/profile"}>Profile</NavLink>*/}
-                {/*</Menu.Item>*/}
-                {/*<Menu.Item key="researches">*/}
-                {/*    <NavLink to={"/researches"}>My Researches</NavLink>*/}
-                {/*</Menu.Item>*/}
+                {isDisabled ? <
+                    span className={isDisabled ? `disabled-menu-item`: ''}> <FileSearchOutlined className={"navigation-icon"}/>Article</span> :  <
+                    Menu.Item key="article">
+                    <NavLink to={"/article"}> <FileSearchOutlined className={"navigation-icon"}/>Article</NavLink>
+                </Menu.Item>
+                }
             </Menu>
         </div>
     );
