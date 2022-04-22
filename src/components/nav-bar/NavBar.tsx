@@ -4,7 +4,6 @@ import NavigationMenu from '../navigation-menu/NavigationMenu';
 import {useLocation} from 'react-router-dom';
 import {MenuDrawer} from '../drawer/Drawer';
 import { ImportOutlined, AppstoreOutlined, CloseOutlined } from '@ant-design/icons';
-import {Switch} from "antd";
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks'
 import {changeTheme} from "../../actions/SharedAction";
 
@@ -15,14 +14,9 @@ interface INavBarProps {
 
 const NavBar = (props: INavBarProps) => {
     // REDUCER
-    const theme = useAppSelector<string>(state => state.shared.theme)
     const queryId = useAppSelector<string>(state => state.query.queryId)
 
     const dispatch = useAppDispatch()
-
-    const onChangingTheme = (currentTheme:string) => {
-        dispatch(changeTheme(currentTheme))
-    }
 
     // STATES
     const location = useLocation();
@@ -66,12 +60,9 @@ const NavBar = (props: INavBarProps) => {
                             <CloseOutlined style={{fontSize:25, color: "cadetblue"}} onClick={onClose}/>}
                     </div>
                     <img style={{height:35, width:110, marginBottom: 15}} src={"https://i.ibb.co/Pj4dtmP/Whats-App-Image-2022-01-13-at-15-33-32.jpg"}/>
-
                 </div>
                 <NavigationMenu handleClick={handleClick} current={current} isDisabled={queryId === ''}/>
                 <div className="tab-button" onClick={() => {}}>
-                    {/*<Switch checked={theme === "dark"} onChange={()=>onChangingTheme(theme)} checkedChildren="Dark" unCheckedChildren="Light" />*/}
-                    {/*<span style={{fontWeight:"bold", marginLeft:10}}>Mode</span>*/}
                     <ImportOutlined style={{marginLeft:15, fontSize:25, color: "cadetblue"}}/>
                 </div>
             </div>

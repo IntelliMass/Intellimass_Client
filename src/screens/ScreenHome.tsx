@@ -1,9 +1,6 @@
 import React, {useEffect} from "react";
-import {ArticleList} from "../modules/articles/articlesList/ArticleList";
-import { useAppSelector, useAppDispatch } from "../hooks/hooks"
-import {ArticleDetail, ArticleOfList} from "../actions/ArticleActions";
+import { useAppSelector } from "../hooks/hooks"
 import {ArticlesContainer} from "../components/articles-container/ArticleContainer";
-import {log} from "util";
 import {useHistory} from "react-router-dom";
 
 type HomeScreenProps = {};

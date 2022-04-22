@@ -1,7 +1,5 @@
 import React  from "react";
 import "./CategoryCard.scss";
-import {Meta} from "antd/es/list/Item";
-import { Card } from "antd";
 
 type CategoryCardProps = {
     title:string;

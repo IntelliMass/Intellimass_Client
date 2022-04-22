@@ -5,6 +5,7 @@ import ArticleReducer from "./ArticlesReducer";
 import CatalogReducer from "./CatalogReducer";
 import MetadataReducer from "./MetadataReducer";
 import NetworkReducer from "./NetworkReducer";
+import UserReducer from "./UserReducer";
 
 const RootReducer = combineReducers({
     shared: SharedReducer,
@@ -12,7 +13,8 @@ const RootReducer = combineReducers({
     article: ArticleReducer,
     catalog: CatalogReducer,
     metadata: MetadataReducer,
-    network: NetworkReducer
+    network: NetworkReducer,
+    user: UserReducer,
 });
 
 export default RootReducer;

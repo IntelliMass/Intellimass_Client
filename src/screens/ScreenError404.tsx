@@ -9,51 +9,48 @@ const ScreenError404: React.FC<Screen404Props> = () => {
     "https://www.winx5.com/wp-content/themes/ekommart/assets/images/404/404.png";
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div
-          style={{
-            width: "80%",
-            marginTop: "5%",
-          }}
-        >
-          <h2
-            style={{
-              color: "red",
-              textAlign: "center",
-              width: "95%",
-              fontSize: 40,
-            }}
-          >
-            404{" "}
-          </h2>
-          <img src={error404} alt="404" />
-          <p
-            style={{
-              color: "red",
-              padding: 0,
-              textAlign: "center",
-              fontSize: 40,
-            }}
-          >
-            This Route is not exist
-          </p>
-          <ButtonGroup
-            disableElevation
-            variant="contained"
-            color="primary"
-            style={{ marginBottom: "5%" }}
-          >
-            <Button
-              onClick={() => {
-                window.location.replace("/");
-              }}
-            >
-              Back To Homepage
-            </Button>
-          </ButtonGroup>
+    <div className="screen" >
+        <div>
+            <header>
+                <div style={{marginTop: "5%" , paddingLeft: "80%"}}>
+                    <h2
+                        style={{
+                            color: "red",
+                            textAlign: "center",
+                            width: "95%",
+                            fontSize: 40,
+                        }}
+                    >
+                        404{" "}
+                    </h2>
+                    <img src={error404} alt="404" />
+                    <p
+                        style={{
+                            color: "red",
+                            padding: 0,
+                            textAlign: "center",
+                            fontSize: 20,
+                        }}
+                    >
+                        This Route is not exist
+                    </p>
+                    <ButtonGroup
+                        disableElevation
+                        variant="contained"
+                        color="primary"
+                        style={{ marginBottom: "5%" }}
+                    >
+                        <Button
+                            onClick={() => {
+                                window.location.replace("/");
+                            }}
+                        >
+                            Back To Homepage
+                        </Button>
+                    </ButtonGroup>
+                </div>
+            </header>
         </div>
-      </header>
     </div>
   );
 };
