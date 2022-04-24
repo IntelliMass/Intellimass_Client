@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import React, {useEffect, useState} from "react";
 import {UserState} from "../../reducers/UserReducer";
 import "./AuthenticationForm.scss";
+import {login, signup} from "../../actions/UserActions";
 
 const formItemLayout = {
     labelCol: { span: 6 },
@@ -37,8 +38,7 @@ export const AuthenticationForm = () => {
         setIsLoader(false);
         if (isSubmitSelected){
             setIsSubmitSelected(false);
-            console.log('redirect')
-            //history.replace('/articles');
+            history.replace('/home');
         }
     },[userId]);
 
@@ -57,15 +57,19 @@ export const AuthenticationForm = () => {
     const onFinish = (values: any) => {
         setIsLoader(true);
         setIsSubmitSelected(true);
+
         const newQuery:UserState = {
             userName: values.userName,
             userPassword: values.userPassword,
-            userId: '',
+            userId: 'temp',
         }
 
-        // login or signup
-        // @ts-ignore
-        dispatch(createQuery(newQuery ));
+        if (formLayout === "Login"){
+            dispatch(login(newQuery ));
+        }
+        else {
+            dispatch(signup(newQuery ));
+        }
     };
 
     const onReset = () => {
@@ -102,7 +106,7 @@ export const AuthenticationForm = () => {
 
                 {formLayout === 'Signup' &&  <Form.Item
                     label="Confirm Pass"
-                    name="password"
+                    name="password2"
                     rules={[{ required: true, message: 'Please confirm your password!' }]}
                 >
                     <Input.Password />

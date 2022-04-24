@@ -61,7 +61,7 @@ const NavBar = (props: INavBarProps) => {
                     </div>
                     <img style={{height:35, width:110, marginBottom: 15}} src={"https://i.ibb.co/Pj4dtmP/Whats-App-Image-2022-01-13-at-15-33-32.jpg"}/>
                 </div>
-                <NavigationMenu handleClick={handleClick} current={current} isDisabled={queryId === ''}/>
+                <NavigationMenu handleClick={handleClick} current={current}/>
                 <div className="tab-button" onClick={() => {}}>
                     <ImportOutlined style={{marginLeft:15, fontSize:25, color: "cadetblue"}}/>
                 </div>

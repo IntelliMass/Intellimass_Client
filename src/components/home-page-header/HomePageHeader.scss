@@ -1,0 +1,23 @@
+.home-data-container{
+  margin-bottom: 30px;
+
+  .title-home{
+    font-size: 28px;
+    color: white;
+  }
+
+  .Col-total{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    color: white;
+    font-size: 18px;
+    width: 200px;
+    text-align: center;
+    display: inline-block;
+    margin: 20px 10px;
+  }
+
+  .alerts-value{
+    color: #91d5ff;
+    font-size: 16px;
+  }
+}
