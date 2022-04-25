@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './NavBar.scss';
 import NavigationMenu from '../navigation-menu/NavigationMenu';
-import {useLocation} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {MenuDrawer} from '../drawer/Drawer';
 import { ImportOutlined, AppstoreOutlined, CloseOutlined } from '@ant-design/icons';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks'
 import {changeTheme} from "../../actions/SharedAction";
+import {login, logout} from "../../actions/UserActions";
 
 
 interface INavBarProps {}
@@ -18,6 +19,8 @@ const NavBar = (props: INavBarProps) => {
 
     // STATES
     const location = useLocation();
+    const history = useHistory();
+
     const routeName = location.pathname.replace('/', '');
     const [current, setCurrent] = useState(routeName || 'query');
     const [MenuDrawerVisible, setMenuDrawerVisible] = useState<boolean>(false);
@@ -49,7 +52,8 @@ const NavBar = (props: INavBarProps) => {
     };
 
     const onLogout = () => {
-
+        dispatch(logout());
+        history.replace('/');
     }
 
 
@@ -65,7 +69,7 @@ const NavBar = (props: INavBarProps) => {
                 </div>
                 <NavigationMenu handleClick={handleClick} current={current}/>
                 <div className="tab-button" onClick={() => {}}>
-                    <ImportOutlined style={{marginLeft:15, fontSize:25, color: "cadetblue", cursor: "pointer"}}/>
+                    <ImportOutlined onClick={onLogout} style={{marginLeft:15, fontSize:25, color: "cadetblue", cursor: "pointer"}}/>
                 </div>
             </div>
             <MenuDrawer visible={MenuDrawerVisible} onClose={onClose} />
