@@ -1,19 +1,33 @@
 import React, {useEffect} from "react";
 import {useAppSelector} from "../hooks/hooks";
 import "../index.scss"
-import {AuthenticationForm} from "../components/authentication-form/AuthenticationForm";
+import {ArticlesContainer} from "../components/articles-container/ArticleContainer";
+import {useHistory} from "react-router-dom";
+import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
+import {CollectionContainer} from "../components/collection-container/CollectionContainer";
+import {NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
 
 
 
 type ScreenProfileProps = {};
 
 const ScreenArticles: React.FC<ScreenProfileProps> = () => {
-  const theme = useAppSelector<string>(state => state.shared.theme);
+    const queryId = useAppSelector<string>(state => state.query.queryId);
+    const history = useHistory();
+
+    useEffect(()=>{
+        if (queryId === ''){
+            history.replace('/');
+        }
+    },[queryId])
 
   return (
-      <div className={`screen profile ${theme}`}>
-            <AuthenticationForm/>
-      </div>
+    queryId !== '' ?
+    <div className="screen">
+        {/*<ArticlesContainer/>*/}
+        <NewMetadataList metadataList={[]} savedMetadataList={[]}/>
+    </div> : <div className="home-page-container"> </div>
+
   );
 };
 

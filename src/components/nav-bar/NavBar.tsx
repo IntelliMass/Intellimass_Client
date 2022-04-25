@@ -8,13 +8,11 @@ import { useAppSelector, useAppDispatch } from '../../hooks/hooks'
 import {changeTheme} from "../../actions/SharedAction";
 
 
-interface INavBarProps {
-    signOut?: Function,
-}
+interface INavBarProps {}
 
 const NavBar = (props: INavBarProps) => {
     // REDUCER
-    const queryId = useAppSelector<string>(state => state.query.queryId)
+    const queryId = useAppSelector<string>(state => state.query.queryId);
 
     const dispatch = useAppDispatch()
 
@@ -50,20 +48,24 @@ const NavBar = (props: INavBarProps) => {
         setMenuDrawerVisible(true);
     };
 
+    const onLogout = () => {
+
+    }
+
 
     return (
         <>
             <div className='navbar'>
                 <div className="mast-head">
                     <div className="tenant-button-container">
-                        {!MenuDrawerVisible? <AppstoreOutlined style={{fontSize:25, color: "cadetblue"}} onClick={showDrawer}/>:
+                        {!MenuDrawerVisible? <AppstoreOutlined style={{fontSize:25, color: "cadetblue", cursor:"pointer"}} onClick={showDrawer}/>:
                             <CloseOutlined style={{fontSize:25, color: "cadetblue"}} onClick={onClose}/>}
                     </div>
                     <img style={{height:35, width:110, marginBottom: 15}} src={"https://i.ibb.co/Pj4dtmP/Whats-App-Image-2022-01-13-at-15-33-32.jpg"}/>
                 </div>
                 <NavigationMenu handleClick={handleClick} current={current}/>
                 <div className="tab-button" onClick={() => {}}>
-                    <ImportOutlined style={{marginLeft:15, fontSize:25, color: "cadetblue"}}/>
+                    <ImportOutlined style={{marginLeft:15, fontSize:25, color: "cadetblue", cursor: "pointer"}}/>
                 </div>
             </div>
             <MenuDrawer visible={MenuDrawerVisible} onClose={onClose} />
