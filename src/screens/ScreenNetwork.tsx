@@ -25,7 +25,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     },[network])
 
     return (
-      <div className={`screen home ${theme}`}>
+      <div className={`screen`}>
         {/*<Network/>*/}
           {/*<MetadataList items={[1, 2, 3, 4]} />*/}
           {/*  <Network2/>*/}
