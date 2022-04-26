@@ -60,7 +60,7 @@ export const AuthenticationForm = () => {
 
         const newQuery:UserState = {
             userName: values.userName,
-            userPassword: values.userPassword,
+            userPassword: values.password,
             userId: 'temp',
         }
 
@@ -68,6 +68,7 @@ export const AuthenticationForm = () => {
             dispatch(login(newQuery ));
         }
         else {
+            // @ts-ignore
             dispatch(signup(newQuery ));
         }
     };
@@ -89,15 +90,15 @@ export const AuthenticationForm = () => {
                 <h2 className="form-auth-title">{formLayout} </h2>
                 <Divider className="divider-title-form"/>
                 <Form.Item
-                    label="Username"
-                    name="username"
+                    label="userName"
+                    name="userName"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label="Password"
+                    label="password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >

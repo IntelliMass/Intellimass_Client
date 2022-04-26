@@ -8,7 +8,6 @@ type HomePageHeaderProps = {};
 
 export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
     const userName = useAppSelector<string>(state => state.user.userName);
-    console.log(userName);
 
     return (
         <div className="home-data-container">
