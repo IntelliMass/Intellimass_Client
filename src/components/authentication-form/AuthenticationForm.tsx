@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import React, {useEffect, useState} from "react";
 import {UserState} from "../../reducers/UserReducer";
 import "./AuthenticationForm.scss";
+import {login, signup} from "../../actions/UserActions";
 
 const formItemLayout = {
     labelCol: { span: 6 },
@@ -37,8 +38,7 @@ export const AuthenticationForm = () => {
         setIsLoader(false);
         if (isSubmitSelected){
             setIsSubmitSelected(false);
-            console.log('redirect')
-            //history.replace('/articles');
+            history.replace('/home');
         }
     },[userId]);
 
@@ -57,15 +57,20 @@ export const AuthenticationForm = () => {
     const onFinish = (values: any) => {
         setIsLoader(true);
         setIsSubmitSelected(true);
+
         const newQuery:UserState = {
             userName: values.userName,
-            userPassword: values.userPassword,
-            userId: '',
+            userPassword: values.password,
+            userId: 'temp',
         }
 
-        // login or signup
-        // @ts-ignore
-        dispatch(createQuery(newQuery ));
+        if (formLayout === "Login"){
+            dispatch(login(newQuery ));
+        }
+        else {
+            // @ts-ignore
+            dispatch(signup(newQuery ));
+        }
     };
 
     const onReset = () => {
@@ -85,15 +90,15 @@ export const AuthenticationForm = () => {
                 <h2 className="form-auth-title">{formLayout} </h2>
                 <Divider className="divider-title-form"/>
                 <Form.Item
-                    label="Username"
-                    name="username"
+                    label="userName"
+                    name="userName"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label="Password"
+                    label="password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
@@ -102,7 +107,7 @@ export const AuthenticationForm = () => {
 
                 {formLayout === 'Signup' &&  <Form.Item
                     label="Confirm Pass"
-                    name="password"
+                    name="password2"
                     rules={[{ required: true, message: 'Please confirm your password!' }]}
                 >
                     <Input.Password />

@@ -1,25 +1,30 @@
 import React, {useEffect} from "react";
 import { useAppSelector } from "../hooks/hooks"
-import {ArticlesContainer} from "../components/articles-container/ArticleContainer";
 import {useHistory} from "react-router-dom";
+import {CollectionContainer} from "../components/collection-container/CollectionContainer";
+import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
 
 type HomeScreenProps = {};
 
 const HomeScreen: React.FC<HomeScreenProps> = (props) => {
-    const theme = useAppSelector<string>(state => state.shared.theme);
-    const queryId = useAppSelector<string>(state => state.query.queryId);
+    const userId = useAppSelector<string>(state => state.user.userId);
     const history = useHistory();
 
     useEffect(()=>{
-        if (queryId === ''){
+        if (userId === ''){
             history.replace('/');
         }
-    },[queryId])
+    },[userId])
 
 
     return (
-        <div className={`screen home ${theme}`}>
-            {queryId !== '' && <ArticlesContainer/>}
+        <div className={`screen`}>
+            {userId !== '' &&
+                <div className="home-page-container">
+                    <HomePageHeader/>
+                    <CollectionContainer/>
+                </div>
+            }
         </div>
       );
 };
@@ -27,4 +32,3 @@ const HomeScreen: React.FC<HomeScreenProps> = (props) => {
 export default HomeScreen;
 
 HomeScreen.defaultProps = {};
-
