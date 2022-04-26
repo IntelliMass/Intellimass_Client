@@ -10,7 +10,7 @@ type RemoveItemAction = {type: "REMOVE_ITEM_TO_COLLECTION", payload: any}
 
 export type CollectionsAction = GetCollectionsAction | UpdateCollectionNameAction | InsertItemAction | RemoveItemAction;
 
-let URL_COLLECTIONS = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/collections";
+let URL_COLLECTIONS = "https://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/collections";
 
 
 /**
