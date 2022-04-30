@@ -1,0 +1,38 @@
+.export-action-container{
+  color: black;
+
+  .create-collection{
+    width: 94%;
+    margin-left: 3%;
+  }
+
+  .save-collection{
+    margin-top: 10px;
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .collections-list{
+    overflow: auto;
+    height: 200px;
+    padding: 0px 5px;
+
+    .collection-title{
+      color: #1890ff;
+      cursor: pointer;
+    }
+
+    .collection-title:hover{
+      color: #2f54eb;
+    }
+
+    .collection-icon{
+      color: #1890ff;
+      cursor: pointer;
+    }
+
+    .collection-icon:hover{
+      color: #2f54eb;
+    }
+  }
+}

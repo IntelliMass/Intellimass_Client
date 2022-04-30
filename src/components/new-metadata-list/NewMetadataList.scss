@@ -1,45 +1,15 @@
 .metadata-list-container{
-  height: 770px;
-  width: 500px;
-  //background-color: #FFFCFC;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  border: 1px solid gray;
-  color: white;
-  margin-left: 5%;
-  margin-top: 3%;
-
-  .metadata-header{
-    height: 75px;
-
-    .metadata-header-label{
-      color: gray;
-      font-weight: 500;
-      display: inline-block;
-      width: 90px;
-      font-size: 14px;
-      margin-left: 10px;
-      margin-top: 5px;
-    }
-
-    .metadata-search{
-      margin: 0px 20px 0px 0px;
-      width: 300px;
-    }
-
-    .metadata-select-rank{
-      margin-top: 10px;
-      width: 150px;
-    }
-
-    .metadata-number-rank{
-      margin-left: 10px;
-      margin-top: 10px;
-      width: 140px;
-    }
-  }
 
   .ant-divider-inner-text{
     color: #3B5EB8;
+  }
+  .saved-metadata-list{
+    height: 100px;
+    width: 500px;
+    display: block;
+    padding: 0px 20px;
+    overflow:hidden;
+    overflow-y:auto;
   }
 
   .metadata-list{
@@ -52,8 +22,11 @@
   }
 
   .metadata-footer{
+    bottom: 0;
     height: 60px;
     display: flex;
+    position: absolute;
+    width: 470px;
 
     .ant-btn{
       margin: 10px;

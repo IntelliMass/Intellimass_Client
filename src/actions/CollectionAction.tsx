@@ -1,16 +1,18 @@
 import {ICollection} from "../reducers/CollectionResucer";
 import {ArticleOfList} from "./ArticleActions";
 
-type GetCollectionsAction = {type: "GET_COLLECTIONS", payload: any }
-type UpdateCollectionNameAction = {type: "UPDATE_COLLECTION_NAME", payload: any}
-type InsertItemAction = {type: "INSERT_ITEM_TO_COLLECTION", payload: any}
-type RemoveItemAction = {type: "REMOVE_ITEM_TO_COLLECTION", payload: any}
+type GetCollectionsAction = {type: "GET_COLLECTIONS", payload: any };
+type UpdateCollectionNameAction = {type: "UPDATE_COLLECTION_NAME", payload: any};
+type InsertItemAction = {type: "INSERT_ITEM_TO_COLLECTION", payload: any};
+type RemoveItemAction = {type: "REMOVE_ITEM_TO_COLLECTION", payload: any};
+type DeleteCollectionAction = {type: "DELETE_COLLECTION", payload: any};
+type CreateCollectionAction = {type: "CREATE_COLLECTION", payload: any};
 
 
+export type CollectionsAction = GetCollectionsAction | UpdateCollectionNameAction |
+    InsertItemAction | RemoveItemAction | DeleteCollectionAction | CreateCollectionAction;
 
-export type CollectionsAction = GetCollectionsAction | UpdateCollectionNameAction | InsertItemAction | RemoveItemAction;
-
-let URL_COLLECTIONS = "https://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/collections";
+let URL_COLLECTIONS = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/collections";
 
 
 /**
@@ -75,11 +77,41 @@ export function insertToCollection(id:string, userid: string, collections: Array
 }
 
 
-export function removeFromCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string) {
+export function removeFromCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId:string) {
     const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const newCollections = collections.filter(collection => collection.collectionName != collectionName);
+    let newCollections = [...collections];
+    const index = collections.findIndex(collection => collection.collectionName === collectionName);
+    if (index) {
+        const newCollectionArticles = newCollections[index].articles.filter(article => article.paperId !== paperId);
+        newCollections[index].articles = newCollectionArticles;
+        return {
+            type: "REMOVE_ITEM_TO_COLLECTION",
+            payload: [...newCollections],
+        };
+    }
+
+
+
+}
+
+export function deleteCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string) {
+    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
+    const filteredCollections = collections.filter(collection => collection.collectionName !== collectionName);
     return {
-        type: "REMOVE_ITEM_TO_COLLECTION",
-        payload: newCollections,
+        type: "DELETE_COLLECTION",
+        payload: [...filteredCollections],
+    };
+}
+
+export function createCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string) {
+    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
+    const newCollection: ICollection = {
+        collectionName: collectionName,
+        articles: []
+    }
+    const newCollections = [newCollection,...collections];
+    return {
+        type: "CREATE_COLLECTION",
+        payload: [...newCollections],
     };
 }

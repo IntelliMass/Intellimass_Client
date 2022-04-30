@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from "react";
 import './NewMetadataList.scss';
 import { IMetadata, Metadata} from "../metadata/Metadata";
-import {Button, Divider, Select, Spin} from "antd";
+import {Button, Collapse, Divider, Select, Spin} from "antd";
 import Search from "antd/es/input/Search";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
 import {SimpleNet} from "../network2/SimpleNet";
 import {getArticleDetail, getFilteredArticles} from "../../actions/ArticleActions";
 import {getNetwork} from "../../actions/NetworkAction";
+import {CollectionTable} from "../collection-table/CollectionTable";
+
 const { Option } = Select;
+const { Panel } = Collapse;
+
 
 type MetadataListProps = {
     metadataList: any[];
@@ -176,6 +180,10 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
         }
     };
 
+    function callback(key:any) {
+        console.log(key);
+    }
+
     return (
         <div className="metadata-list-container">
             {isLoader ? <div className="loader-container">
@@ -184,7 +192,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                 </div> :
                 <>
                     <Divider orientation="left">Saved Metadata ( {savedMetadataList.length} )</Divider>
-                    <div className="metadata-list">
+                    <div className="saved-metadata-list">
                         {filteredSavedMetadataList.map((metadata, index) => {
                             return(
                                 <Metadata metadata={metadata} index={index} listName="SAVED" onMetadataChange={onMetadataChange}/>
@@ -192,17 +200,58 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                         })}
                     </div>
                     <Divider orientation="left">New Metadata ( {metadataList.length} )</Divider>
-                    <div className="metadata-list">
-                        {filteredMetadataList.map((metadata, index) => {
-                            return(
-                                <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
-                            )
-                        })}
-                    </div>
-                    <Divider orientation="left">Actions</Divider>
+
+                    <Collapse accordion onChange={callback}>
+                        <Panel header="Common words" key="1">
+                            <div className="metadata-list">
+                                {filteredMetadataList.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                        <Panel header="Topics" key="2">
+                            <div className="metadata-list">
+                                {filteredMetadataList.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                        <Panel header="Fields of study" key="3">
+                            <div className="metadata-list">
+                                {filteredMetadataList.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                        <Panel header="Authors" key="4">
+                            <div className="metadata-list">
+                                {filteredMetadataList.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                        <Panel header="Years" key="5">
+                            <div className="metadata-list">
+                                {filteredMetadataList.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                    </Collapse>
+
                     <div className="metadata-footer">
-                        <Button onClick={onSave} type="primary" className="save-saved-metadata">Save selected</Button>
-                        <Button onClick={onClear}>Clear selected</Button>
+                        <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Save selected</Button>
+                        <Button onClick={onClear} shape="round" block >Clear selected</Button>
                     </div>
                 </>
             }
