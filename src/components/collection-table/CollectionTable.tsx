@@ -1,77 +1,101 @@
 import React from "react";
-import { Table, Tag, Space } from 'antd';
+import {Table, Tag, Space, Tooltip} from 'antd';
+import "../collection-container/CollectionContainer.scss"
+import {ArticleOfList, Author} from "../../actions/ArticleActions";
+import {ArticleList} from "../../modules/articles/articlesList/ArticleList";
+import {DeleteOutlined, MoreOutlined} from "@ant-design/icons";
 
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined) => <a>{text}</a>,
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (tags: any[]) => (
-            <>
-                {tags.map(tag => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (text: any, record: { name: string | number | boolean | {} | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactNodeArray | React.ReactPortal | null | undefined; }) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-        ),
-    },
-];
+type CollectionTableProps = {
+    articles: Array<ArticleOfList>
+};
 
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-];
+// authors
+// frequentWords
 
-export default () => <Table columns={columns} dataSource={data} />;
+export interface VisualCollectionRow {
+    title: string,
+    year: number,
+    authors: Array<Author>,
+    frequentWords: Array<string>
+}
+
+export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
+   const {articles} = props;
+
+
+    const columns = [
+        {
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: 'Year',
+            dataIndex: 'year',
+            key: 'year',
+        },
+        {
+            title: 'Authors',
+            key: 'authors',
+            dataIndex: 'authors',
+            render: (authors: Author[]) => (
+                <>
+                    {authors.map(author => {
+                        // @ts-ignore
+                        let color = author.name.length > 5 ? 'geekblue' : 'green';
+                        return (
+                            <Tag color={color} key={author.name}>
+                                {author.name}
+                            </Tag>
+                        );
+                    })}
+                </>
+            ),
+        },
+        {
+            title: 'Frequent Words',
+            key: 'frequentWords',
+            dataIndex: 'frequentWords',
+            render: (frequentWords: any[]) => (
+                <>
+                    {frequentWords.map(frequentWord => {
+                        let color = frequentWord.length > 5 ? 'geekblue' : 'green';
+                        return (
+                            <Tag color={color} key={frequentWord}>
+                                {frequentWord}
+                            </Tag>
+                        );
+                    })}
+                </>
+            ),
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: ( ) => (
+                <Space size="middle">
+                    <Tooltip placement="bottom" title={'More details'}>
+                        <MoreOutlined className="collection-icon"/>
+                    </Tooltip>
+                    <Tooltip placement="bottom" title={'Remove article'}>
+                        <DeleteOutlined className="collection-icon"/>
+                    </Tooltip>
+                </Space>
+            ),
+        },
+    ];
+
+    const visualArticles = (articles: Array<ArticleOfList>) : Array<VisualCollectionRow> => {
+        let dataSet: Array<VisualCollectionRow> = [];
+        articles.forEach(article => {
+            dataSet.push({title: article.title, year: article.year, authors: article.authors, frequentWords: article.frequentWords || []})
+        })
+        return dataSet;
+    }
+
+    return (
+        <Table columns={columns} dataSource={visualArticles(articles)} />
+    );
+};
+
+

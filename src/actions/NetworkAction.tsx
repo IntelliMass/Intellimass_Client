@@ -10,7 +10,7 @@ export type NetworkAction = getNetworkAction| UpdateConnectionAction|  getFilter
 
 let URL_GET_NETWORK = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/network";
 let URL_GET_FILTERED_NETWORK = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/filter-network";
-let URL_GET_NETWORK_NEW = "https://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/network";
+let URL_GET_NETWORK_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/network";
 
 
 //f3b3b7a0-eed7-49e0-a21a-d540d6cc22db

@@ -3,7 +3,14 @@
   margin: 0 auto;
 
   .collection-container{
+    .collection-icon{
+      color: #1890ff;
+      cursor: pointer;
+    }
 
+    .collection-icon:hover{
+      color: #2f54eb;
+    }
   }
 }
 

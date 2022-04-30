@@ -30,7 +30,6 @@ type ArticleListProps = {
 
 export const ArticleList: React.FC<ArticleListProps> = (props) => {
     const {articles, query, queryId} = props;
-    const theme = useAppSelector<string>(state => state.shared.theme);
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
@@ -38,7 +37,7 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
     },[ articles])
 
     return (
-        <div className={`Article-list ${theme}`}>
+        <div className={`Article-list`}>
             <List
                 itemLayout="vertical"
                 size="small"
@@ -49,17 +48,14 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                     pageSize: 10,
                 }}
                 dataSource={articles}
-                className={`${theme}`}
                 renderItem={item => (
                     <List.Item
-                        className={`${theme}`}
                         key={item.title}
                         actions={[<GetMoreButton paperId={item.paperId}/>]}
                     >
                         <List.Item.Meta
                             title={item.year + ' | ' + item.title}
                             description={ listAuthorsToString(item.authors)}
-                            className={`${theme}`}
                         />
                         {item.abstract}
                     </List.Item>
