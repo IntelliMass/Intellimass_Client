@@ -2,13 +2,8 @@ import React from "react";
 import './Metadata.scss';
 import {Badge, Tag} from "antd";
 import {CloseOutlined} from "@ant-design/icons";
+import {IMetadata} from "../../reducers/MetadataReducer";
 
-export type IMetadata = {
-    title: string;
-    rank: number;
-    isSelected: boolean;
-    id: string;
-}
 
 type MetadataProps = {
     metadata: IMetadata;
@@ -49,23 +44,23 @@ export const Metadata: React.FC<MetadataProps> = (props) => {
         if(metadata.rank <= 10){
             return (
                 <Badge style={{ backgroundColor: "firebrick" }} count={metadata.rank}>
-                    {MetadataTag(metadata.title)}
+                    {MetadataTag(metadata.title.toString())}
                 </Badge>
             );
         }
         else if(metadata.rank > 10 && metadata.rank <= 50){
             return <Badge style={{ backgroundColor: "orange" }} count={metadata.rank}>
-                {MetadataTag(metadata.title)}
+                {MetadataTag(metadata.title.toString())}
             </Badge>
         }
         else if(metadata.rank > 50 && metadata.rank < 100){
             return <Badge style={{ backgroundColor: "cadetblue" }} count={metadata.rank}>
-                {MetadataTag(metadata.title)}
+                {MetadataTag(metadata.title.toString())}
             </Badge>
         }
         else{
             return <Badge style={{ backgroundColor: "forestgreen" }} count={metadata.rank}>
-                {MetadataTag(metadata.title)}
+                {MetadataTag(metadata.title.toString())}
             </Badge>
         }
     };

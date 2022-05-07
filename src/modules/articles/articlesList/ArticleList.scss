@@ -1,6 +1,6 @@
 .Article-list{
-  margin-top: 2%;
-  width: 90%;
+  margin-top: 5%;
+  width: 93%;
   margin-left: 5%;
   height: 800px;
   overflow: auto;
@@ -9,5 +9,17 @@
     position: absolute;
     margin-top: 20%;
     margin-left: 25%;
+
+    .ant-list-vertical .ant-list-item{
+      color: white;
+    }
+
+    .ant-list-item-meta-description{
+        color:burlywood;
+    }
+
+    .ant-list-vertical .ant-list-item-meta-title{
+      color: dodgerblue;
+    }
   }
 }

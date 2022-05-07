@@ -12,7 +12,7 @@ type CreateCollectionAction = {type: "CREATE_COLLECTION", payload: any};
 export type CollectionsAction = GetCollectionsAction | UpdateCollectionNameAction |
     InsertItemAction | RemoveItemAction | DeleteCollectionAction | CreateCollectionAction;
 
-let URL_COLLECTIONS = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/collections";
+let URL_COLLECTIONS = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/collections";
 
 
 /**
