@@ -85,7 +85,7 @@ let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
 let URL3 = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
 let URL_GET_ARTICLES_NEW = "httsp://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/articles";
 let URL_GET_ARTICLE_NEW = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/getOne";
-let URL_GET_FILTERED_ARTICLES = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/articles";
+let URL_GET_FILTERED_ARTICLES = "https://api.intellimass.net/articles";
 
 
 let OFFSET = 10;

@@ -4,7 +4,7 @@ export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction;
 
 let URL_GET_CATALOG = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/categories";
 let URL_PATCH_CATEGORIES = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/categories";
-let URL_GET_CATEGORIES_NEW = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/categories";
+let URL_GET_CATEGORIES_NEW = "https://api.intellimass.net/categories";
 
 
 /**

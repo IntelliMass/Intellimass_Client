@@ -25,14 +25,6 @@ export interface IMetadataWithCategory {
 export const FUNCTION_TYPE = "REMOVE_SAVED_METADATA" || "SELECT_UNSAVED_METADATA";
 export const LIST_TYPE = "SAVED" || "UN_SAVED";
 
-export const getTitlesFromMetadata = (metadataList:Array<IMetadata>) => {
-    let titles: Array<string> = [];
-    metadataList.forEach(metadata => {
-        titles.push(metadata.title.toString());
-    })
-    return titles;
-}
-
 export const fromCatalogToArray = (metadata: NewMetadata) => {
     const newSavedMetadata: Array<IMetadataWithCategory> = [];
     metadata.metadata.authors.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "AUTHORS"})});
@@ -66,9 +58,7 @@ export const removeSelected = (metadata: NewMetadata) : NewMetadata => {
         }
     }
     return newMetadata;
-};
-
-// unSelect one
+}
 
 export const unSelectOne = (metadata: NewMetadata ,categoryType: string, index: number) : NewMetadata => {
     let newMetadata = {...metadata};
@@ -100,7 +90,6 @@ export const count = (metadata: NewMetadata) : number => {
     count +=  metadata.metadata.fields_of_study.length;
     return count;
 }
-
 
 export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     // @ts-ignore
@@ -153,41 +142,58 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
         setIsLoader(false);
     },[localMetadata])
 
-
+    /**
+     * TAKE ALL SELECTED FROM LOCAL
+     * CHANGE ALL SELECTED TO UNSELECTED
+     * */
     const onClear = () => {
         setIsLoader(true);
         setLocalMetadata({...unSelectAll(localMetadata)});
-    }
+        const newMetadata = unSelectAll(localMetadata);
 
-    const onSave = () => {
-        setIsLoader(true);
-        setIsSubmitSelected(true);
-
-
-        // const selectedMetadataList = [...metadataList];
-        // const newSavedMetadataList:IMetadata[] = [];
-        // const newUnsavedMetadataList:IMetadata[] = [];
-        // selectedMetadataList.forEach((metadata)=>{
-        //     if(metadata.isSelected){
-        //         newSavedMetadataList.push(metadata);
-        //         metadata.isSelected = false;
-        //     }
-        //     else
-        //         newUnsavedMetadataList.push(metadata);
-        // });
-        // // setMetadataList([...newUnsavedMetadataList]);
-        // // setSavedMetadataList([...filteredSavedMetadataList,...newSavedMetadataList]);
-        // // FILTER
-        //
+        setLocalMetadata({...newMetadata});
+        // TODO: DISPATCH AND NOT SETTERS
         // // @ts-ignore
         // dispatch(patchMetadata(metadataList, savedMetadataList));
     }
 
+
+    /**
+     * TAKE ALL SELECTED FROM LOCAL
+     * MOVE ALL SELECTED TO SAVE
+     * REMOVE SELECTED FROM LOCAL
+     * */
+    const onSave = () => {
+        setIsLoader(true);
+        setIsSubmitSelected(true);
+        const newSavedMetadata = fromCatalogToArray(localMetadata);
+        const newMetadata = removeSelected(localMetadata);
+
+        setLocalMetadata({...newMetadata});
+        setSavedMetadataList([...newSavedMetadata]);
+        // TODO: DISPATCH AND NOT SETTERS
+        // // @ts-ignore
+        // dispatch(patchMetadata(metadataList, savedMetadataList));
+    }
+
+
+    /**
+     * SELECT ONE
+     * UNSELECT ONE
+     * */
     const onMetadataChange = (listName: string, changeType: string, id:string ) => {
-        // become reducer later
+        // IF SAVED LIST
+        const foundIndex = savedMetadataList.findIndex(item => item.metadata.id === id);
+        let newSavedList = {...savedMetadataList};
+        newSavedList[foundIndex].metadata.isSelected = !newSavedList[foundIndex].metadata.isSelected;
+        // TODO: REMOVE FROM SAVED AND PUT IN THE RIGHT LIST BY CATEGORY
+
+        // IF UNSAVED LIST
+
         // SELECTED
-        // const newMeta = [...metadataList];
-        //
+        // const newMetadata = unSelectOne(metadata, ); {...localMetadata};
+        // unSelectOne = (metadata: NewMetadata ,categoryType: string, index: number)
+
         // if(changeType === "SELECT_UNSAVED_METADATA"){
         //     if(listName === "UN_SAVED"){
         //         const newMeta2 = newMeta.map(item => (
