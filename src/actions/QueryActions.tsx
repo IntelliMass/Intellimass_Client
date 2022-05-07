@@ -12,7 +12,7 @@ export interface KeywordsListObject {
 
 const URL_POST = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/query";
 const URL_GET = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
-let URL_POST_NEW = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/query";
+let URL_POST_NEW = "https://api.intellimass.net/query";
 
 
 /**
