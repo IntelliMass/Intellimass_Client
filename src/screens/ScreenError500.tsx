@@ -6,6 +6,8 @@ import {NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
 import {MenuButton2} from "../components/menu-button/MenuButton2";
 import aos from "aos";
 import {ExportAction} from "../components/exort-action/ExportAction";
+import {ClusterContainer} from "../components/cluster-container/ClusterContainer";
+import {BreadCrumbList} from "../components/bread-crumb-list/BreadCrumbList";
 
 const error404 =
     "https://www.winx5.com/wp-content/themes/ekommart/assets/images/404/404.png";
@@ -14,6 +16,7 @@ type Screen500Props = {};
 
 const ScreenError500: React.FC<Screen500Props> = () => {
     const [actionOption, setActionOption] = useState<string>('none');
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
     useEffect(()=>{
         aos.init({duration: 1000})
@@ -43,7 +46,7 @@ const ScreenError500: React.FC<Screen500Props> = () => {
     return (
     <>
         <div className='screen'>
-            <MenuButton2 actionOption={actionOption} setActionOption={actionHandler}/>
+            <MenuButton2 actionOption={actionOption} setActionOption={actionHandler} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen}/>
             {actionOption !== 'none' &&
                 <div className="actions-containers" data-aos='fade-right' data-aos-duration='1500'>
                     { actionOption === 'Filter' &&
@@ -52,13 +55,23 @@ const ScreenError500: React.FC<Screen500Props> = () => {
                         <NewMetadataList metadataList={[]} savedMetadataList={[]}/>
                     </>
                     }
-                    { actionOption === 'Cluster' && <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Cluster</h2> }
+                    {actionOption === 'Cluster' &&
+                        <>
+                            <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Cluster</h2>
+                            <ClusterContainer/>
+                        </>
+                    }
                     { actionOption === 'Export' &&
                     <>
                         <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Export</h2>
                         <ExportAction/>
                     </> }
-                    { actionOption === 'Breadcrumb' && <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Breadcrumb</h2> }
+                    { actionOption === 'Breadcrumb' &&
+                    <>
+                        <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Breadcrumb</h2>
+                        <BreadCrumbList/>
+                    </>
+                    }
                     {/**/}
                 </div>
             }

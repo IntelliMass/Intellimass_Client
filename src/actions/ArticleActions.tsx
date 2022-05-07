@@ -83,9 +83,9 @@ export interface ArticleOfList {
 let URL1 = "https://api.semanticscholar.org/v1/paper/";
 let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
 let URL3 = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
-let URL_GET_ARTICLES_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/articles";
-let URL_GET_ARTICLE_NEW = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/getOne";
-let URL_GET_FILTERED_ARTICLES = "http://ec2-18-168-84-104.eu-west-2.compute.amazonaws.com:5000/articles";
+let URL_GET_ARTICLES_NEW = "httsp://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/articles";
+let URL_GET_ARTICLE_NEW = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/getOne";
+let URL_GET_FILTERED_ARTICLES = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/articles";
 
 
 let OFFSET = 10;

@@ -10,18 +10,24 @@ import { Tooltip } from 'antd';
 
 type MenuButton2Props = {
     actionOption: string,
-    setActionOption: Function
+    setActionOption: Function,
+    isOpen: boolean,
+    setIsOpen: Function
 };
 
 export const MenuButton2: React.FC<MenuButton2Props> = (props) => {
-    const {actionOption, setActionOption} = props;
+    const {actionOption, setActionOption, isOpen, setIsOpen} = props;
 
     return (
         <div className="menu-button-container">
             <nav className="menu">
                 <input type="checkbox" className="menu-open" name="menu-open" id="menu-open"/>
                 <Tooltip placement="bottom" title={'Actions options'}>
-                    <label className="menu-open-button" htmlFor="menu-open" onClick={()=>setActionOption('none')}>
+                    <label className="menu-open-button" htmlFor="menu-open" onClick={()=>
+                    {
+                        setActionOption('none');
+                        setIsOpen(!isOpen);
+                    }}>
                         <span className="hamburger hamburger-1"></span>
                         <span className="hamburger hamburger-2"></span>
                         <span className="hamburger hamburger-3"></span>

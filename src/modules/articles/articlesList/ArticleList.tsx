@@ -33,7 +33,6 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
-        console.log(articles);
     },[ articles])
 
     return (

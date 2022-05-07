@@ -11,12 +11,12 @@ import {customNodesSize, getNetwork, updateConnectionType} from "../../actions/N
 import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles, updateCount} from "../../actions/ArticleActions";
 import {ExpandableTopBar} from "../expended-bar/ExpandedBar";
 import {ServiceSummary} from "../expand-stattistic-panel/ExpandStatisticPanel";
-import {IMetadata} from "../metadata/Metadata";
 import {getMetadata} from "../../actions/MeatadataAction";
 import { Select } from 'antd';
 import {PlusOutlined, MinusOutlined} from "@ant-design/icons";
 import {ArticleCard} from "../article-card/ArticleCard";
 import {typeGeneretor} from "../category-tags/CategoryTag";
+import {IMetadata} from "../../reducers/MetadataReducer";
 const { Option } = Select;
 
 type ArticlesContainerProps = {};
