@@ -5,13 +5,18 @@ import React, {useEffect, useState} from "react";
 import {UserState} from "../../reducers/UserReducer";
 import "./AuthenticationForm.scss";
 import {login, signup} from "../../actions/UserActions";
+import { Amplify } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import awsExports from './aws-exports';
+Amplify.configure(awsExports);
 
 const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
 };
 
-export const AuthenticationForm = () => {
+export const AuthenticationForm = withAuthenticator(() => {
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
 
@@ -130,5 +135,4 @@ export const AuthenticationForm = () => {
             </Form>
         </div>
     );
-};
-
+});
