@@ -4,11 +4,8 @@ import { Metadata} from "../metadata/Metadata";
 import {Button, Collapse, Divider, Select, Spin} from "antd";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
-import { getFilteredArticles} from "../../actions/ArticleActions";
-import {getNetwork} from "../../actions/NetworkAction";
 import {IMetadata, NewMetadata} from "../../reducers/MetadataReducer";
 
-const { Option } = Select;
 const { Panel } = Collapse;
 
 
@@ -25,13 +22,15 @@ export interface IMetadataWithCategory {
 export const FUNCTION_TYPE = "REMOVE_SAVED_METADATA" || "SELECT_UNSAVED_METADATA";
 export const LIST_TYPE = "SAVED" || "UN_SAVED";
 
-export const fromCatalogToArray = (metadata: NewMetadata) => {
-    const newSavedMetadata: Array<IMetadataWithCategory> = [];
-    metadata.metadata.authors.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "AUTHORS"})});
-    metadata.metadata.common_words.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "COMMON_WORDS"})})
-    metadata.metadata.topics.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "TOPICS"})})
-    metadata.metadata.years.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "YEARS"})})
-    metadata.metadata.fields_of_study.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "FIELDS_OF_STUDY"})})
+export const fromCatalogToArray = (metadata: NewMetadata, savedMetaata: Array<IMetadataWithCategory>) => {
+    const newSavedMetadata: Array<IMetadataWithCategory> = [...savedMetaata];
+    if(metadata.metadata){
+        metadata.metadata.authors.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "AUTHORS"})});
+        metadata.metadata.common_words.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "COMMON_WORDS"})})
+        metadata.metadata.topics.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "TOPICS"})})
+        metadata.metadata.years.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "YEARS"})})
+        metadata.metadata.fields_of_study.forEach(item => {if (item.isSelected === true) newSavedMetadata.push({metadata : item, category : "FIELDS_OF_STUDY"})})
+    }
     return newSavedMetadata;
 }
 
@@ -95,21 +94,14 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     // @ts-ignore
     // SERVER
     const state_metadataList = useAppSelector<NewMetadata>(state => state.metadata.metadataList);
-    const state_savedMetadataList = useAppSelector<NewMetadata>(state => state.metadata.savedMetadataList);
+    const state_savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const queryId = useAppSelector<string>(state => state.query.queryId);
 
-    // SHOW ALL IN CATEGORIES
-    // SAVED - SAME + ADD TYPE CATEGORY
-    // NO FILTERS
-    // SELECT
-    // UNSAVE - ADD BY CATEGORY
 
-    //const [metadataList, setMetadataList] = useState<Array<IMetadata>>([...state_metadataList]);
     const [localMetadata, setLocalMetadata] = useState<NewMetadata>({...state_metadataList});
-    const [savedMetadataList, setSavedMetadataList] = useState<Array<IMetadataWithCategory>>(fromCatalogToArray(state_savedMetadataList));
+    const [savedMetadataList, setSavedMetadataList] = useState<Array<IMetadataWithCategory>>([...state_savedMetadataList]);
 
     // TYPE OF TOGGLE
-    const [metadataType, setMetadataType] = useState<string>("NONE");
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
 
@@ -132,7 +124,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
 
 
         setIsLoader(false);
-    },[state_metadataList]);
+    },[state_metadataList, state_savedMetadataList]);
 
     /*
     * LISTENER TO SELECTION
@@ -150,11 +142,8 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
         setIsLoader(true);
         setLocalMetadata({...unSelectAll(localMetadata)});
         const newMetadata = unSelectAll(localMetadata);
-
-        setLocalMetadata({...newMetadata});
-        // TODO: DISPATCH AND NOT SETTERS
-        // // @ts-ignore
-        // dispatch(patchMetadata(metadataList, savedMetadataList));
+         // @ts-ignore
+        dispatch(patchMetadata({...newMetadata}, savedMetadataList));
     }
 
 
@@ -166,14 +155,10 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     const onSave = () => {
         setIsLoader(true);
         setIsSubmitSelected(true);
-        const newSavedMetadata = fromCatalogToArray(localMetadata);
+        const newSavedMetadata = fromCatalogToArray(localMetadata, savedMetadataList);
         const newMetadata = removeSelected(localMetadata);
-
-        setLocalMetadata({...newMetadata});
-        setSavedMetadataList([...newSavedMetadata]);
-        // TODO: DISPATCH AND NOT SETTERS
-        // // @ts-ignore
-        // dispatch(patchMetadata(metadataList, savedMetadataList));
+         // @ts-ignore
+        dispatch(patchMetadata({...newMetadata}, [...newSavedMetadata]));
     }
 
 
@@ -181,41 +166,64 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
      * SELECT ONE
      * UNSELECT ONE
      * */
-    const onMetadataChange = (listName: string, changeType: string, id:string ) => {
-        // IF SAVED LIST
-        const foundIndex = savedMetadataList.findIndex(item => item.metadata.id === id);
-        let newSavedList = {...savedMetadataList};
-        newSavedList[foundIndex].metadata.isSelected = !newSavedList[foundIndex].metadata.isSelected;
-        // TODO: REMOVE FROM SAVED AND PUT IN THE RIGHT LIST BY CATEGORY
+    const onMetadataChange = (listName: string, listType: string, id:string ) => {
+        // IF SAVED LIST = REMOVE FROM SAVED TO THE
+        if(listName === "SAVED"){
+            const foundIndex = savedMetadataList.findIndex(item => item.metadata.id === id);
+            let newSavedList = [...savedMetadataList];
+            let newMetadata = {...localMetadata};
+            if (foundIndex !== -1) {
+                newSavedList[foundIndex].metadata.isSelected = !newSavedList[foundIndex].metadata.isSelected;
+                if (newSavedList[foundIndex].category === "AUTHORS") newMetadata.metadata.authors.push({...newSavedList[foundIndex].metadata});
+                else if (newSavedList[foundIndex].category === "COMMON_WORDS") newMetadata.metadata.common_words.push({...newSavedList[foundIndex].metadata});
+                else if (newSavedList[foundIndex].category === "TOPICS") newMetadata.metadata.topics.push({...newSavedList[foundIndex].metadata});
+                else if (newSavedList[foundIndex].category === "YEARS") newMetadata.metadata.years.push({...newSavedList[foundIndex].metadata});
+                else  newMetadata.metadata.fields_of_study.push({...newSavedList[foundIndex].metadata});
+                newSavedList.splice(foundIndex, 1);
+                // @ts-ignore
+                dispatch(patchMetadata({...newMetadata}, [...newSavedList]));
+            }
+        }
 
-        // IF UNSAVED LIST
-
-        // SELECTED
-        // const newMetadata = unSelectOne(metadata, ); {...localMetadata};
-        // unSelectOne = (metadata: NewMetadata ,categoryType: string, index: number)
-
-        // if(changeType === "SELECT_UNSAVED_METADATA"){
-        //     if(listName === "UN_SAVED"){
-        //         const newMeta2 = newMeta.map(item => (
-        //             item.id===id? {...item, isSelected: !item.isSelected } : item
-        //         ));
-        //         setMetadataList([...newMeta2]);
-        //         return;
-        //     }
-        //     return;
-        // }
-        //
-        // // REMOVED
-        // const items = [...savedMetadataList];
-        // if(changeType === "REMOVE_SAVED_METADATA"){
-        //     if(listName === "SAVED"){
-        //         const item:IMetadata | undefined = items.find(item => item.id === id);
-        //         const newList = items.filter((item) => item.id !== id);
-        //         setSavedMetadataList([...newList]);
-        //         item? setMetadataList([...newMeta, item]): console.log("");
-        //     }
-        //     return;
-        // }
+        else {
+            // IF UN_SAVED LIST
+            let newMetadata = {...localMetadata};
+            let newList: Array<IMetadata> = []
+            if (listType === "AUTHORS") {
+                newList = [...localMetadata.metadata.authors];
+                const foundIndex = newList.findIndex(item => item.id === id);
+                if (foundIndex !== -1) newList[foundIndex].isSelected = !newList[foundIndex].isSelected;
+                newMetadata.metadata.authors = newList;
+            }
+            else if(listType === "COMMON_WORDS"){
+                newList = [...localMetadata.metadata.common_words];
+                const foundIndex = newList.findIndex(item => item.id === id);
+                if (foundIndex !== -1) newList[foundIndex].isSelected = !newList[foundIndex].isSelected;
+                newMetadata.metadata.common_words = newList;
+            }
+            else if(listType === "TOPICS"){
+                newList = [...localMetadata.metadata.topics];
+                const foundIndex = newList.findIndex(item => item.id === id);
+                if (foundIndex !== -1) newList[foundIndex].isSelected = !newList[foundIndex].isSelected;
+                newMetadata.metadata.topics = newList;
+            }
+            else if(listType === "YEARS"){
+                newList = [...localMetadata.metadata.years];
+                const foundIndex = newList.findIndex(item => item.id === id);
+                if (foundIndex !== -1) newList[foundIndex].isSelected = !newList[foundIndex].isSelected;
+                newMetadata.metadata.years = newList;
+            }
+            else {
+                newList = [...localMetadata.metadata.fields_of_study];
+                const foundIndex = newList.findIndex(item => item.id === id);
+                if (foundIndex !== -1) newList[foundIndex].isSelected = !newList[foundIndex].isSelected;
+                newMetadata.metadata.fields_of_study = newList;
+            }
+            // TODO : DISPATCH AND NOT LOCAL
+            // @ts-ignore
+            dispatch(patchMetadata({...newMetadata}, [...savedMetadataList]))
+            //setLocalMetadata({...newMetadata});
+        }
     };
 
     function callback(key:any) {
@@ -234,54 +242,54 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                             <div className="saved-metadata-list">
                                 {savedMetadataList.map((metadata, index) => {
                                     return(
-                                        <Metadata metadata={metadata.metadata} index={index} listName="SAVED" onMetadataChange={onMetadataChange}/>
+                                        <Metadata metadata={metadata.metadata} index={index} listName="NONE" onMetadataChange={onMetadataChange}/>
                                     )
                                 })}
                             </div>
                             <Divider orientation="left">New Metadata ( {count(localMetadata)} )</Divider>
 
-                            <Collapse accordion onChange={callback}>
-                                <Panel header="Common words" key="1">
+                            <Collapse accordion onChange={callback} style={{width: 470}}>
+                                <Panel header={`Common words (${localMetadata.metadata.common_words.length})`} key="1">
                                     <div className="metadata-list">
                                         {localMetadata.metadata.common_words.map((metadata, index) => {
                                             return(
-                                                <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                                <Metadata metadata={metadata} index={index} listName="COMMON_WORDS" onMetadataChange={onMetadataChange}/>
                                             )
                                         })}
                                     </div>
                                 </Panel>
-                                <Panel header="Topics" key="2">
+                                <Panel header={`Topics (${localMetadata.metadata.topics.length})`} key="2">
                                     <div className="metadata-list">
                                         {localMetadata.metadata.topics.map((metadata, index) => {
                                             return(
-                                                <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                                <Metadata metadata={metadata} index={index} listName="TOPICS" onMetadataChange={onMetadataChange}/>
                                             )
                                         })}
                                     </div>
                                 </Panel>
-                                <Panel header="Fields of study" key="3">
+                                <Panel header={`Fields of study (${localMetadata.metadata.fields_of_study.length})`} key="3">
                                     <div className="metadata-list">
                                         {localMetadata.metadata.fields_of_study.map((metadata, index) => {
                                             return(
-                                                <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                                <Metadata metadata={metadata} index={index} listName="FIELDS_OF_STUDY" onMetadataChange={onMetadataChange}/>
                                             )
                                         })}
                                     </div>
                                 </Panel>
-                                <Panel header="Authors" key="4">
+                                <Panel header={`Authors (${localMetadata.metadata.authors.length})`} key="4">
                                     <div className="metadata-list">
                                         {localMetadata.metadata.authors.map((metadata, index) => {
                                             return(
-                                                <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                                <Metadata metadata={metadata} index={index} listName="AUTHORS" onMetadataChange={onMetadataChange}/>
                                             )
                                         })}
                                     </div>
                                 </Panel>
-                                <Panel header="Years" key="5">
+                                <Panel header={`Years (${localMetadata.metadata.years.length})`} key="5">
                                     <div className="metadata-list">
                                         {localMetadata.metadata.years.map((metadata, index) => {
                                             return(
-                                                <Metadata metadata={metadata} index={index} listName="UN_SAVED" onMetadataChange={onMetadataChange}/>
+                                                <Metadata metadata={metadata} index={index} listName="YEARS" onMetadataChange={onMetadataChange}/>
                                             )
                                         })}
                                     </div>

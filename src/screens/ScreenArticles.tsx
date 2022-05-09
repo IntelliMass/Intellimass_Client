@@ -34,7 +34,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
-
+        setIsLoader(true);
     },[queryId]);
 
 
@@ -49,7 +49,8 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
 
 
     useEffect(()=>{
-        setIsLoader(false);
+        if(articles.length === 0)  setIsLoader(true);
+        else setIsLoader(false);
     },[articles])
 
 
