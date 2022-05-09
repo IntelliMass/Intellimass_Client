@@ -67,6 +67,7 @@ export const getMetadata = (id:string): (dispatch: any) => Promise<void> =>
  * @return {dispatch} Type + payload.
  */
 export function patchMetadata(metadata:Array<IMetadata>, savedMetadata:Array<IMetadataWithCategory> ) {
+    console.log(savedMetadata)
     return {
         type: "UPDATE_SELECTED_METADATA",
         payload:  {

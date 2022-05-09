@@ -110,29 +110,37 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     /*
      * ON LOAD
     */
+    // useEffect(()=>{
+    //     setIsLoader(true);
+    //     if (state_metadataList.metadata.common_words.length === 0){
+    //         // @ts-ignore
+    //         dispatch( getMetadata(queryId));
+    //     }
+    // },[])
+
     useEffect(()=>{
         setIsLoader(true);
-        getMetadata(queryId)
         // @ts-ignore
         dispatch( getMetadata(queryId));
-    },[])
+    },[queryId])
 
     /*
     * LISTENER TO SERVER METADATA
     */
     useEffect(() => {
-
-
+        setLocalMetadata({...state_metadataList});
         setIsLoader(false);
-    },[state_metadataList, state_savedMetadataList]);
+    },[  state_metadataList ]);
 
-    /*
-    * LISTENER TO SELECTION
-    */
     useEffect(() => {
-
+        console.log(state_savedMetadataList)
+        setSavedMetadataList([...state_savedMetadataList]);
         setIsLoader(false);
-    },[localMetadata])
+    },[ state_savedMetadataList]);
+
+    useEffect(()=>{
+        console.log(savedMetadataList);
+    },[savedMetadataList])
 
     /**
      * TAKE ALL SELECTED FROM LOCAL
@@ -141,9 +149,6 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     const onClear = () => {
         setIsLoader(true);
         setLocalMetadata({...unSelectAll(localMetadata)});
-        const newMetadata = unSelectAll(localMetadata);
-         // @ts-ignore
-        dispatch(patchMetadata({...newMetadata}, savedMetadataList));
     }
 
 
@@ -179,9 +184,9 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                 else if (newSavedList[foundIndex].category === "TOPICS") newMetadata.metadata.topics.push({...newSavedList[foundIndex].metadata});
                 else if (newSavedList[foundIndex].category === "YEARS") newMetadata.metadata.years.push({...newSavedList[foundIndex].metadata});
                 else  newMetadata.metadata.fields_of_study.push({...newSavedList[foundIndex].metadata});
-                newSavedList.splice(foundIndex, 1);
+                const list = [...newSavedList.splice(foundIndex, 1)];
                 // @ts-ignore
-                dispatch(patchMetadata({...newMetadata}, [...newSavedList]));
+                dispatch(patchMetadata({...newMetadata}, []));
             }
         }
 

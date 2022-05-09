@@ -71,10 +71,10 @@ const MetadataReducer = (state: NewMetadataState = initState, action:MetadataAct
             return {
                 ...state,
                 metadataList: {...action.payload},
-                savedMetadataList: []
             };
 
         case "UPDATE_SELECTED_METADATA":
+            console.log(action.payload.savedMetadata)
             return {
                 ...state,
                 metadataList: { ...action.payload.metadata },
