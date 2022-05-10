@@ -1,5 +1,6 @@
 // METADATA STATE MANAGEMENT REDUCER
 import {MetadataAction} from "../actions/MeatadataAction";
+import {IMetadataWithCategory} from "../components/new-metadata-list/NewMetadataList";
 
 export interface MetadataState {
     metadataList : Array<IMetadata>;
@@ -34,7 +35,7 @@ export interface NewMetadata {
 
 export interface NewMetadataState {
     metadataList : NewMetadata;
-    savedMetadataList: NewMetadata;
+    savedMetadataList: Array<IMetadataWithCategory>;
 }
 
 export interface NewIMetadata {
@@ -61,15 +62,7 @@ const initState: NewMetadataState = {
             years: []
         }
     },
-    savedMetadataList: {
-        metadata: {
-            authors: [],
-            topics:  [],
-            fields_of_study: [],
-            common_words: [],
-            years: []
-        }
-    }
+    savedMetadataList: []
 };
 
 const MetadataReducer = (state: NewMetadataState = initState, action:MetadataAction) => {
@@ -78,14 +71,14 @@ const MetadataReducer = (state: NewMetadataState = initState, action:MetadataAct
             return {
                 ...state,
                 metadataList: {...action.payload},
-                savedMetadataList: {}
             };
 
         case "UPDATE_SELECTED_METADATA":
+            console.log(action.payload.savedMetadata)
             return {
                 ...state,
                 metadataList: { ...action.payload.metadata },
-                savedMetadataList: { ...action.payload.savedMetadata }
+                savedMetadataList: [...action.payload.savedMetadata ]
             };
 
         default:

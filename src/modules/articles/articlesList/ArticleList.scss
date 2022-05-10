@@ -9,17 +9,16 @@
     position: absolute;
     margin-top: 20%;
     margin-left: 25%;
+  }
+  .ant-list-vertical .ant-list-item{
+    color: white;
+  }
 
-    .ant-list-vertical .ant-list-item{
-      color: white;
-    }
+  .ant-list-item-meta-description{
+    color:burlywood;
+  }
 
-    .ant-list-item-meta-description{
-        color:burlywood;
-    }
-
-    .ant-list-vertical .ant-list-item-meta-title{
-      color: dodgerblue;
-    }
+  .ant-list-vertical .ant-list-item-meta-title{
+    color: dodgerblue;
   }
 }

@@ -32,7 +32,7 @@ export const customNodes = (nodes: Array<any>):Array<any> => {
             id: node.title,
             isClusterNode: true,
             name: node.title,
-            size: 300,
+            size: 20,
             color: "#B0C4DE",
         };
         newNodes.push(newNode);
@@ -82,7 +82,7 @@ export const customNodesSize = (network: INetwork) => {
     // RUN ON THE NODES AND CHANGE THE SIZE TO NUMBER OF COUNT
     nodesNewSizes.forEach((newNode, index) => {
         let place = networkNewNodes.findIndex(foundNode => foundNode.title == newNode);
-        networkNewNodes[place].size = nodesCounter[index];
+        if (place !== -1 && networkNewNodes) networkNewNodes[place].size = nodesCounter[index];
     });
     return networkNewNodes;
 }
@@ -90,9 +90,10 @@ export const customNodesSize = (network: INetwork) => {
 
 /**
  * Get Network from the server
+ * authors/abstract/title/default
  * @return {dispatch} Type + payload.
  */
-export const getNetwork = (id:string, filterType:string="topics", filterItems:string="", feature:string="Authors", count:number=100): (dispatch: any) => Promise<void> =>
+export const getNetwork = (id:string, filterType:string="default", filterItems:string="", feature:string="Authors", count:number=100): (dispatch: any) => Promise<void> =>
     async dispatch => {
         const url = `${URL_GET_NETWORK_NEW}?id=${id}&count=${count}&feature=${feature}&filterFeature=${filterType}&filterList=${filterItems}`;
         await fetch(url)
@@ -101,17 +102,17 @@ export const getNetwork = (id:string, filterType:string="topics", filterItems:st
             })
             .then(function (network:any) {
                 const customNetwork = {
-                    nodes: customNodes(network.nodes),
-                    links: customLinks(network.links),
+                    nodes: customNodes(network.network.nodes),
+                    links: customLinks(network.network.links),
                 }
-                const networkNodesAfterResize = {
-                    nodes: [...customNodesSize(customNetwork)],
-                    links: customNetwork.links
-                } ;
+                // const networkNodesAfterResize = {
+                //     nodes: [...customNodesSize(customNetwork)],
+                //     links: customNetwork.links
+                // } ;
 
                 console.log(customNetwork)
                 dispatch({type: "GET_NETWORK",
-                    payload:  networkNodesAfterResize
+                    payload:  customNetwork
                 });
             })
             .catch(function (error) {

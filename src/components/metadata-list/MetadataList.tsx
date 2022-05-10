@@ -81,7 +81,6 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
         if (isSubmitSelected){
             setIsSubmitSelected(false);
             // @ts-ignore
-            dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords'));
 
 
             // @ts-ignore

@@ -149,9 +149,9 @@ export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<v
  * Get Articles from the server
  * @return {dispatch} Type + payload.
  */
-export const getFilteredArticles = (id:string, filterItems: Array<string>, filterType: string = 'frequentWords', limit:number=100): (dispatch: any) => Promise<void> =>
+export const getFilteredArticles = (id:string, filterItems:string="", limit:number=100): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filterFeature=${filterType}&filterList=${filterItems}`;
+        let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filters=${filterItems}`;
         await fetch(URL_GET_ARTICLES)
             .then(function (response) {
                 return response.json();

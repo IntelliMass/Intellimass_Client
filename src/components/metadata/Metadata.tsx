@@ -16,15 +16,15 @@ export const Metadata: React.FC<MetadataProps> = (props) => {
     const { metadata, index, listName, onMetadataChange  } = props;
 
     const removeTag = () => {
-        onMetadataChange(listName, "REMOVE_SAVED_METADATA", metadata.id);
+        onMetadataChange("SAVED", "NONE", metadata.id);
     }
 
     const selectTag = () => {
-        onMetadataChange(listName, "SELECT_UNSAVED_METADATA", metadata.id);
+        onMetadataChange("UNSAVED", listName, metadata.id);
     }
 
     const MetadataTag = (title:string) => {
-        if(listName === "SAVED"){
+        if(listName === "NONE"){
             return <Tag onClose={removeTag} color="pink" >
                 {title} <CloseOutlined onClick={removeTag}/>
             </Tag>
