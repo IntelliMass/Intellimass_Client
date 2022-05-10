@@ -5,7 +5,7 @@ import {ArticlesContainer} from "../components/articles-container/ArticleContain
 import {useHistory} from "react-router-dom";
 import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
 import {CollectionContainer} from "../components/collection-container/CollectionContainer";
-import {NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
+import {IMetadataWithCategory, NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
 import {ArticleOfList, getFilteredArticles} from "../actions/ArticleActions";
 import {ArticleList} from "../modules/articles/articlesList/ArticleList";
 import {Spin} from "antd";
@@ -24,6 +24,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const queryId = useAppSelector<string>(state => state.query.queryId);
     // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
+    const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const query = useAppSelector<string>(state => state.query.query);
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [localCount, setCount] = useState<number>(100);
@@ -33,10 +34,6 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const history = useHistory();
     const dispatch = useAppDispatch();
 
-    useEffect(()=>{
-        setIsLoader(true);
-    },[queryId]);
-
 
     useEffect(()=>{
         if (queryId === ''){
@@ -44,7 +41,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-        dispatch(getFilteredArticles(queryId, [], 'frequentWords', localCount));
+        dispatch(getFilteredArticles(queryId, savedMetadataList, 'frequentWords', localCount));
     },[queryId, query])
 
 
@@ -81,7 +78,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
 
   return (
     queryId !== '' || articles.length !== 0 ?
-    <div className="screen">
+    <div className="screen screen-articles">
         <MenuButton2 actionOption={actionOption} setActionOption={actionHandler} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen}/>
         {actionOption !== 'none' &&
         <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
@@ -117,10 +114,10 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
                 <h4 className="loader-articles-details">Searching for articles</h4>
             </div> :
             <div>
-                <ArticleList articles={articles} queryId={queryId} query={query}/>
+                <ArticleList articles={articles} queryId={queryId} query={query} savedMetadataList={savedMetadataList}/>
             </div>
         }
-    </div> : <div className="screen"> </div>
+    </div> : <div className="screen screen-articles"> </div>
 
   );
 };

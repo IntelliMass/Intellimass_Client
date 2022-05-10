@@ -65,6 +65,21 @@ code {
   background-size: cover;
 }
 
+.screen-articles{
+  .loader-container{
+    margin-top: 250px;
+    margin-left: 50%;
+    color: white;
+    width: 400px;
+
+    .loader-articles-details{
+      margin-left: -70px;
+      color: white;
+      font-size: 16px;
+    }
+  }
+}
+
 .light{
   background: var(--background-white-theme) !important;
   color: var(--background-dark-theme) !important;

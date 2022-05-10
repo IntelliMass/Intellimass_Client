@@ -5,6 +5,8 @@ import {Button, Collapse, Divider, Select, Spin} from "antd";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
 import {IMetadata, NewMetadata} from "../../reducers/MetadataReducer";
+import Swal from "sweetalert2";
+import {deleteCollection} from "../../actions/CollectionAction";
 
 const { Panel } = Collapse;
 
@@ -178,15 +180,33 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
             let newSavedList = [...savedMetadataList];
             let newMetadata = {...localMetadata};
             if (foundIndex !== -1) {
-                newSavedList[foundIndex].metadata.isSelected = !newSavedList[foundIndex].metadata.isSelected;
-                if (newSavedList[foundIndex].category === "AUTHORS") newMetadata.metadata.authors.push({...newSavedList[foundIndex].metadata});
-                else if (newSavedList[foundIndex].category === "COMMON_WORDS") newMetadata.metadata.common_words.push({...newSavedList[foundIndex].metadata});
-                else if (newSavedList[foundIndex].category === "TOPICS") newMetadata.metadata.topics.push({...newSavedList[foundIndex].metadata});
-                else if (newSavedList[foundIndex].category === "YEARS") newMetadata.metadata.years.push({...newSavedList[foundIndex].metadata});
-                else  newMetadata.metadata.fields_of_study.push({...newSavedList[foundIndex].metadata});
-                const list = [...newSavedList.splice(foundIndex, 1)];
-                // @ts-ignore
-                dispatch(patchMetadata({...newMetadata}, []));
+                Swal.fire({
+                    title: 'Are you sure you want to remove this filter?',
+                    text: `Your data set will be change`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // @ts-ignore
+                        newSavedList[foundIndex].metadata.isSelected = !newSavedList[foundIndex].metadata.isSelected;
+                        if (newSavedList[foundIndex].category === "AUTHORS") newMetadata.metadata.authors.push({...newSavedList[foundIndex].metadata});
+                        else if (newSavedList[foundIndex].category === "COMMON_WORDS") newMetadata.metadata.common_words.push({...newSavedList[foundIndex].metadata});
+                        else if (newSavedList[foundIndex].category === "TOPICS") newMetadata.metadata.topics.push({...newSavedList[foundIndex].metadata});
+                        else if (newSavedList[foundIndex].category === "YEARS") newMetadata.metadata.years.push({...newSavedList[foundIndex].metadata});
+                        else  newMetadata.metadata.fields_of_study.push({...newSavedList[foundIndex].metadata});
+                        const list = [...newSavedList.splice(foundIndex-1, 1)];
+                        // @ts-ignore
+                        dispatch(patchMetadata({...newMetadata}, list));
+                        Swal.fire(
+                            'Deleted!',
+                            'Your collection has been deleted.',
+                            'success'
+                        )
+                    }
+                })
             }
         }
 
@@ -227,7 +247,6 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
             // TODO : DISPATCH AND NOT LOCAL
             // @ts-ignore
             dispatch(patchMetadata({...newMetadata}, [...savedMetadataList]))
-            //setLocalMetadata({...newMetadata});
         }
     };
 
