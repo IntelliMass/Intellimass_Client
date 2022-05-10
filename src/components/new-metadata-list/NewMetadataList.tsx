@@ -197,7 +197,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                         else if (newSavedList[foundIndex].category === "TOPICS") newMetadata.metadata.topics.push({...newSavedList[foundIndex].metadata});
                         else if (newSavedList[foundIndex].category === "YEARS") newMetadata.metadata.years.push({...newSavedList[foundIndex].metadata});
                         else  newMetadata.metadata.fields_of_study.push({...newSavedList[foundIndex].metadata});
-                        const list = [...newSavedList.splice(foundIndex-1, 1)];
+                        const list = [...savedMetadataList.filter(item => item.metadata.id !== id)];
                         // @ts-ignore
                         dispatch(patchMetadata({...newMetadata}, list));
                         Swal.fire(

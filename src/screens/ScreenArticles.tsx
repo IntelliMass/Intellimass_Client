@@ -17,8 +17,46 @@ import {BreadCrumbList} from "../components/bread-crumb-list/BreadCrumbList";
 import aos from "aos";
 
 
-
 type ScreenProfileProps = {};
+
+export const truncateMetadataType = (type: string) => {
+    if (type === "AUTHORS")  return "authors";
+    else if(type === "TOPICS") return "topics";
+    else if(type === "COMMON_WORDS") return "frequentWords";
+    else if(type === "YEARS") return "year";
+    else return "fieldsOfStudy";
+}
+
+
+export const truncateMetadataTypeToObject = (metadata: IMetadataWithCategory) => {
+    if (metadata.category === "AUTHORS")  return {authors: metadata.metadata.title.toString()};
+    else if(metadata.category === "TOPICS") return {topics: metadata.metadata.title.toString()};
+    else if(metadata.category === "COMMON_WORDS") return {frequentWords: metadata.metadata.title.toString()};
+    else if(metadata.category === "YEARS") return {year: metadata.metadata.title.toString()};
+    else return {fieldsOfStudy: metadata.metadata.title.toString()};
+}
+
+
+export const metadataListToSerialize = (metadataList: Array<IMetadataWithCategory>) => {
+    let urlParams:string = "";
+    metadataList.forEach((metadata:IMetadataWithCategory) => {
+        let str = serialize(truncateMetadataTypeToObject(metadata));
+        urlParams+=str + '##';
+    });
+    let responseStr =  urlParams.slice(0,-2);
+    console.log(responseStr);
+    return responseStr;
+}
+
+export const serialize = function(obj:any) {
+    var str = [];
+    for (var p in obj)
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+    return str.join("&");
+}
+
 
 const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const queryId = useAppSelector<string>(state => state.query.queryId);
@@ -41,8 +79,8 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-        dispatch(getFilteredArticles(queryId, savedMetadataList, 'frequentWords', localCount));
-    },[queryId, query])
+        dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount));
+    },[queryId, query, savedMetadataList])
 
 
     useEffect(()=>{

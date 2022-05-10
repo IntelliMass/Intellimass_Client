@@ -66,7 +66,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         // @ts-ignore
        // dispatch(getMetadata(queryId));
         // @ts-ignore
-        dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', localCount));
+        dispatch(getFilteredArticles(queryId,  "", localCount));
     },[queryId]);
 
     useEffect(()=>{
@@ -98,7 +98,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         console.log(count)
         setCount(count);
         // @ts-ignore
-        dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', count));
+        dispatch(getFilteredArticles(queryId, '', count));
 
         // @ts-ignore
         dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
@@ -140,7 +140,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
             dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, localCount));
         } else if (value === "List"){
             // @ts-ignore
-            dispatch(getFilteredArticles(queryId, getTitlesFromMetadata(savedMetadataList), 'frequentWords', localCount));
+            dispatch(queryId, '', localCount);
             // dispatch(getArticles(queryId));
         }
     }
