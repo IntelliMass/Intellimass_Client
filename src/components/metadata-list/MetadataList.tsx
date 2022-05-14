@@ -52,6 +52,8 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
 
     const dispatch = useAppDispatch();
 
+
+
     /*
     * LISTENER TO SERVER METADATA
     */

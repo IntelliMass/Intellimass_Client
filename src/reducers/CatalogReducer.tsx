@@ -1,15 +1,20 @@
-// QUERY STATE MANAGEMENT REDUCER
-import {KeywordsListObject, QueryAction} from "../actions/QueryActions";
 import {CatalogAction} from "../actions/CatalogAction";
 
+export interface INewSingleCatalog {
+    title: string,
+    rank: number
+}
+
 export interface CatalogState {
-    catalogs: Array<string>,
-    selectedCategories: Array<string>
+    catalogs: Array<INewSingleCatalog>,
+    selectedCategories: Array<INewSingleCatalog>,
+    numOfClusters: number
 }
 
 const initState = {
-    catalogs: ['Computer Science', 'Academy', 'Business', 'Data Science'],
-    selectedCategories: ['Computer Science', 'Academy']
+    catalogs: [],
+    selectedCategories: [],
+    numOfClusters: 4
 };
 
 
@@ -22,10 +27,17 @@ const CatalogReducer = (state: CatalogState = initState, action:CatalogAction) =
                 selectedCategories: []
             };
 
-        case "UPDATE_SELECTED":
+        case "UPDATE_SELECTED_METADATA":
             return {
                 ...state,
-                selectedCategories: [...action.payload],
+                catalogs: [...action.payload.catalogs],
+                selectedCategories: [...action.payload.selectedCategories]
+            };
+
+        case "UPDATE_NUMBER_OF_CLUSTERS":
+            return {
+                ...state,
+                numOfClusters: action.payload
             };
 
         default:

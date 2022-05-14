@@ -29,10 +29,10 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
 
     const history = useHistory();
 
-
     useEffect(()=>{
         console.log(collections)
-    },[collections])
+    },[userid, collections, userid])
+
 
     useEffect(()=>{
         const selected = collections.find(found => found.collectionName === selectedCollectionName);

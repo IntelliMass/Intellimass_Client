@@ -6,9 +6,15 @@ import { useAppSelector, useAppDispatch } from "../../../hooks/hooks"
 import {ArticleOfList, Author, getArticles} from "../../../actions/ArticleActions";
 import {GetMoreButton} from "../../../components/get-more/GetMore";
 import {IMetadataWithCategory} from "../../../components/new-metadata-list/NewMetadataList";
+import {CategoryTag} from "../../../components/category-tags/CategoryTag";
+import {INewSingleCatalog} from "../../../reducers/CatalogReducer";
 
 
-const listAuthorsToString = (authors: Array<Author>):string=>{
+export const fromCategoryToIndex = (category: string, categories: Array<INewSingleCatalog>): number => {
+    return categories.findIndex(item => category === item.title);
+}
+
+export const listAuthorsToString = (authors: Array<Author>):string=>{
     let stringAuthores = "";
     authors.forEach(author => {
         stringAuthores += author.name + " , "
@@ -25,10 +31,11 @@ type ArticleListProps = {
 
 export const ArticleList: React.FC<ArticleListProps> = (props) => {
     const {articles, query, queryId, savedMetadataList} = props;
+    const catalog = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.catalogs);
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
-    },[ articles])
+    },[ articles, catalog])
 
     return (
         <div className={`Article-list`}>
@@ -42,7 +49,7 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                     pageSize: 10,
                 }}
                 dataSource={articles}
-                renderItem={item => (
+                renderItem={(item) => (
                     <List.Item
                         key={item.title}
                         actions={[<GetMoreButton paperId={item.paperId}/>]}
@@ -51,6 +58,9 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                             title={item.year + ' | ' + item.title}
                             description={ listAuthorsToString(item.authors)}
                         />
+                        <div className="category-tag">
+                            <CategoryTag category={item.categories || 'none'} index={fromCategoryToIndex(item.categories || 'none', catalog )}/>
+                        </div>
                         {item.abstract}
                     </List.Item>
                 )}

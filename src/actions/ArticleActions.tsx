@@ -75,20 +75,18 @@ export interface ArticleOfList {
     paperId: string,
     venue:string,
     year: number,
-    frequentWords?: string[]
+    frequentWords?: string[],
     topics?: any[],
-    references?: any[]
+    references?: any[],
+    categories?: string
 }
 
-let URL1 = "https://api.semanticscholar.org/v1/paper/";
-let URL2 = "https://api.semanticscholar.org/graph/v1/paper/search";
-let URL3 = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
-let URL_GET_ARTICLES_NEW = "httsp://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/articles";
-let URL_GET_ARTICLE_NEW = "https://ec2-35-178-32-52.eu-west-2.compute.amazonaws.com:5000/getOne";
+let URL_GET_ARTICLES_NEW = "https://api.intellimass.net/articles/articles";
+let URL_GET_ARTICLE_NEW = "https://api.intellimass.net/articles/getOne";
 let URL_GET_FILTERED_ARTICLES = "https://api.intellimass.net/articles";
 
 
-let OFFSET = 10;
+let OFFSET = 100;
 let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
 
 /**
@@ -149,9 +147,9 @@ export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<v
  * Get Articles from the server
  * @return {dispatch} Type + payload.
  */
-export const getFilteredArticles = (id:string, filterItems:string="", limit:number=100): (dispatch: any) => Promise<void> =>
+export const getFilteredArticles = (id:string, filterItems:string="", limit:number=100, clusters:string="", numOfClusters: number=4): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filters=${filterItems}`;
+        let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
         await fetch(URL_GET_ARTICLES)
             .then(function (response) {
                 return response.json();

@@ -43,8 +43,9 @@ let URL_COLLECTIONS = "https://api.intellimass.net/collections";
 //         };
 //     }
 
-export function getCollections(id:string, userid: string, collections: Array<ICollection>) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
+export function getCollections(id:string, userid: string, collections: Array<ICollection>, count:number=100, filterItems:string="", clusters: string="", numOfClusters: string="" ) {
+    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}&count=${count}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
+
     return {
         type: "GET_COLLECTIONS",
         payload: collections,

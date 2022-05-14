@@ -93,9 +93,10 @@ export const customNodesSize = (network: INetwork) => {
  * authors/abstract/title/default
  * @return {dispatch} Type + payload.
  */
-export const getNetwork = (id:string, filterType:string="default", filterItems:string="", feature:string="Authors", count:number=100): (dispatch: any) => Promise<void> =>
+export const getNetwork = (id:string, filterItems:string="", feature:string="Authors", count:number=100, clusters:string, numOfClusters:number): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        const url = `${URL_GET_NETWORK_NEW}?id=${id}&count=${count}&feature=${feature}&filterFeature=${filterType}&filterList=${filterItems}`;
+        const url = `${URL_GET_NETWORK_NEW}?id=${id}&count=${count}&feature=${feature}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
+
         await fetch(url)
             .then(function (response) {
                 return response.json();

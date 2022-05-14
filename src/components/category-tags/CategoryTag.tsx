@@ -1,9 +1,10 @@
 import React from "react";
-import {Statistic, Card, Row, Col, Alert} from 'antd';
-import { ArrowUpOutlined } from '@ant-design/icons';
+import { Col, Alert} from 'antd';
+import "./CategoryTag.scss";
 
 type ArticlePopoverProps = {
-    article: any;
+    category: string;
+    index: number;
 };
 
 export const typeGeneretor = (index:number)=>{
@@ -13,25 +14,23 @@ export const typeGeneretor = (index:number)=>{
     else if (index % 4 === 1){
         return "info";
     }
-    else if (index % 4 === 1){
+    else if (index % 4 === 2){
         return "success";
     }
-    return "error";
+    else if (index % 4 === 3){
+        return "error";
+    }
+    else {
+        return ;
+    }
 };
 
 export const CategoryTag: React.FC<ArticlePopoverProps> = (props) => {
-    const {article} = props;
-
+    const {category, index} = props;
     return (
-        <Row gutter={20}>
-            {article.fieldsOfStudy.map((field:string, index:number)=>{
-                return(
-                    <Col span={10} >
-                        <Alert message={field} type={typeGeneretor(index)} />
-                    </Col>
-                );
-            })}
-        </Row>
+        <>
+            <Alert className={`category-tag`} message={category} type={typeGeneretor(index)} />
+        </>
     );
 };
 

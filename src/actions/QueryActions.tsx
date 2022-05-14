@@ -10,8 +10,6 @@ export interface KeywordsListObject {
     source?: string
 }
 
-const URL_POST = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/query";
-const URL_GET = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/articles";
 let URL_POST_NEW = "https://api.intellimass.net/query";
 
 

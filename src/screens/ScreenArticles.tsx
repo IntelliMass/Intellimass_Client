@@ -15,6 +15,8 @@ import {ClusterContainer} from "../components/cluster-container/ClusterContainer
 import {ExportAction} from "../components/exort-action/ExportAction";
 import {BreadCrumbList} from "../components/bread-crumb-list/BreadCrumbList";
 import aos from "aos";
+import {INewSingleCatalog} from "../reducers/CatalogReducer";
+import {stringCategoriesFromArray} from "../actions/CatalogAction";
 
 
 type ScreenProfileProps = {};
@@ -62,7 +64,11 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const queryId = useAppSelector<string>(state => state.query.queryId);
     // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
+
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
+    const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
+    const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
+
     const query = useAppSelector<string>(state => state.query.query);
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [localCount, setCount] = useState<number>(100);
@@ -79,7 +85,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-        dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount));
+        dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount, stringCategoriesFromArray(categories), numberOfClusters ));
     },[queryId, query, savedMetadataList])
 
 
