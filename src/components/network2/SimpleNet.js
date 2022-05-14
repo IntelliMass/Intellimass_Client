@@ -10,6 +10,7 @@ export function SimpleNet(props) {
     const forceRef = useRef(null);
 
     useEffect(() => {
+        console.log(network);
         forceRef.current.d3Force("charge").strength(-400);
     },[]);
 
@@ -48,6 +49,7 @@ export function SimpleNet(props) {
             {hoveredNode? <NodeHover/> : null}
             <ForceGraph3D
                 graphData={network}
+                id="title"
                 nodeLabel="title"
                 height={700}
                 width={1000}
