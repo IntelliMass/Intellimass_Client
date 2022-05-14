@@ -78,7 +78,7 @@ export interface ArticleOfList {
     frequentWords?: string[],
     topics?: any[],
     references?: any[],
-    categories?: string
+    cluster?: string
 }
 
 let URL_GET_ARTICLES_NEW = "https://api.intellimass.net/articles/articles";
@@ -174,4 +174,3 @@ export function updateCount(count:number) {
         payload: count,
     };
 }
-

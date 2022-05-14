@@ -19,38 +19,30 @@ let URL_COLLECTIONS = "https://api.intellimass.net/collections";
  * Get User's private collections from the server
  * @return {dispatch} Type + payload.
  */
-// export const getCollections = (id:string, userid: string): (dispatch: any) => Promise<void> =>
-//     async dispatch => {
-//         const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-//         // await fetch(url)
-//         //     .then(function (response) {
-//         //         return response.json();
-//         //     })
-//         //     .then(function (categories:any) {
-//         //         dispatch({type: "GET_COLLECTIONS",
-//         //             payload: categories
-//         //         });
-//         //     })
-//         //     .catch(function (error) {
-//         //         console.log(
-//         //             "There has been a problem with your fetch operation: " + error.message
-//         //         );
-//         //         throw error;
-//         //     });
-//         return {
-//             type: "GET_COLLECTIONS",
-//             payload: [],
-//         };
-//     }
+export const getCollections = (userid:string="anar"): (dispatch: any) => Promise<{ payload: any[]; type: string }> =>
+    async dispatch => {
+        const url = `${URL_COLLECTIONS}?user_id=${userid}`;
+        await fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (categories:any) {
+                dispatch({type: "GET_COLLECTIONS",
+                    payload: categories
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
+        return {
+            type: "GET_COLLECTIONS",
+            payload: [],
+        };
+    }
 
-export function getCollections(id:string, userid: string, collections: Array<ICollection>, count:number=100, filterItems:string="", clusters: string="", numOfClusters: string="" ) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}&count=${count}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-
-    return {
-        type: "GET_COLLECTIONS",
-        payload: collections,
-    };
-}
 
 export function changeCollectionName(id:string, userid: string, collections: Array<ICollection>, oldName:string, newName: string) {
     const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;

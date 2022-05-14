@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Collapse } from 'antd';
 import "./CollectionContainer.scss"
 import {CollectionTable} from "../collection-table/CollectionTable";
-import {useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {ICollection} from "../../reducers/CollectionResucer";
+import {getCollections} from "../../actions/CollectionAction";
 
 const { Panel } = Collapse;
 
@@ -12,7 +13,15 @@ type CollectionContainerProps = {};
 export const CollectionContainer: React.FC<CollectionContainerProps> = (props) => {
     const collections = useAppSelector<Array<ICollection>>(state => state.collection.collections);
     const userid = useAppSelector<string>(state => state.user.userId) || 'userId';
-    const queryId = useAppSelector<string>(state => state.query.queryId) || 'queryId';
+
+    const dispatch = useAppDispatch()
+
+    useEffect(()=>{
+        // @ts-ignore
+        dispatch(getCollections());
+    },[userid]);
+
+    useEffect(()=>{},[collections ])
 
     function callback(key:any) {
         console.log(key);
