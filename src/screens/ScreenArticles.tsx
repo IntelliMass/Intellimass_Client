@@ -5,7 +5,7 @@ import {ArticlesContainer} from "../components/articles-container/ArticleContain
 import {useHistory} from "react-router-dom";
 import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
 import {CollectionContainer} from "../components/collection-container/CollectionContainer";
-import {NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
+import {IMetadataWithCategory, NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
 import {ArticleOfList, getFilteredArticles} from "../actions/ArticleActions";
 import {ArticleList} from "../modules/articles/articlesList/ArticleList";
 import {Spin} from "antd";
@@ -17,13 +17,52 @@ import {BreadCrumbList} from "../components/bread-crumb-list/BreadCrumbList";
 import aos from "aos";
 
 
-
 type ScreenProfileProps = {};
+
+export const truncateMetadataType = (type: string) => {
+    if (type === "AUTHORS")  return "authors";
+    else if(type === "TOPICS") return "topics";
+    else if(type === "COMMON_WORDS") return "frequentWords";
+    else if(type === "YEARS") return "year";
+    else return "fieldsOfStudy";
+}
+
+
+export const truncateMetadataTypeToObject = (metadata: IMetadataWithCategory) => {
+    if (metadata.category === "AUTHORS")  return {authors: metadata.metadata.title.toString()};
+    else if(metadata.category === "TOPICS") return {topics: metadata.metadata.title.toString()};
+    else if(metadata.category === "COMMON_WORDS") return {frequentWords: metadata.metadata.title.toString()};
+    else if(metadata.category === "YEARS") return {year: metadata.metadata.title.toString()};
+    else return {fieldsOfStudy: metadata.metadata.title.toString()};
+}
+
+
+export const metadataListToSerialize = (metadataList: Array<IMetadataWithCategory>) => {
+    let urlParams:string = "";
+    metadataList.forEach((metadata:IMetadataWithCategory) => {
+        let str = serialize(truncateMetadataTypeToObject(metadata));
+        urlParams+=str + '##';
+    });
+    let responseStr =  urlParams.slice(0,-2);
+    console.log(responseStr);
+    return responseStr;
+}
+
+export const serialize = function(obj:any) {
+    var str = [];
+    for (var p in obj)
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+    return str.join("&");
+}
+
 
 const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const queryId = useAppSelector<string>(state => state.query.queryId);
     // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
+    const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const query = useAppSelector<string>(state => state.query.query);
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [localCount, setCount] = useState<number>(100);
@@ -33,10 +72,6 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const history = useHistory();
     const dispatch = useAppDispatch();
 
-    useEffect(()=>{
-
-    },[queryId]);
-
 
     useEffect(()=>{
         if (queryId === ''){
@@ -44,12 +79,13 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-        dispatch(getFilteredArticles(queryId, [], 'frequentWords', localCount));
-    },[queryId, query])
+        dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount));
+    },[queryId, query, savedMetadataList])
 
 
     useEffect(()=>{
-        setIsLoader(false);
+        if(articles.length === 0)  setIsLoader(true);
+        else setIsLoader(false);
     },[articles])
 
 
@@ -80,7 +116,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
 
   return (
     queryId !== '' || articles.length !== 0 ?
-    <div className="screen">
+    <div className="screen screen-articles">
         <MenuButton2 actionOption={actionOption} setActionOption={actionHandler} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen}/>
         {actionOption !== 'none' &&
         <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
@@ -116,10 +152,10 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
                 <h4 className="loader-articles-details">Searching for articles</h4>
             </div> :
             <div>
-                <ArticleList articles={articles} queryId={queryId} query={query}/>
+                <ArticleList articles={articles} queryId={queryId} query={query} savedMetadataList={savedMetadataList}/>
             </div>
         }
-    </div> : <div className="screen"> </div>
+    </div> : <div className="screen screen-articles"> </div>
 
   );
 };

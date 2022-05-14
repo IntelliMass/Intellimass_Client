@@ -17,7 +17,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     useEffect(()=>{
         // @ts-ignore
         dispatch(getNetwork(queryId));
-    },[])
+    },[queryId])
 
 
     useEffect(()=>{

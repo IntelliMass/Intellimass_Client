@@ -1,4 +1,5 @@
 import {IMetadata, NewMetadata, ServerMetadata} from "../reducers/MetadataReducer";
+import {IMetadataWithCategory} from "../components/new-metadata-list/NewMetadataList";
 
 type UpdateMetadataAction = {type: "UPDATE_METADATA", payload: any }
 type UpdateSelectedMetadataAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
@@ -65,7 +66,8 @@ export const getMetadata = (id:string): (dispatch: any) => Promise<void> =>
  * patch selected Metadata to filter articles
  * @return {dispatch} Type + payload.
  */
-export function patchMetadata(metadata:Array<IMetadata>, savedMetadata:Array<IMetadata> ) {
+export function patchMetadata(metadata:Array<IMetadata>, savedMetadata:Array<IMetadataWithCategory> ) {
+    console.log(savedMetadata)
     return {
         type: "UPDATE_SELECTED_METADATA",
         payload:  {

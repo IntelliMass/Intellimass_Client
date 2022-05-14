@@ -5,14 +5,8 @@ import {LikeOutlined, MessageOutlined, StarOutlined} from "@ant-design/icons";
 import { useAppSelector, useAppDispatch } from "../../../hooks/hooks"
 import {ArticleOfList, Author, getArticles} from "../../../actions/ArticleActions";
 import {GetMoreButton} from "../../../components/get-more/GetMore";
+import {IMetadataWithCategory} from "../../../components/new-metadata-list/NewMetadataList";
 
-// @ts-ignore
-const IconText = ({ icon, text }) => (
-    <Space>
-        {React.createElement(icon)}
-        {text}
-    </Space>
-);
 
 const listAuthorsToString = (authors: Array<Author>):string=>{
     let stringAuthores = "";
@@ -25,11 +19,12 @@ const listAuthorsToString = (authors: Array<Author>):string=>{
 type ArticleListProps = {
     articles: Array<ArticleOfList>,
     query: string,
-    queryId: string
+    queryId: string,
+    savedMetadataList?: Array<IMetadataWithCategory>
 };
 
 export const ArticleList: React.FC<ArticleListProps> = (props) => {
-    const {articles, query, queryId} = props;
+    const {articles, query, queryId, savedMetadataList} = props;
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
