@@ -1,17 +1,25 @@
 .categories-list-container{
   display: grid;
 
+  .option-slider{
+    position: relative;
+    padding: 0px 30px;
+  }
+
   .categories-list{
-    height: 450px;
-    overflow: auto;
+    height: 100px;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     color: black;
     width: 500px;
+    padding-left: 10px;
+    padding-top: 10px;
   }
 
   .categories-saved-list{
-    height: 150px;
+    height: 100px;
+    display: grid;
+    grid-template-columns: auto auto;
   }
 
   .categories-action{

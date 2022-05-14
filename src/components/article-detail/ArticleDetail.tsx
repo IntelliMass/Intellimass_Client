@@ -46,7 +46,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                 </p>
                                 <div>
                                     <Divider orientation="left">Categories</Divider>
-                                    <CategoryTag article={articleDetail}/>
+                                    {/*<CategoryTag article={articleDetail}/>*/}
                                 </div>
                                 <Divider orientation="left">Abstract</Divider>
                                 <div className="abstract-container">

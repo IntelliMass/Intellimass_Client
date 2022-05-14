@@ -60,7 +60,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = (props) => {
                 </p>
                 <div>
                     <Divider orientation="left">Categories</Divider>
-                    <CategoryTag article={article}/>
+                    {/*<CategoryTag article={article}/>*/}
                 </div>
                 <Divider orientation="left">Abstract</Divider>
                 <div className="abstract-container">

@@ -17,6 +17,7 @@ import {PlusOutlined, MinusOutlined} from "@ant-design/icons";
 import {ArticleCard} from "../article-card/ArticleCard";
 import {typeGeneretor} from "../category-tags/CategoryTag";
 import {IMetadata} from "../../reducers/MetadataReducer";
+import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 const { Option } = Select;
 
 type ArticlesContainerProps = {};
@@ -38,10 +39,8 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     // @ts-ignore
     const connectionType = useAppSelector<string>(state => state.network.connectionType);
 
-
     // @ts-ignore
-    const catalog = useAppSelector<Array<string>>(state => state.catalog.catalogs);
-    const categories = useAppSelector<Array<string>>(state => state.catalog.selectedCategories);
+    const catalog = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.catalogs);
 
     const metadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.metadataList);
     const savedMetadataList = useAppSelector<Array<IMetadata>>(state => state.metadata.savedMetadataList);
@@ -253,10 +252,10 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                 <div className="network-right-container">
                     <div className="categories-selection-container">
                         <Row gutter={20}>
-                            {catalog.map((field:string, index:number)=>{
+                            {catalog.map((field: INewSingleCatalog, index:number)=>{
                                 return(
                                     <Col span={4} >
-                                        <Alert message={field} type={typeGeneretor(index)} />
+                                        <Alert message={field.title} type={typeGeneretor(index)} />
                                     </Col>
                                 );
                             })}

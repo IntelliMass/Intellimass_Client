@@ -7,6 +7,7 @@ import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
 import {IMetadata, NewMetadata} from "../../reducers/MetadataReducer";
 import Swal from "sweetalert2";
 import {deleteCollection} from "../../actions/CollectionAction";
+import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 
 const { Panel } = Collapse;
 
@@ -100,6 +101,9 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     const queryId = useAppSelector<string>(state => state.query.queryId);
 
 
+    const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
+    const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
+
     const [localMetadata, setLocalMetadata] = useState<NewMetadata>({...state_metadataList});
     const [savedMetadataList, setSavedMetadataList] = useState<Array<IMetadataWithCategory>>([...state_savedMetadataList]);
 
@@ -109,26 +113,18 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
 
     const dispatch = useAppDispatch();
 
-    /*
+    /**
      * ON LOAD
-    */
-    // useEffect(()=>{
-    //     setIsLoader(true);
-    //     if (state_metadataList.metadata.common_words.length === 0){
-    //         // @ts-ignore
-    //         dispatch( getMetadata(queryId));
-    //     }
-    // },[])
-
+    **/
     useEffect(()=>{
         setIsLoader(true);
         // @ts-ignore
-        dispatch( getMetadata(queryId));
+        dispatch( getMetadata(queryId, 100, state_savedMetadataList, categories, numberOfClusters));
     },[queryId])
 
-    /*
+    /**
     * LISTENER TO SERVER METADATA
-    */
+    **/
     useEffect(() => {
         setLocalMetadata({...state_metadataList});
         setIsLoader(false);
@@ -142,7 +138,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
 
     useEffect(()=>{
         console.log(savedMetadataList);
-    },[savedMetadataList])
+    },[savedMetadataList, categories, numberOfClusters ])
 
     /**
      * TAKE ALL SELECTED FROM LOCAL
