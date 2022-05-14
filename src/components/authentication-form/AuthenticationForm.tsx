@@ -16,8 +16,9 @@ const formItemLayout = {
     wrapperCol: { span: 14 },
 };
 
-export const AuthenticationForm = withAuthenticator(() => {
-    const [isLoader, setIsLoader] = useState<boolean>(false);
+// export const AuthenticationForm = withAuthenticator(() => {
+    export const AuthenticationForm = (() => {
+        const [isLoader, setIsLoader] = useState<boolean>(false);
     const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
 
     const [formLayout, setFormLayout] = useState<string>('Login');
@@ -136,3 +137,4 @@ export const AuthenticationForm = withAuthenticator(() => {
         </div>
     );
 });
+// });
