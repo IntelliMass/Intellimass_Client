@@ -15,7 +15,7 @@ type GetMoreButtonProps = {
 export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
     const {paperId, article} = props;
 
-    const collections = useAppSelector<Array<ICollection>>(state => state.collection.collections);
+    const collections = useAppSelector<Array<ICollection>>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userId) || 'userId';
     const queryId = useAppSelector<string>(state => state.query.queryId) || 'queryId';
 
@@ -33,7 +33,7 @@ export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
     const getCollectionsNames = (collections: Array<ICollection>): Array<string> => {
         let collectionNames: Array<string> = [];
         collections.forEach(collection => {
-            collectionNames.push(collection.collectionName);
+            collectionNames.push(collection.collection_name);
         })
         return collectionNames;
     }

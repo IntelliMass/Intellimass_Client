@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 type CollectionContainerProps = {};
 
 export const CollectionContainer: React.FC<CollectionContainerProps> = (props) => {
-    const collections = useAppSelector<Array<ICollection>>(state => state.collection.collections);
+    const collections = useAppSelector<Array<ICollection>>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userId) || 'userId';
 
     const dispatch = useAppDispatch()
@@ -21,7 +21,9 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
         dispatch(getCollections());
     },[userid]);
 
-    useEffect(()=>{},[collections ])
+    useEffect(()=>{
+        console.log(collections)
+    },[collections ])
 
     function callback(key:any) {
         console.log(key);
@@ -32,8 +34,8 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
             <h2 style={{color:"white"}}>Private collection</h2>
             <Collapse defaultActiveKey={['1']} onChange={callback}>
                 {collections.map((collection, index)=>(
-                    <Panel header={collection.collectionName} key={collection.collectionName + index}>
-                        <CollectionTable articles={collection.articles}/>
+                    <Panel header={collection.collection_name} key={collection.collection_name + index}>
+                        <CollectionTable articles={collection.articles_list}/>
                     </Panel>
                 ))}
             </Collapse>

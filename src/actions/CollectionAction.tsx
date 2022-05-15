@@ -1,4 +1,4 @@
-import {ICollection} from "../reducers/CollectionResucer";
+import {CollectionState, ICollection} from "../reducers/CollectionResucer";
 import {ArticleOfList} from "./ArticleActions";
 
 type GetCollectionsAction = {type: "GET_COLLECTIONS", payload: any };
@@ -26,9 +26,9 @@ export const getCollections = (userid:string="anar"): (dispatch: any) => Promise
             .then(function (response) {
                 return response.json();
             })
-            .then(function (categories:any) {
+            .then(function (serverCollection:any) {
                 dispatch({type: "GET_COLLECTIONS",
-                    payload: categories
+                    payload: serverCollection
                 });
             })
             .catch(function (error) {
@@ -46,9 +46,9 @@ export const getCollections = (userid:string="anar"): (dispatch: any) => Promise
 
 export function changeCollectionName(id:string, userid: string, collections: Array<ICollection>, oldName:string, newName: string) {
     const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const foundIndex = collections.findIndex(collection => collection.collectionName == oldName);
+    const foundIndex = collections.findIndex(collection => collection.collection_name == oldName);
     let newCollection =  {...collections[foundIndex]};
-    newCollection.collectionName = newName;
+    newCollection.collection_name = newName;
     collections[foundIndex] = newCollection;
     return {
         type: "UPDATE_COLLECTION_NAME",
@@ -58,10 +58,10 @@ export function changeCollectionName(id:string, userid: string, collections: Arr
 
 export function insertToCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string, article: ArticleOfList) {
     const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const foundIndex = collections.findIndex(collection => collection.collectionName == collectionName);
+    const foundIndex = collections.findIndex(collection => collection.collection_name == collectionName);
     let newCollection =  {...collections[foundIndex]};
-    const newArticles = [...newCollection.articles, article];
-    newCollection.articles = newArticles;
+    const newArticles = [...newCollection.articles_list, article];
+    newCollection.articles_list = newArticles;
     collections[foundIndex] = newCollection;
     return {
         type: "INSERT_ITEM_TO_COLLECTION",
@@ -73,10 +73,10 @@ export function insertToCollection(id:string, userid: string, collections: Array
 export function removeFromCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId:string) {
     const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
     let newCollections = [...collections];
-    const index = collections.findIndex(collection => collection.collectionName === collectionName);
+    const index = collections.findIndex(collection => collection.collection_name === collectionName);
     if (index) {
-        const newCollectionArticles = newCollections[index].articles.filter(article => article.paperId !== paperId);
-        newCollections[index].articles = newCollectionArticles;
+        const newCollectionArticles = newCollections[index].articles_list.filter(article => article.paperId !== paperId);
+        newCollections[index].articles_list = newCollectionArticles;
         return {
             type: "REMOVE_ITEM_TO_COLLECTION",
             payload: [...newCollections],
@@ -89,7 +89,7 @@ export function removeFromCollection(id:string, userid: string, collections: Arr
 
 export function deleteCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string) {
     const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const filteredCollections = collections.filter(collection => collection.collectionName !== collectionName);
+    const filteredCollections = collections.filter(collection => collection.collection_name !== collectionName);
     return {
         type: "DELETE_COLLECTION",
         payload: [...filteredCollections],
@@ -99,8 +99,8 @@ export function deleteCollection(id:string, userid: string, collections: Array<I
 export function createCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string) {
     const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
     const newCollection: ICollection = {
-        collectionName: collectionName,
-        articles: []
+        collection_name: collectionName,
+        articles_list: []
     }
     const newCollections = [newCollection,...collections];
     return {

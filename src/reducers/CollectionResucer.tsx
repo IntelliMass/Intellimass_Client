@@ -4,19 +4,19 @@ import {ArticleOfList} from "../actions/ArticleActions";
 import {CollectionsAction} from "../actions/CollectionAction";
 
 export interface ICollection {
-    collectionName: string;
-    articles: Array<ArticleOfList>;
+    collection_name: string;
+    articles_list: Array<ArticleOfList>;
 }
 
 export interface CollectionState {
-    collections: Array<any>,
+    collection: Array<any>,
 }
 
 const initState = {
-    collections: [
+    collection: [
         {
-            collectionName: "NFT 2021",
-            articles: [
+            collection_name: "NFT 2021",
+            articles_list: [
                 {
                     abstract: "The Non-Fungible Token (NFT) market is mushrooming in recent years. The concept of NFT originally comes from a token standard of Ethereum, aiming to distinguish each token with distinguishable signs. This type of token can be bound with virtual/digital properties as their unique identifications. With NFTs, all marked properties can be freely traded with customized values according to their ages, rarity, liquidity, etc. It has greatly stimulated the prosperity of the decentralized application (DApp) market. At the time of writing (May 2021), the total money used on completed NFT sales has reached 34, 530, 649.86 USD. The thousandfold return on its increasing market draws huge attention worldwide. However, the development of the NFT ecosystem is still in its early stage, and the technologies of NFTs are pre-mature. Newcomers may get lost in their frenetic evolution due to the lack of systematic summaries. In this technical report, we explore the NFT ecosystems in several aspects. We start with an overview of state-of-the-art NFT solutions, then provide their technical components, protocols, standards, and desired proprieties. Afterwards, we give a security evolution, with discussions on the perspectives of their design models, opportunities and challenges. To the best of our knowledge, this is the first systematic study on the current NFT ecosystems.",
                     authors: [
@@ -61,8 +61,8 @@ const initState = {
             ]
         },
         {
-            collectionName: "NFT 2022",
-            articles: [
+            collection_name: "NFT 2022",
+            articles_list: [
                 {
                     abstract: "Non Fungible Tokens (NFTs) are digital assets that represent objects like art, collectible, and in-game items. They are traded online, often with cryptocurrency, and are generally encoded within smart contracts on a blockchain. Public attention towards NFTs has exploded in 2021, when their market has experienced record sales, but little is known about the overall structure and evolution of its market. Here, we analyse data concerning 6.1 million trades of 4.7 million NFTs between June 23, 2017 and April 27, 2021, obtained primarily from Ethereum and WAX blockchains. First, we characterize statistical properties of the market. Second, we build the network of interactions, show that traders typically specialize on NFTs associated with similar objects and form tight clusters with other traders that exchange the same kind of objects. Third, we cluster objects associated to NFTs according to their visual features and show that collections contain visually homogeneous objects. Finally, we investigate the predictability of NFT sales using simple machine learning algorithms and find that sale history and, secondarily, visual features are good predictors for price. We anticipate that these findings will stimulate further research on NFT production, adoption, and trading in different contexts.",
                     authors: [
@@ -91,8 +91,8 @@ const initState = {
             ]
         },
         {
-            collectionName: "IOT architecture",
-            articles: [
+            collection_name: "IOT architecture",
+            articles_list: [
                 {
                     abstract: "The Non-Fungible Token (NFT) market is mushrooming in recent years. The concept of NFT originally comes from a token standard of Ethereum, aiming to distinguish each token with distinguishable signs. This type of token can be bound with virtual/digital properties as their unique identifications. With NFTs, all marked properties can be freely traded with customized values according to their ages, rarity, liquidity, etc. It has greatly stimulated the prosperity of the decentralized application (DApp) market. At the time of writing (May 2021), the total money used on completed NFT sales has reached 34, 530, 649.86 USD. The thousandfold return on its increasing market draws huge attention worldwide. However, the development of the NFT ecosystem is still in its early stage, and the technologies of NFTs are pre-mature. Newcomers may get lost in their frenetic evolution due to the lack of systematic summaries. In this technical report, we explore the NFT ecosystems in several aspects. We start with an overview of state-of-the-art NFT solutions, then provide their technical components, protocols, standards, and desired proprieties. Afterwards, we give a security evolution, with discussions on the perspectives of their design models, opportunities and challenges. To the best of our knowledge, this is the first systematic study on the current NFT ecosystems.",
                     authors: [
@@ -123,8 +123,8 @@ const initState = {
             ]
         },
         {
-            collectionName: "Food",
-            articles: [
+            collection_name: "Food",
+            articles_list: [
                 {
                     abstract: "The market for non-fungible tokens (NFTs), transferrable and unique digital assets on public blockchains, has received widespread attention and experienced strong growth since early 2021. This study provides an introduction to NFTs and explores the 14 largest submarkets using data from the Ethereum blockchain between June 2017 and May 2021. The analyses rely on (a) the number of NFT sales, (b) the dollar volume of NFT trades and (c) the number of unique blockchain wallets that traded NFTs. Based on the number of transactions and wallets, the Ethereum-based NFT market peaked at the end of 2017 due to the success of the CryptoKitties project. As of 2021, fewer transactions occur but the traded value is much higher. We find that NFT submarkets are cointegrated and feature various causal short-run connections between them. The success or adoption of younger NFT projects is influenced by that of more established markets. At the same time, the success of newer markets has an impact on the more established projects. The results contribute to the overall understanding of the NFT phenomenon and suggest that NFT markets are immature or even inefficient.",
                     authors: [{authorId: "113611772", name: "Lennart Ante"}],
@@ -146,7 +146,7 @@ const CatalogReducer = (state: CollectionState = initState, action:CollectionsAc
         case "GET_COLLECTIONS":
             return {
                 ...state,
-                collections: [...action.payload],
+                collections: {...action.payload},
             };
 
         case "UPDATE_COLLECTION_NAME":

@@ -136,7 +136,6 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
 
 
     const handlerNumOfClusters = (newNumber: number) => {
-
         setNumOfClusters(newNumber);
     }
 
