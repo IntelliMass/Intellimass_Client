@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import {deleteCollection} from "../../actions/CollectionAction";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 import {IMetadataWithCategory} from "../new-metadata-list/NewMetadataList";
+import {PieChartComponent} from "../pie-chart/PieChart";
 
 type CategoriesListProps = {
 
@@ -256,6 +257,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
                     <CategoryCard isSelected={category.isSelected} selectedCategories={fromSelectedToCategories(selectedCategories)} title={category.category.title} onCategoryClick={handlerClick} index={index} count={category.category.rank}/>
                 ))}
             </div>
+            <PieChartComponent categories={catalog}/>
             <div className="categories-action">
                 <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Save selected</Button>
                 <Button onClick={onClear} shape="round" block >Reset clusters</Button>
