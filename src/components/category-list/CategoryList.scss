@@ -3,7 +3,21 @@
 
   .option-slider{
     position: relative;
-    padding: 0px 30px;
+    padding: 0px 20px;
+
+    .slider{
+      width: 50%;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .slider-button{
+      margin-left: 10%;
+      max-width: 40%;
+      display: inline-block;
+      position: absolute;
+      margin-top: -3px;
+    }
   }
 
   .categories-list{
@@ -26,10 +40,9 @@
     height: 110px;
     margin-left: 2.5%;
     margin-right: 2.5%;
-    display: flex;
-    position: absolute;
     bottom: 0;
     padding: 20px;
+    position: absolute;
 
     .save-saved-metadata{
       margin-right: 30px;
@@ -37,7 +50,7 @@
 
     .ant-btn{
       margin: 20px;
-      width: 150px;
+      width: 200px;
     }
 
   }
