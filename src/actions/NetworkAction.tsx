@@ -1,3 +1,4 @@
+import { string } from "prop-types";
 import {INetwork} from "../reducers/NetworkReducer";
 
 type getNetworkAction = {type: "GET_NETWORK", payload: any }
@@ -21,8 +22,6 @@ export const customValue = (listAuthorsNames: Array<string>) => {
     return listAuthorsNames.join();
 };
 
-// TODO: ADD HERE COLOR
-// TODO: ADD HERE SIZE
 export const customNodes = (nodes: Array<any>):Array<any> => {
     let newNodes:Array<any>  = [];
     let newNode = {};
@@ -32,8 +31,6 @@ export const customNodes = (nodes: Array<any>):Array<any> => {
             id: node.title,
             isClusterNode: true,
             name: node.title,
-            size: 20,
-            color: "#B0C4DE",
         };
         newNodes.push(newNode);
     })
@@ -93,7 +90,7 @@ export const customNodesSize = (network: INetwork) => {
  * authors/abstract/title/default
  * @return {dispatch} Type + payload.
  */
-export const getNetwork = (id:string, filterItems:string="", feature:string="Authors", count:number=100, clusters:string, numOfClusters:number): (dispatch: any) => Promise<void> =>
+export const getNetwork = (id:string, filterItems:string="", feature:string="frequentWords", count:number=100, clusters:string, numOfClusters:number): (dispatch: any) => Promise<void> =>
     async dispatch => {
         const url = `${URL_GET_NETWORK_NEW}?id=${id}&count=${count}&feature=${feature}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
 

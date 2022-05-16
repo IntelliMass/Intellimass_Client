@@ -40,7 +40,7 @@ export function SimpleNet(props) {
             <div className="node-clicked">
                 {/*<ArticleCard article={selectedNode}/>*/}
             </div>
-        );
+        );    
     };
 
     return (
@@ -49,26 +49,19 @@ export function SimpleNet(props) {
             {hoveredNode? <NodeHover/> : null}
             <ForceGraph3D
                 graphData={network}
-                id="title"
+                nodeId="title"
                 nodeLabel="title"
                 height={700}
                 width={1000}
-                backgroundColor={'#f4f6f8'}
-                linkCurvature="curvature"
+                linkWidth={10}
+                linkColor={"#FFFFFF"}
+                nodeAutoColorBy="cluster"
+                nodeVal='size' 
+                // backgroundColor={'#f4f6f8'}
+                linkCurvature={0.05}
                 enablePointerInteraction={true}
                 enableNodeDrag={true}
-                // linkDirectionalParticleWidth={1}
-                // linkDirectionalArrowRelPos={1}
-                // linkDirectionalArrowLength={4}
-                //nodeRelSize="nodeRelSize"
-                nodeCanvasObject={(node, ctx) =>  {
-                    console.log('hey')
-                    nodePaint(node, node.color, ctx, node.size)
-                }}
-                //nodePointerAreaPaint={nodePaint}
-                linkWidth={3}
-                linkColor={"#FFA07A"}
-
+                // zoomToFit={{ms: 0, px: 0}}
                 ref={forceRef}
                 onNodeHover={(node) => {
                     if (node) {
