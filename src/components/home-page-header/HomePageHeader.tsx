@@ -1,10 +1,13 @@
 import React from "react";
 import { useAppSelector } from "../../hooks/hooks"
-import {Col} from 'antd';
+import {Col, Row} from 'antd';
 import {UiTitle} from "../ui-title/UiTitle";
 import "./HomePageHeader.scss"
 
-type HomePageHeaderProps = {};
+type HomePageHeaderProps = {
+    numberOfCollection: number,
+    numberOfArticles: number
+};
 
 export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
     const userName = useAppSelector<string>(state => state.user.userName);
@@ -12,18 +15,44 @@ export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
     return (
         <div className="home-data-container">
             <span className="title-home">Hey {userName || 'user'}, Let discover articles with IntelliMass</span>
-            <Col className="Col-total"  key={"home-total-collections"} order={0}>
-                <UiTitle title="Total collections" type="medium" />
-                <div className="value alerts-value">
-                    3
-                </div>
-            </Col>
-            <Col className="Col-total" key={"home-total-articles"} order={1}>
-                <UiTitle title="Total saved articles" type="medium" />
-                <div className="value alerts-value">
-                    40
-                </div>
-            </Col>
+            <Row>
+                <Col className="Col-total">
+                    <div className="stati concrete ">
+                        <i className="icon-book-open icons"></i>
+                        <div>
+                            <b> {props.numberOfCollection}</b>
+                            <span>Total Clusters</span>
+                        </div>
+                    </div>
+                </Col>
+                <Col className="Col-total">
+                    <div className="stati concrete left">
+                        <i className="icon-basket-loaded icons"></i>
+                        <div>
+                            <b>{props.numberOfArticles}</b>
+                            <span>Total Saved Articles</span>
+                        </div>
+                    </div>
+                </Col>
+                <Col className="Col-total">
+                    <div className="stati bg-concrete ">
+                        <i className="icon-basket icons"></i>
+                        <div>
+                            <b>{props.numberOfCollection}</b>
+                            <span>Clusters</span>
+                        </div>
+                    </div>
+                </Col>
+                <Col className="Col-total">
+                    <div className="stati bg-concrete left">
+                        <i className="icon-bag icons"></i>
+                        <div>
+                            <b>{props.numberOfArticles}</b>
+                            <span>Articles</span>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </div>
     );
 };

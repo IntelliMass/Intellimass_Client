@@ -116,7 +116,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     useEffect(()=>{
         // @ts-ignore
         dispatch(getCatalog(queryId, 100, savedMetadataList, categories, numberOfClusters ));
-    },[queryId])
+    },[queryId, numberClusters])
 
     useEffect(()=>{
         console.log(catalog)
@@ -222,7 +222,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             if (result.isConfirmed) {
 
                 // @ts-ignore
-                dispatch(patchNumberOfCluster(numberOfClusters));
+                dispatch(patchNumberOfCluster(numOfClusters));
 
                 Swal.fire(
                     'Clusters updated!',
@@ -240,8 +240,8 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
                 <h5 style={{color: "gray"}}>You can split the articles into clusters and filter them by save</h5>
             </div>
             <div className="option-slider">
-                <Slider min={2} max={5} dots={true} tooltipVisible={true} onChange={handlerNumOfClusters} value={numOfClusters} />
-                <Button onClick={onSaveNumberOfClusters} shape="round" >Change clusters number</Button>
+                <Slider className="slider" min={2} max={5} dots={true} tooltipVisible={true} onChange={handlerNumOfClusters} value={numOfClusters} />
+                <Button className="slider-button" onClick={onSaveNumberOfClusters} shape="round" >save new number</Button>
             </div>
             <Divider orientation="left">Saved categories</Divider>
             <div className="categories-list categories-saved-list">
@@ -252,11 +252,11 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             <Divider orientation="left">Articles categories list</Divider>
             <h4 style={{color: "#1890ff", marginLeft: 20}}>You select {categories.length} categories</h4>
             <h5 style={{color: "gray" , marginLeft: 20}}>Maximum to choose is 2 categories</h5>
-            <div className="categories-list">
-                {selectedCategories.map((category, index)=>(
-                    <CategoryCard isSelected={category.isSelected} selectedCategories={fromSelectedToCategories(selectedCategories)} title={category.category.title} onCategoryClick={handlerClick} index={index} count={category.category.rank}/>
-                ))}
-            </div>
+            {/*<div className="categories-list">*/}
+            {/*    {selectedCategories.map((category, index)=>(*/}
+            {/*        <CategoryCard isSelected={category.isSelected} selectedCategories={fromSelectedToCategories(selectedCategories)} title={category.category.title} onCategoryClick={handlerClick} index={index} count={category.category.rank}/>*/}
+            {/*    ))}*/}
+            {/*</div>*/}
             <PieChartComponent categories={catalog}/>
             <div className="categories-action">
                 <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Save selected</Button>

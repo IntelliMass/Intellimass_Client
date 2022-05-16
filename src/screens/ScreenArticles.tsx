@@ -86,7 +86,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         setIsLoader(true);
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount, stringCategoriesFromArray(categories), numberOfClusters ));
-    },[queryId, query, savedMetadataList])
+    },[queryId, query, savedMetadataList, numberOfClusters])
 
 
     useEffect(()=>{
