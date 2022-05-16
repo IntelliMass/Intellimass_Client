@@ -63,6 +63,7 @@ export function patchCategories(catalogs:Array<INewSingleCatalog>, selectedCateg
      * @return {dispatch} Type + payload.
      */
     export function patchNumberOfCluster(newNumber: number ) {
+        console.log(newNumber)
         return {
             type: "UPDATE_NUMBER_OF_CLUSTERS",
             payload:  newNumber
