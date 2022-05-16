@@ -1,5 +1,6 @@
-import {ICollection} from "../reducers/CollectionResucer";
+import {CollectionState, ICollection} from "../reducers/CollectionResucer";
 import {ArticleOfList} from "./ArticleActions";
+import {joinQuery, QueryState} from "../reducers/QueryReducer";
 
 type GetCollectionsAction = {type: "GET_COLLECTIONS", payload: any };
 type UpdateCollectionNameAction = {type: "UPDATE_COLLECTION_NAME", payload: any};
@@ -12,107 +13,167 @@ type CreateCollectionAction = {type: "CREATE_COLLECTION", payload: any};
 export type CollectionsAction = GetCollectionsAction | UpdateCollectionNameAction |
     InsertItemAction | RemoveItemAction | DeleteCollectionAction | CreateCollectionAction;
 
-let URL_COLLECTIONS = "https://api.intellimass.net/collections";
+let URL_COLLECTIONS = "https://api.intellimass.net/";
 
 
 /**
  * Get User's private collections from the server
  * @return {dispatch} Type + payload.
  */
-// export const getCollections = (id:string, userid: string): (dispatch: any) => Promise<void> =>
-//     async dispatch => {
-//         const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-//         // await fetch(url)
-//         //     .then(function (response) {
-//         //         return response.json();
-//         //     })
-//         //     .then(function (categories:any) {
-//         //         dispatch({type: "GET_COLLECTIONS",
-//         //             payload: categories
-//         //         });
-//         //     })
-//         //     .catch(function (error) {
-//         //         console.log(
-//         //             "There has been a problem with your fetch operation: " + error.message
-//         //         );
-//         //         throw error;
-//         //     });
-//         return {
-//             type: "GET_COLLECTIONS",
-//             payload: [],
-//         };
-//     }
-
-export function getCollections(id:string, userid: string, collections: Array<ICollection>, count:number=100, filterItems:string="", clusters: string="", numOfClusters: string="" ) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}&count=${count}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-
-    return {
-        type: "GET_COLLECTIONS",
-        payload: collections,
-    };
-}
-
-export function changeCollectionName(id:string, userid: string, collections: Array<ICollection>, oldName:string, newName: string) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const foundIndex = collections.findIndex(collection => collection.collectionName == oldName);
-    let newCollection =  {...collections[foundIndex]};
-    newCollection.collectionName = newName;
-    collections[foundIndex] = newCollection;
-    return {
-        type: "UPDATE_COLLECTION_NAME",
-        payload: collections,
-    };
-}
-
-export function insertToCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string, article: ArticleOfList) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const foundIndex = collections.findIndex(collection => collection.collectionName == collectionName);
-    let newCollection =  {...collections[foundIndex]};
-    const newArticles = [...newCollection.articles, article];
-    newCollection.articles = newArticles;
-    collections[foundIndex] = newCollection;
-    return {
-        type: "INSERT_ITEM_TO_COLLECTION",
-        payload: [],
-    };
-}
-
-
-export function removeFromCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId:string) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    let newCollections = [...collections];
-    const index = collections.findIndex(collection => collection.collectionName === collectionName);
-    if (index) {
-        const newCollectionArticles = newCollections[index].articles.filter(article => article.paperId !== paperId);
-        newCollections[index].articles = newCollectionArticles;
+export const getCollections = (userid:string="anar"): (dispatch: any) => Promise<{ payload: any[]; type: string }> =>
+    async dispatch => {
+        const url = `${URL_COLLECTIONS}collections?user_id=${userid}`;
+        await fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (serverCollection:any) {
+                dispatch({type: "GET_COLLECTIONS",
+                    payload: serverCollection
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
         return {
-            type: "REMOVE_ITEM_TO_COLLECTION",
-            payload: [...newCollections],
+            type: "GET_COLLECTIONS",
+            payload: [],
         };
     }
 
 
-
-}
-
-export function deleteCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const filteredCollections = collections.filter(collection => collection.collectionName !== collectionName);
-    return {
-        type: "DELETE_COLLECTION",
-        payload: [...filteredCollections],
-    };
-}
-
-export function createCollection(id:string, userid: string, collections: Array<ICollection>, collectionName: string) {
-    const url = `${URL_COLLECTIONS}?id=${id}&userId=${userid}`;
-    const newCollection: ICollection = {
-        collectionName: collectionName,
-        articles: []
+export const  changeCollectionName = (id:string, userid:string="anar", collections: Array<ICollection>, oldName:string, newName: string): (dispatch: any) => Promise<void> =>{
+    const user_ID = "anar";
+    const url = `${URL_COLLECTIONS}rename_collection?user_id=${user_ID}`;
+    const body = {collection_name: oldName, new_collection: newName};
+    return async dispatch => {
+        await fetch(url, {
+            method: 'post',
+            body: JSON.stringify(body)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (serverCollection:any) {
+                dispatch({ type: "UPDATE_COLLECTION_NAME",
+                    payload: { ...serverCollection}
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
     }
-    const newCollections = [newCollection,...collections];
-    return {
-        type: "CREATE_COLLECTION",
-        payload: [...newCollections],
-    };
 }
+
+export const  insertToCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId: string): (dispatch: any) => Promise<void> =>{
+    const user_ID = "anar";
+    const url = `${URL_COLLECTIONS}insert_article?user_id=${user_ID}&query_id=${id}`;
+    const body = {collection_name: collectionName, article_id: paperId};
+    return async dispatch => {
+        await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(body)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (serverCollection:any) {
+                dispatch({ type: "INSERT_ITEM_TO_COLLECTION",
+                    payload: { ...serverCollection}
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
+    }
+}
+
+export const  removeFromCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId:string): (dispatch: any) => Promise<void> =>{
+    const user_ID = "anar";
+    const url = `${URL_COLLECTIONS}pop_article?user_id=${user_ID}`;
+    const body = {collection_name: collectionName, article_id: paperId};
+    return async dispatch => {
+        await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(body)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (serverCollection:any) {
+                dispatch({ type: "REMOVE_ITEM_TO_COLLECTION",
+                    payload: { ...serverCollection}
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
+    }
+}
+
+
+export const  deleteCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string): (dispatch: any) => Promise<void> =>{
+    const user_ID = "anar";
+    const url = `${URL_COLLECTIONS}collection_delete?user_id=${user_ID}`;
+    const body = {collection_name: collectionName};
+    return async dispatch => {
+        await fetch(url, {
+            method: 'DELETE',
+            body: JSON.stringify(body)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (serverCollection:any) {
+                dispatch({ type: "DELETE_COLLECTION",
+                    payload: { ...serverCollection}
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
+    }
+}
+
+export const  createCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string): (dispatch: any) => Promise<void> =>{
+    const user_ID = "anar";
+    const url = `${URL_COLLECTIONS}create_collection?user_id=${user_ID}`;
+    const body = {collection_name: collectionName};
+    return async dispatch => {
+        await fetch(url, {
+            method: 'post',
+            body: JSON.stringify(body)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (serverCollection:any) {
+                dispatch({ type: "CREATE_COLLECTION",
+                    payload: { ...serverCollection}
+                });
+            })
+            .catch(function (error) {
+                console.log(
+                    "There has been a problem with your fetch operation: " + error.message
+                );
+                throw error;
+            });
+    }
+}
+
+

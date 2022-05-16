@@ -3,7 +3,7 @@ import "./ExportAction.scss"
 import {Button, Divider, Input, List, Tooltip} from "antd";
 import {DeleteOutlined, EditOutlined, MoreOutlined} from "@ant-design/icons";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks"
-import {ICollection} from "../../reducers/CollectionResucer";
+import {CollectionState, ICollection} from "../../reducers/CollectionResucer";
 import Swal from 'sweetalert2'
 import {
     changeCollectionName,
@@ -11,14 +11,13 @@ import {
     deleteCollection,
     removeFromCollection
 } from "../../actions/CollectionAction";
-import {getArticleDetail} from "../../actions/ArticleActions";
 import {useHistory} from "react-router-dom";
 
 
 type ExportActionProps = {};
 
 export const ExportAction: React.FC<ExportActionProps> = (props) => {
-    const collections = useAppSelector<Array<ICollection>>(state => state.collection.collections);
+    const collections = useAppSelector<CollectionState>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userId) || 'userId';
     const queryId = useAppSelector<string>(state => state.query.queryId) || 'queryId';
 
@@ -35,7 +34,7 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
 
 
     useEffect(()=>{
-        const selected = collections.find(found => found.collectionName === selectedCollectionName);
+        const selected = collections.collection.find(found => found.collection_name === selectedCollectionName);
         if (selected)
             setSelectedCollection({...selected});
     },[selectedCollectionName])
@@ -157,19 +156,19 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
                 <List
                     className="collections-list"
                     itemLayout="horizontal"
-                    dataSource={collections}
+                    dataSource={collections.collection}
                     renderItem={item => (
                         <List.Item
                             actions={[
                                 <Tooltip placement="bottom" title={'Rename collection'}>
-                                    <EditOutlined className="collection-icon" onClick={()=>updateCollectionName(item.collectionName)}/>
+                                    <EditOutlined className="collection-icon" onClick={()=>updateCollectionName(item.collection_name)}/>
                                 </Tooltip>,
                                 <Tooltip placement="bottom" title={'Delete collection'}>
-                                    <DeleteOutlined className="collection-icon" onClick={()=>deleteCollectionHandler(item.collectionName)} />
+                                    <DeleteOutlined className="collection-icon" onClick={()=>deleteCollectionHandler(item.collection_name)} />
                                 </Tooltip>]}
                         >
                             <List.Item.Meta
-                                title={<span className="collection-title" onClick={()=>changeCollection(item.collectionName)}>{item.collectionName}</span>}
+                                title={<span className="collection-title" onClick={()=>changeCollection(item.collection_name)}>{item.collection_name}</span>}
                             />
                         </List.Item>
                     )}
@@ -183,7 +182,7 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
                             <List
                                 className="collections-list"
                                 itemLayout="horizontal"
-                                dataSource={selectedCollection?.articles}
+                                dataSource={selectedCollection?.articles_list}
                                 renderItem={item => (
                                     <List.Item
                                         actions={[

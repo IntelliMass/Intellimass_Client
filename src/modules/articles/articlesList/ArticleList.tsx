@@ -59,7 +59,7 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                             description={ listAuthorsToString(item.authors)}
                         />
                         <div className="category-tag">
-                            <CategoryTag category={item.categories || 'none'} index={fromCategoryToIndex(item.categories || 'none', catalog )}/>
+                            <CategoryTag category={item.cluster || 'none'} index={fromCategoryToIndex(item.cluster || 'none', catalog )}/>
                         </div>
                         {item.abstract}
                     </List.Item>
