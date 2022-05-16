@@ -21,7 +21,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
 
     useEffect(()=>{
         // @ts-ignore
-        dispatch(getNetwork(queryId, savedMetadataList, "Authors", 100, categories, numberOfClusters));
+        dispatch(getNetwork(queryId, savedMetadataList, "frequentWords", 100, categories, numberOfClusters));
     },[queryId])
 
 
