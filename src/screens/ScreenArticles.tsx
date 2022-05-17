@@ -43,7 +43,7 @@ export const metadataListToSerialize = (metadataList: Array<IMetadataWithCategor
     let urlParams:string = "";
     metadataList.forEach((metadata:IMetadataWithCategory) => {
         let str = serialize(truncateMetadataTypeToObject(metadata));
-        urlParams+=str + '##';
+        urlParams+=str + '%%';
     });
     let responseStr =  urlParams.slice(0,-2);
     console.log(responseStr);
@@ -86,7 +86,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         setIsLoader(true);
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount, stringCategoriesFromArray(categories), numberOfClusters ));
-    },[queryId, query, savedMetadataList, numberOfClusters])
+    },[queryId, query, savedMetadataList, numberOfClusters, categories])
 
 
     useEffect(()=>{
@@ -149,7 +149,6 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
                 <BreadCrumbList/>
             </>
             }
-            {/**/}
         </div>
         }
         {

@@ -7,6 +7,7 @@ import MetadataReducer from "./MetadataReducer";
 import NetworkReducer from "./NetworkReducer";
 import UserReducer from "./UserReducer";
 import CollectionResucer from "./CollectionResucer";
+import BreadcrumbReducer from "./BreadcrumbReducer";
 
 const RootReducer = combineReducers({
     shared: SharedReducer,
@@ -16,7 +17,8 @@ const RootReducer = combineReducers({
     metadata: MetadataReducer,
     network: NetworkReducer,
     user: UserReducer,
-    collection: CollectionResucer
+    collection: CollectionResucer,
+    breadcrumbs: BreadcrumbReducer
 });
 
 export default RootReducer;

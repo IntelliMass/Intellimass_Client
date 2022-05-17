@@ -3,7 +3,6 @@ import "./CategoryCard.scss";
 import {Alert, Badge} from "antd";
 import {typeGeneretor} from "../category-tags/CategoryTag";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
-import {SelectedCategory} from "../category-list/CategoryList";
 
 type CategoryCardProps = {
     title:string;
@@ -12,6 +11,7 @@ type CategoryCardProps = {
     index: number;
     count: number;
     isSelected: boolean;
+    color: string;
 };
 
 export const CategoryCard: React.FC<CategoryCardProps> = (props) => {
@@ -24,6 +24,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = (props) => {
                         className={`alert-cluster ${props.isSelected && 'selected-alert'}`}
                         message={props.title}
                         type={typeGeneretor(props.index)}
+                        style={{backgroundColor: props.color}}
                     />
                 </Badge>
             );
@@ -34,6 +35,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = (props) => {
                     className={`alert-cluster ${props.isSelected && 'selected-alert'}`}
                     message={props.title}
                     type={typeGeneretor(props.index)}
+                    style={{backgroundColor: props.color}}
                 />
             </Badge>
         }
@@ -43,6 +45,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = (props) => {
                     className={`alert-cluster ${props.isSelected && 'selected-alert'}`}
                     message={props.title}
                     type={typeGeneretor(props.index)}
+                    style={{backgroundColor: props.color}}
                 />
             </Badge>
         }
@@ -52,6 +55,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = (props) => {
                     className={`alert-cluster ${props.isSelected && 'selected-alert'}`}
                     message={props.title}
                     type={typeGeneretor(props.index)}
+                    style={{backgroundColor: props.color}}
                 />
             </Badge>
         }

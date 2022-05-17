@@ -20,17 +20,16 @@ const initState = {
 
 const CatalogReducer = (state: CatalogState = initState, action:CatalogAction) => {
     switch (action.type) {
-        case "UPDATE_CATALOG":
+        case "GET_CATALOG":
             return {
                 ...state,
                 catalogs: [...action.payload],
                 selectedCategories: []
             };
 
-        case "UPDATE_SELECTED_METADATA":
+        case "UPDATE_CATALOG":
             return {
                 ...state,
-                catalogs: [...action.payload.catalogs],
                 selectedCategories: [...action.payload.selectedCategories]
             };
 

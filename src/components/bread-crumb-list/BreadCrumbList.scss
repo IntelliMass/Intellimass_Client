@@ -2,4 +2,23 @@
   width: 500px;
   padding-left: 10px;
   padding-top: 10px;
+
+  .time-line-list{
+    padding-right: 10px;
+
+    .ant-timeline-item{
+      .time-line-item{
+        .title-time-line{
+          color: black;
+        }
+      }
+
+      .time-line-item:hover{
+        .title-time-line{
+          color: #1890ff !important;
+        }
+        cursor: pointer;
+      }
+    }
+  }
 }
