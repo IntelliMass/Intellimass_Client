@@ -1,15 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Button, Divider, Dropdown, Menu, Slider} from "antd";
-import {useHistory} from "react-router-dom";
-import {ArticleOfList, getArticleDetail} from "../../actions/ArticleActions";
+import {Button, Divider, Slider} from "antd";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import "./CategoryList.scss";
 import {CategoryCard} from "../category/CategoryCard";
 import {getCatalog, patchCategories, patchNumberOfCluster} from "../../actions/CatalogAction";
-import {IconSlider} from "../sliderRank/SliderRank";
-import {CategoryTag} from "../category-tags/CategoryTag";
 import Swal from "sweetalert2";
-import {deleteCollection} from "../../actions/CollectionAction";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 import {IMetadataWithCategory} from "../new-metadata-list/NewMetadataList";
 import {PieChartComponent} from "../pie-chart/PieChart";
@@ -21,12 +16,13 @@ type CategoriesListProps = {
 export interface SelectedCategory {
     category: INewSingleCatalog;
     isSelected: boolean;
+    color: string;
 }
 
 export const fromCategoriesToSelected = (categories: Array<INewSingleCatalog>) : Array<SelectedCategory> => {
     let newArray: Array<SelectedCategory> = [];
     categories.forEach(category => {
-        newArray.push({category:category, isSelected: false});
+        newArray.push({category:category, isSelected: false, color: "white"});
     })
     return newArray;
 }
@@ -40,11 +36,8 @@ export const fromSelectedToCategories = (categories: Array<SelectedCategory>) : 
 }
 
 export const selectOneCategory = (categories: Array<INewSingleCatalog>, index: number) : Array<SelectedCategory> => {
-    console.log(index)
     let newArray: Array<SelectedCategory> = [...fromCategoriesToSelected(categories)];
-    console.log( newArray[index].isSelected)
     newArray[index].isSelected = !newArray[index].isSelected;
-    console.log( newArray[index].isSelected)
     return newArray;
 }
 
@@ -59,59 +52,18 @@ export const removeSelectedCategories = (categories: Array<SelectedCategory>) : 
 
 export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     // @ts-ignore
+    // SERVER
     const catalog = useAppSelector<Array< INewSingleCatalog>>(state => state.catalog.catalogs);
     const categories = useAppSelector<Array< INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberClusters = useAppSelector<number>(state => state.catalog.numOfClusters);
     const queryId = useAppSelector<string>(state => state.query.queryId);
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
-
-    // GET - FROM REDUCER
-    // SELECT - NEED TO WRAP THE CATALOG WITH IS_SELCTED
-    // IF SELECTED HEN DIFFERENT DESIGN
-    // SAVED - UN SELECTABLE
-
+    // SELECTED
     const [selectedCategories, setSelectedCategories] = useState<Array<SelectedCategory>>([]);
-
-    // const [stateCatalog, setCatalog] = useState<Array< INewSingleCatalog>>([]);
-    //
-    // //
-    // const [stateCategories, setCategories] = useState<Array< INewSingleCatalog>>([]);
-    //
-    // //
-    // const [savedCategories, setSavedCategories] = useState<Array< INewSingleCatalog>>([]);
-
-    // FOR DISPATCH - MAYBE ADD HERE TO THE NUM
     const [numOfClusters, setNumOfClusters] = useState<number>(numberClusters);
 
     const dispatch = useAppDispatch()
-
-    // ===========YANIV===========
-    // TODO - SELECTION + UI OF LIST
-    // PROBLEM WITH THE SECOND ITERATION - WITH THE VIEW OF 2
-
-
-
-    // ===========TODOS===========
-    // TODO - OPTION TO REMOVE FROM SAVED - ACTION
-    // TODO - CHANGE THE UI TO SOMETHING THAT LOOK BETTER
-    // TODO - DISABLING MORE THEN 2 SELECTION
-        // UI NUMBER OF TAGS BUG
-
-
-    // ===========PLAN===========
-    // TODO - PLAN - FILTER SELECTED GROUP - WHERE? API_REQUEST? UI?
-    // TODO - PLAN - GET NEW CATEGORIES LIST
-    // TODO - LOADER
-
-    // ===========FUNCTIONALITY===========
-    // SHOW LIST CATALOG
-    // SELECT ON IT
-    // MOVE TO SAVED AS FILTERED
-    // SHOW SELECTED AND REGULAR
-    // ADD SELECTED TO QUERY_PARAMS
-    // THEN WHAT HAPPENED TO THE REGULAR? IT JUST BE THE 2 OF THEM BECAUSE THE FILTER
-
 
     useEffect(()=>{
         // @ts-ignore
@@ -120,7 +72,6 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
 
     useEffect(()=>{
         console.log(catalog)
-        setSelectedCategories([...fromCategoriesToSelected(catalog)])
     },[catalog ])
 
     useEffect(()=>{
@@ -143,6 +94,17 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     const handlerClick = (categories: Array<INewSingleCatalog>, index: number) => {
         const newArray = [...selectOneCategory(categories, index)];
         setSelectedCategories([...newArray]);
+    }
+
+    /**
+     * RIGHT NOW CAN ONLY ADD TO THIS ARRAY
+     * */
+    const pieHandleClick = (category: string, color: string ) => {
+        let newItem = catalog.find(item => item.title === category);
+        if (newItem) {
+            let newSavedCategory = {category:newItem, isSelected: true, color: color}
+            setSelectedCategories([...selectedCategories, {...newSavedCategory}]);
+        }
     }
 
     const onClear = () => {
@@ -178,28 +140,10 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             confirmButtonText: 'Yes, zoom in'
         }).then((result) => {
             if (result.isConfirmed) {
-                // TAKE THE SELECTED
-                // DISPATCH (UPDATE) CATEGORY -> ALL WITHOUT SAVE + SAVED -> SELCTED
-                const newCatalog: INewSingleCatalog[] = fromSelectedToCategories(removeSelectedCategories(selectedCategories));
                 const newCategories: INewSingleCatalog[] = fromSelectedToCategories(selectedCategories);
+                console.log(newCategories);
                 // @ts-ignore
-                dispatch(patchCategories(newCatalog, newCategories ))
-
-                //
-                // let newCatalog: Array<INewSingleCatalog> = [];
-                // catalog.forEach(category => {
-                //     if (stateCategories.find(statecategory => statecategory === category)){
-                //         let nothing = 'nothing';
-                //     }
-                //     else {
-                //         newCatalog.push(category)
-                //     }
-                // })
-                // setCatalog([...newCatalog]);
-                // setSavedCategories([...savedCategories, ...stateCategories]);
-                // setCategories([]);
-
-
+                dispatch(patchCategories(newCategories))
                 Swal.fire(
                     'Success!',
                     'Your article list has been updated.',
@@ -245,8 +189,15 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             </div>
             <Divider orientation="left">Saved categories</Divider>
             <div className="categories-list categories-saved-list">
-                {categories.map((category, index)=>(
-                    <CategoryCard isSelected={false} selectedCategories={categories} title={category.title} onCategoryClick={handlerClick} index={index} count={category.rank}/>
+                {selectedCategories.map((category, index)=>(
+                    <CategoryCard isSelected={category.isSelected}
+                                  selectedCategories={categories}
+                                  title={category.category.title}
+                                  onCategoryClick={handlerClick}
+                                  index={index}
+                                  count={category.category.rank}
+                                  color={category.color}
+                    />
                 ))}
             </div>
             <Divider orientation="left">Articles categories list</Divider>
@@ -257,7 +208,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             {/*        <CategoryCard isSelected={category.isSelected} selectedCategories={fromSelectedToCategories(selectedCategories)} title={category.category.title} onCategoryClick={handlerClick} index={index} count={category.category.rank}/>*/}
             {/*    ))}*/}
             {/*</div>*/}
-            <PieChartComponent categories={catalog}/>
+            <PieChartComponent categories={catalog} onSelect={pieHandleClick}/>
             <div className="categories-action">
                 <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Save selected</Button>
                 <Button onClick={onClear} shape="round" block >Reset clusters</Button>

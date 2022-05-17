@@ -1,7 +1,7 @@
 import {INewSingleCatalog} from "../reducers/CatalogReducer";
 
-type UpdateCatalogAction = {type: "UPDATE_CATALOG", payload: any }
-type UpdateSelectedAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
+type UpdateCatalogAction = {type: "GET_CATALOG", payload: any }
+type UpdateSelectedAction = {type: "UPDATE_CATALOG", payload: any}
 type UpdateNumberOfClustersAction = {type: "UPDATE_NUMBER_OF_CLUSTERS", payload: any}
 
 export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction | UpdateNumberOfClustersAction;
@@ -11,9 +11,10 @@ let URL_GET_CATEGORIES_NEW = "https://api.intellimass.net/clusters";
 export const stringCategoriesFromArray = (categories: Array<INewSingleCatalog>) => {
     let newParams = "";
     categories.forEach(category => {
-        newParams += category.title + '%%';
+        newParams += category.title + '%$';
     })
     const urlParams = newParams.slice(0,-2);
+    console.log(urlParams)
     return urlParams;
 }
 
@@ -31,7 +32,7 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
                 return response.json();
             })
             .then(function (catalog:any) {
-                dispatch({type: "UPDATE_CATALOG",
+                dispatch({type: "GET_CATALOG",
                     payload: catalog.clusters
                 });
             })
@@ -48,11 +49,11 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
  * patch selected Metadata to filter articles
  * @return {dispatch} Type + payload.
  */
-export function patchCategories(catalogs:Array<INewSingleCatalog>, selectedCategories:Array<INewSingleCatalog> ) {
+export function patchCategories(selectedCategories:Array<INewSingleCatalog> ) {
+    console.log(selectedCategories)
     return {
-        type: "UPDATE_SELECTED_METADATA",
+        type: "UPDATE_CATALOG",
         payload: {
-            catalogs: [...catalogs],
             selectedCategories: [...selectedCategories]
         }
     };

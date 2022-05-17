@@ -5,7 +5,8 @@ import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 import "./PieChart.scss"
 
 type PieChartProps = {
-    categories: Array<INewSingleCatalog>
+    categories: Array<INewSingleCatalog>,
+    onSelect: Function
 };
 
 type SeriesData = {
@@ -53,16 +54,12 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
                 },
                 point: {
                     events: {
-                        mouseOver() {
-                            console.log(this);
-                        },
-                        mouseOut() {
-                        },
+                        // mouseOver() {},
+                        // mouseOut() {},
                         click(event: any) {
                             const color = event.target.point.color;
                             const value = event.target.point.name;
-                            console.log(color)
-                            console.log(value)
+                            props.onSelect(value, color);
                         },
                         select: function(event:any){
                             event.preventDefault();

@@ -39,6 +39,7 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
 
     return (
         <div className={`Article-list`}>
+            <h3 style={{marginLeft: 15, color: "#E7E9A3"}}>Articles ({articles.length})</h3>
             <List
                 itemLayout="vertical"
                 size="small"
@@ -53,6 +54,7 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                     <List.Item
                         key={item.title}
                         actions={[<GetMoreButton paperId={item.paperId}/>]}
+                        className="article-list-item"
                     >
                         <List.Item.Meta
                             title={item.year + ' | ' + item.title}
