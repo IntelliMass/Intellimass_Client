@@ -43,7 +43,7 @@ export const metadataListToSerialize = (metadataList: Array<IMetadataWithCategor
     let urlParams:string = "";
     metadataList.forEach((metadata:IMetadataWithCategory) => {
         let str = serialize(truncateMetadataTypeToObject(metadata));
-        urlParams+=str + '%%';
+        urlParams+=str + '%$';
     });
     let responseStr =  urlParams.slice(0,-2);
     console.log(responseStr);

@@ -11,7 +11,7 @@ let URL_GET_CATEGORIES_NEW = "https://api.intellimass.net/clusters";
 export const stringCategoriesFromArray = (categories: Array<INewSingleCatalog>) => {
     let newParams = "";
     categories.forEach(category => {
-        newParams += category.title + '%%';
+        newParams += category.title + '%$';
     })
     const urlParams = newParams.slice(0,-2);
     console.log(urlParams)

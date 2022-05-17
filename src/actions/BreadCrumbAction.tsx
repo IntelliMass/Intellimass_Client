@@ -12,7 +12,7 @@ let URL_GET_BREADCRUMBS = "https://api.intellimass.net/breadcrumbs";
 const extractFromListToString = (items: string[]) => {
     let responseString: string = "";
     items.forEach(item => {
-        responseString += item + "%%";
+        responseString += item + "%$";
     })
     return responseString.slice(0, -2);
 }
