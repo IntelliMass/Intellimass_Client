@@ -6,7 +6,9 @@ import "./HomePageHeader.scss"
 
 type HomePageHeaderProps = {
     numberOfCollection: number,
-    numberOfArticles: number
+    numberOfArticles: number,
+    numberOfAuthors: number,
+    numberOfFrequentsWord: number
 };
 
 export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
@@ -26,11 +28,11 @@ export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
                     </div>
                 </Col>
                 <Col className="Col-total">
-                    <div className="stati concrete left">
+                    <div className="stati concrete ">
                         <i className="icon-basket-loaded icons"></i>
                         <div>
                             <b>{props.numberOfArticles}</b>
-                            <span>Total Saved Articles</span>
+                            <span>Total articles</span>
                         </div>
                     </div>
                 </Col>
@@ -38,17 +40,17 @@ export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
                     <div className="stati bg-concrete ">
                         <i className="icon-basket icons"></i>
                         <div>
-                            <b>{props.numberOfCollection}</b>
-                            <span>Clusters</span>
+                            <b>{props.numberOfFrequentsWord}</b>
+                            <span>Total frequents word</span>
                         </div>
                     </div>
                 </Col>
                 <Col className="Col-total">
-                    <div className="stati bg-concrete left">
+                    <div className="stati bg-concrete ">
                         <i className="icon-bag icons"></i>
                         <div>
                             <b>{props.numberOfArticles}</b>
-                            <span>Articles</span>
+                            <span>Total authors</span>
                         </div>
                     </div>
                 </Col>
