@@ -6,7 +6,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
 import {IMetadata, NewMetadata} from "../../reducers/MetadataReducer";
 import Swal from "sweetalert2";
-import {deleteCollection} from "../../actions/CollectionAction";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 
 const { Panel } = Collapse;
@@ -127,17 +126,16 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     **/
     useEffect(() => {
         setLocalMetadata({...state_metadataList});
-        setIsLoader(false);
-    },[  state_metadataList ]);
+        setTimeout(() => {
+            setIsLoader(false);
+        }, 1500);
+        },[  state_metadataList ]);
 
     useEffect(() => {
-        console.log(state_savedMetadataList)
         setSavedMetadataList([...state_savedMetadataList]);
-        setIsLoader(false);
     },[ state_savedMetadataList]);
 
     useEffect(()=>{
-        console.log(savedMetadataList);
     },[savedMetadataList, categories, numberOfClusters ])
 
     /**
@@ -252,75 +250,79 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
 
     return (
         <div className="metadata-list-container">
-            {isLoader ? <div className="loader-container">
-                    <Spin size="large" />
-                    <h4 className="loader-details">Upload update metadata list</h4>
+            { isLoader ?
+                <div className="screen-articles">
+                    <div className="loader-container">
+                        <Spin size="large" />
+                        <h4 style={{marginLeft: -100, color: "black"}} className="loader-articles-details">Uploading updated metadata list</h4>
+                    </div>
                 </div> :
+
                 localMetadata.metadata &&
-                        <>
-                            <Divider orientation="left">Saved Metadata ( {savedMetadataList.length} )</Divider>
-                            <div className="saved-metadata-list">
-                                {savedMetadataList.map((metadata, index) => {
+                <>
+                    <Divider orientation="left">Saved Metadata ( {savedMetadataList.length} )</Divider>
+                    <div className="saved-metadata-list">
+                        {savedMetadataList.map((metadata, index) => {
+                            return(
+                                <Metadata metadata={metadata.metadata} index={index} listName="NONE" onMetadataChange={onMetadataChange}/>
+                            )
+                        })}
+                    </div>
+                    <Divider orientation="left">New Metadata ( {count(localMetadata)} )</Divider>
+
+                    <Collapse accordion onChange={callback} style={{width: 470}}>
+                        <Panel header={`Common words (${localMetadata.metadata.common_words.length})`} key="1">
+                            <div className="metadata-list">
+                                {localMetadata.metadata.common_words.map((metadata, index) => {
                                     return(
-                                        <Metadata metadata={metadata.metadata} index={index} listName="NONE" onMetadataChange={onMetadataChange}/>
+                                        <Metadata metadata={metadata} index={index} listName="COMMON_WORDS" onMetadataChange={onMetadataChange}/>
                                     )
                                 })}
                             </div>
-                            <Divider orientation="left">New Metadata ( {count(localMetadata)} )</Divider>
-
-                            <Collapse accordion onChange={callback} style={{width: 470}}>
-                                <Panel header={`Common words (${localMetadata.metadata.common_words.length})`} key="1">
-                                    <div className="metadata-list">
-                                        {localMetadata.metadata.common_words.map((metadata, index) => {
-                                            return(
-                                                <Metadata metadata={metadata} index={index} listName="COMMON_WORDS" onMetadataChange={onMetadataChange}/>
-                                            )
-                                        })}
-                                    </div>
-                                </Panel>
-                                <Panel header={`Topics (${localMetadata.metadata.topics.length})`} key="2">
-                                    <div className="metadata-list">
-                                        {localMetadata.metadata.topics.map((metadata, index) => {
-                                            return(
-                                                <Metadata metadata={metadata} index={index} listName="TOPICS" onMetadataChange={onMetadataChange}/>
-                                            )
-                                        })}
-                                    </div>
-                                </Panel>
-                                <Panel header={`Fields of study (${localMetadata.metadata.fields_of_study.length})`} key="3">
-                                    <div className="metadata-list">
-                                        {localMetadata.metadata.fields_of_study.map((metadata, index) => {
-                                            return(
-                                                <Metadata metadata={metadata} index={index} listName="FIELDS_OF_STUDY" onMetadataChange={onMetadataChange}/>
-                                            )
-                                        })}
-                                    </div>
-                                </Panel>
-                                <Panel header={`Authors (${localMetadata.metadata.authors.length})`} key="4">
-                                    <div className="metadata-list">
-                                        {localMetadata.metadata.authors.map((metadata, index) => {
-                                            return(
-                                                <Metadata metadata={metadata} index={index} listName="AUTHORS" onMetadataChange={onMetadataChange}/>
-                                            )
-                                        })}
-                                    </div>
-                                </Panel>
-                                <Panel header={`Years (${localMetadata.metadata.years.length})`} key="5">
-                                    <div className="metadata-list">
-                                        {localMetadata.metadata.years.map((metadata, index) => {
-                                            return(
-                                                <Metadata metadata={metadata} index={index} listName="YEARS" onMetadataChange={onMetadataChange}/>
-                                            )
-                                        })}
-                                    </div>
-                                </Panel>
-                            </Collapse>
-
-                            <div className="metadata-footer">
-                                <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Save selected</Button>
-                                <Button onClick={onClear} shape="round" block >Clear selected</Button>
+                        </Panel>
+                        <Panel header={`Topics (${localMetadata.metadata.topics.length})`} key="2">
+                            <div className="metadata-list">
+                                {localMetadata.metadata.topics.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="TOPICS" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
                             </div>
-                        </>
+                        </Panel>
+                        <Panel header={`Fields of study (${localMetadata.metadata.fields_of_study.length})`} key="3">
+                            <div className="metadata-list">
+                                {localMetadata.metadata.fields_of_study.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="FIELDS_OF_STUDY" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                        <Panel header={`Authors (${localMetadata.metadata.authors.length})`} key="4">
+                            <div className="metadata-list">
+                                {localMetadata.metadata.authors.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="AUTHORS" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                        <Panel header={`Years (${localMetadata.metadata.years.length})`} key="5">
+                            <div className="metadata-list">
+                                {localMetadata.metadata.years.map((metadata, index) => {
+                                    return(
+                                        <Metadata metadata={metadata} index={index} listName="YEARS" onMetadataChange={onMetadataChange}/>
+                                    )
+                                })}
+                            </div>
+                        </Panel>
+                    </Collapse>
+
+                    <div className="metadata-footer">
+                        <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Save selected</Button>
+                        <Button onClick={onClear} shape="round" block >Clear selected</Button>
+                    </div>
+                </>
             }
         </div>
     );
