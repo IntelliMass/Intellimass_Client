@@ -7,29 +7,41 @@ import {CloseOutlined, UserOutlined} from "@ant-design/icons";
 import {useHistory} from "react-router-dom";
 import "./ArticleDetail.scss";
 import {CategoryTag} from "../category-tags/CategoryTag";
+import {getNetwork} from "../../actions/NetworkAction";
 
 type ArticleDetailContainerProps = {};
 
 export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () => {
     // @ts-ignore
     const articleDetail = useAppSelector<ArticleDetail>(state => state.article.articleDetail);
+    const queryId = useAppSelector<string>(state => state.query.queryId);
+
+    const [isLoader, setIsLoader] = useState<boolean>(false);
+
     const history = useHistory();
+    const dispatch = useAppDispatch();
 
-    const [localArticleDetail, setLocalArticleDetail] = useState<ArticleDetail>(articleDetail);
-
-    useEffect(()=>{
-        if( Object.keys(localArticleDetail).length === 0)  history.replace('/profile');
-    },[])
+    // THE GET I CAN TAKE FROM THE SEMANTIC
+    // ACTION FOR THAT
 
     useEffect(()=>{
-        const newArticle = {...articleDetail};
-        setLocalArticleDetail(newArticle);
+
     },[articleDetail])
+
+    useEffect(()=>{
+        if (queryId === ''){
+            history.replace('/');
+        }
+        setIsLoader(true);
+        setTimeout(() => {
+            setIsLoader(false);
+        }, 1000);
+    },[queryId, articleDetail])
 
 
     return (
         <div>
-            {Object.keys(localArticleDetail).length !==0?
+            {Object.keys(articleDetail).length !==0?
                 <div className="article-container">
                     <div className="left-details">
                         <div className="card-article-container">
@@ -64,7 +76,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="Authors"
-                                                value={localArticleDetail.authors.length}
+                                                value={articleDetail.authors.length}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -73,7 +85,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="Fluential Citation"
-                                                value={localArticleDetail.influentialCitationCount}
+                                                value={articleDetail.influentialCitationCount}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -82,7 +94,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="Citation Velocity"
-                                                value={localArticleDetail.citationVelocity}
+                                                value={articleDetail.citationVelocity}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -91,7 +103,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="Number Cited By"
-                                                value={localArticleDetail.numCitedBy}
+                                                value={articleDetail.numCitedBy}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -100,7 +112,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="Number Citing"
-                                                value={localArticleDetail.numCiting}
+                                                value={articleDetail.numCiting}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -112,7 +124,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="Topics"
-                                                value={localArticleDetail.topics.length}
+                                                value={articleDetail.topics.length}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -121,7 +133,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="References"
-                                                value={localArticleDetail.references.length}
+                                                value={articleDetail.references.length}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -130,7 +142,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                         <Card>
                                             <Statistic
                                                 title="Citations"
-                                                value={localArticleDetail.citations.length}
+                                                value={articleDetail.citations.length}
                                                 valueStyle={{ color: "dodgerblue" }}
                                             />
                                         </Card>
@@ -138,7 +150,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                     <Col span={4}>
                                         <Card>
                                             {
-                                                localArticleDetail.isOpenAccess?
+                                                articleDetail.isOpenAccess?
                                                     <Statistic
                                                         title="Open Access"
                                                         prefix={<CheckOutlined />}
@@ -155,7 +167,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                     <Col span={4}>
                                         <Card>
                                             {
-                                                !localArticleDetail.isPublisherLicensed?
+                                                !articleDetail.isPublisherLicensed?
 
                                                     <Statistic
                                                         title="Publish License"
@@ -186,7 +198,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                             <List
                                 style={{}}
                                 itemLayout="horizontal"
-                                dataSource={localArticleDetail.citations}
+                                dataSource={articleDetail.citations}
                                 renderItem={item => (
                                     <List.Item>
                                         <List.Item.Meta style={{width: 600}}
