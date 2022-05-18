@@ -41,7 +41,6 @@ export const colDefs: { [key: string]: IStatisticsColumnDefinition } = {
 
 export const ServiceSummary = (props: IProps) => {
     const {article} = props;
-    console.log(article)
 
     if (article) {
         return (
@@ -80,7 +79,7 @@ export const ServiceSummary = (props: IProps) => {
                     <Col key={'connections'} order={4}>
                         <UiTitle title="Connections" type="medium" />
                         <div className="value alerts-value">
-                            {article.size}
+                            {Math.trunc( article.size)}
                         </div>
                     </Col>
                 </Row>

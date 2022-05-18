@@ -77,6 +77,13 @@ code {
       font-size: 16px;
     }
   }
+
+  .expandable-topbar-container-div{
+    min-height: 72px;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+  }
 }
 
 .light{
@@ -116,3 +123,4 @@ code {
 .isMenuOpen{
   transition: 1s;
 }
+

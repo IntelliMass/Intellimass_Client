@@ -122,7 +122,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                 {
                     isLoader ? <div className="loader-container">
                             <Spin size="large" />
-                            <h4 className="loader-articles-details">Searching for articles</h4>
+                            <h4 className="loader-articles-details">Uploading the articles network</h4>
                         </div> :
                         <div>
                             <div className="expandable-topbar-container-div">

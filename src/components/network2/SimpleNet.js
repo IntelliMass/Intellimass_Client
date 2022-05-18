@@ -26,13 +26,11 @@ export function SimpleNet(props) {
     const NodeHover = () => {
         return(
             <div className="node-hover">
-                {/*<ArticlePopover/>*/}
             </div>
         );
     };
 
     function nodePaint({ id, x, y }, color, ctx, size) {
-        console.log('yo')
         ctx.fillStyle = color;
         console.log(size)
         [
@@ -43,7 +41,6 @@ export function SimpleNet(props) {
     const NodeClicked = () => {
         return(
             <div className="node-clicked">
-                {/*<ArticleCard article={selectedNode}/>*/}
             </div>
         );
     };
