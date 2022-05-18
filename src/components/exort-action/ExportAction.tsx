@@ -153,7 +153,7 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
 
     return (
         <div className={`export-action-container`}>
-            <Divider orientation="left">Collections list</Divider>
+            <Divider orientation="left">Collections list ({collections.collection.length})</Divider>
             <div>
                 <Button onClick={onSave} type="primary" className="save-collection" shape="round" block>Create Collection</Button>
                 <List

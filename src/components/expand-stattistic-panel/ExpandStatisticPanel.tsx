@@ -86,8 +86,45 @@ export const ServiceSummary = (props: IProps) => {
             </div>
         );
     } else return (
-        <div>
-            <h4 className="no-selected-article">No selected article</h4>
-         </div>
+    <div className="service-summary-container">
+        <Row className={'service-row'}>
+        <Col key={"article.year"} order={0}>
+        <UiTitle title="Year" type="medium" />
+        <div className="value alerts-value">
+            No selected article
+</div>
+</Col>
+    <Col key={'authors'} order={1}>
+        <UiTitle title="Authors" type="medium" />
+        <div className="value alerts-value">
+            No selected article
+        </div>
+    </Col>
+    <Col key={'studyFields'} order={2}>
+        <UiTitle title='Study field' type="medium" />
+        <div className="value alerts-value">
+            No selected article
+        </div>
+    </Col>
+    <Col key={'frequentWords'} order={3}>
+        <UiTitle title="Frequent words" type="medium" />
+        <div className="value alerts-value">
+            No selected article
+        </div>
+    </Col>
+    <Col key={'isOpenAccess'} order={4}>
+        <UiTitle title="Is open access" type="medium" />
+        <div className="value alerts-value">
+            No selected article
+        </div>
+    </Col>
+    <Col key={'connections'} order={4}>
+        <UiTitle title="Connections" type="medium" />
+        <div className="value alerts-value">
+            No selected article
+        </div>
+    </Col>
+</Row>
+</div>
     );
 };
