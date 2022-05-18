@@ -49,8 +49,8 @@ export function SimpleNet(props) {
         <div className="network-wrapper">
             {selectedNode? <NodeClicked/> : null}
             {hoveredNode? <NodeHover/> : null}
-            <ForceGraph2D
-                //            <ForceGraph3D
+            {/* <ForceGraph2D */}
+             <ForceGraph3D
                 graphData={network}
                 nodeId="title"
                 nodeLabel="title"
