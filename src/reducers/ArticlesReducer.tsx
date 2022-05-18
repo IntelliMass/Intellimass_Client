@@ -18,15 +18,15 @@ export interface ArticleState {
     articleDetail: ArticleDetail | {},
     serverArticles: Array<ServerArticle> | [],
     count: number,
+    selectedPaperID: string
 }
-
-
 
 const initState = {
     articles: [],
     serverArticles: [],
     articleDetail: {},
     count: 100,
+    selectedPaperID: ""
 };
 
 const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) => {
@@ -47,6 +47,12 @@ const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) =
             return {
                 ...state,
                 count: action.payload,
+            };
+
+        case "UPDATE_SELECTED_PAPER_ID":
+            return {
+                ...state,
+                selectedPaperID: action.payload,
             };
         default:
             return state;

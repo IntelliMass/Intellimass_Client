@@ -6,14 +6,14 @@ import {useHistory} from "react-router-dom";
 type ScreenArticleDetailProps = {};
 
 export const ScreenArticleDetail: React.FC<ScreenArticleDetailProps> = () => {
-    const queryId = useAppSelector<string>(state => state.query.queryId)
+    const userId = useAppSelector<string>(state => state.user.userId)
     const history = useHistory();
 
     useEffect(()=>{
-        if (queryId === ''){
+        if (userId === ''){
             history.replace('/');
         }
-    },[queryId]);
+    },[userId]);
 
     return (
         <div className={`screen`}>

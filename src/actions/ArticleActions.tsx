@@ -3,8 +3,10 @@ import {SharedAction} from "./SharedAction";
 type GetArticlesAction = {type: "GET_ARTICLES", payload: ArticleOfList }
 type GetArticleDetailAction = {type: "GET_ARTICLE_DETAIL", payload: ArticleDetail}
 type UpdateCountAction = {type: "UPDATE_ARTICLES_COUNT", payload: number}
+type UpdatePaperIDAction = {type: "UPDATE_SELECTED_PAPER_ID", payload: string}
 
-export type ArticleAction = GetArticlesAction|  GetArticleDetailAction  | UpdateCountAction;
+
+export type ArticleAction = GetArticlesAction|  GetArticleDetailAction  | UpdateCountAction | UpdatePaperIDAction;
 
 export interface ArticleDetail {
     title: string,
@@ -82,7 +84,7 @@ export interface ArticleOfList {
 }
 
 let URL_GET_ARTICLES_NEW = "https://api.intellimass.net/articles/articles";
-let URL_GET_ARTICLE_NEW = "https://api.intellimass.net/articles/getOne";
+let URL_GET_ARTICLE_NEW = "https://api.intellimass.net/getOne";
 let URL_GET_FILTERED_ARTICLES = "https://api.intellimass.net/articles";
 
 
@@ -172,5 +174,12 @@ export function updateCount(count:number) {
     return {
         type: "UPDATE_ARTICLES_COUNT",
         payload: count,
+    };
+}
+
+export function updatePaperID(newID:string) {
+    return {
+        type: "UPDATE_SELECTED_PAPER_ID",
+        payload: newID,
     };
 }

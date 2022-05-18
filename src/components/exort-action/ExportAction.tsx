@@ -12,6 +12,7 @@ import {
     removeFromCollection
 } from "../../actions/CollectionAction";
 import {useHistory} from "react-router-dom";
+import {updatePaperID} from "../../actions/ArticleActions";
 
 
 type ExportActionProps = {};
@@ -144,7 +145,9 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
 
     function handleMenuClick(e:any) {
         console.log(e.item);
-        //dispatch(getArticleDetail(paperId));
+
+        // @ts-ignore
+        dispatch(updatePaperID(e.item.toString()));
         history.replace('/article');
     }
 
