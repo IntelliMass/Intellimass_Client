@@ -13,6 +13,9 @@ import {Spin} from "antd";
 import aos from "aos";
 import {useHistory} from "react-router-dom";
 import "../index.scss"
+import {ExpandableTopBar} from "../components/expended-bar/ExpandedBar";
+import {ServiceSummary} from "../components/expand-stattistic-panel/ExpandStatisticPanel";
+import {ArticleCard} from "../components/article-card/ArticleCard";
 
 type ScreenSearchProps = {};
 
@@ -122,6 +125,16 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                             <h4 className="loader-articles-details">Searching for articles</h4>
                         </div> :
                         <div>
+                            <div className="expandable-topbar-container-div">
+                                <ExpandableTopBar contractedHeight={72} expandedHeight={600} isPadded={true}>
+                                    <div>
+                                        <ServiceSummary article={selectedNode}/>
+                                    </div>
+                                    <div>
+                                        {selectedNode ? <ArticleCard article={selectedNode}/>:<span>No article selected.</span>}
+                                    </div>
+                                </ExpandableTopBar>
+                            </div>
                             <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>
                         </div>
                 }
