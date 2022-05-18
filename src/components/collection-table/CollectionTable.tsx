@@ -1,9 +1,11 @@
 import React from "react";
 import {Table, Tag, Space, Tooltip} from 'antd';
 import "../collection-container/CollectionContainer.scss"
-import {ArticleOfList, Author} from "../../actions/ArticleActions";
+import {ArticleOfList, Author, updatePaperID} from "../../actions/ArticleActions";
 import {ArticleList} from "../../modules/articles/articlesList/ArticleList";
 import {DeleteOutlined, MoreOutlined} from "@ant-design/icons";
+import {useAppDispatch} from "../../hooks/hooks";
+import {useHistory} from "react-router-dom";
 
 type CollectionTableProps = {
     articles: Array<ArticleOfList>
@@ -16,12 +18,21 @@ export interface VisualCollectionRow {
     title: string,
     year: number,
     authors: Array<Author>,
-    frequentWords: Array<string>
+    frequentWords: Array<string>,
+    paperId: string
 }
 
 export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
    const {articles} = props;
 
+    const dispatch = useAppDispatch();
+    const history = useHistory();
+
+    const onClickMoreDetail = (paperID: string) => {
+        // @ts-ignore
+        dispatch(updatePaperID(paperID));
+        history.replace('/article');
+    }
 
     const columns = [
         {
@@ -72,10 +83,11 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
         {
             title: 'Action',
             key: 'action',
-            render: ( ) => (
+            dataIndex: 'paperId',
+            render: ( paperId:string ) => (
                 <Space size="middle">
                     <Tooltip placement="bottom" title={'More details'}>
-                        <MoreOutlined className="collection-icon"/>
+                        <MoreOutlined onClick={()=>{onClickMoreDetail(paperId)}} className="collection-icon"/>
                     </Tooltip>
                     <Tooltip placement="bottom" title={'Remove article'}>
                         <DeleteOutlined className="collection-icon"/>
@@ -88,7 +100,7 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
     const visualArticles = (articles: Array<ArticleOfList>) : Array<VisualCollectionRow> => {
         let dataSet: Array<VisualCollectionRow> = [];
         articles.forEach(article => {
-            dataSet.push({title: article.title, year: article.year, authors: article.authors, frequentWords: article.frequentWords || []})
+            dataSet.push({title: article.title, year: article.year, authors: article.authors, frequentWords: article.frequentWords || [], paperId: article.paperId})
         })
         return dataSet;
     }

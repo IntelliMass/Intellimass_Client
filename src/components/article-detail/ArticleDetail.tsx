@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {ArticleDetail, Author} from "../../actions/ArticleActions";
+import {ArticleDetail, Author, getArticleDetail} from "../../actions/ArticleActions";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks"
 import {Button, Card, Col, Divider, List, Row, Statistic, Tag} from "antd";
 import {CheckOutlined} from "@material-ui/icons";
@@ -14,186 +14,172 @@ type ArticleDetailContainerProps = {};
 export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () => {
     // @ts-ignore
     const articleDetail = useAppSelector<ArticleDetail>(state => state.article.articleDetail);
-    const queryId = useAppSelector<string>(state => state.query.queryId);
+    // @ts-ignore
+    const paperId = useAppSelector<string>(state => state.article.selectedPaperID);
 
     const [isLoader, setIsLoader] = useState<boolean>(false);
-
-    const history = useHistory();
     const dispatch = useAppDispatch();
 
-    // THE GET I CAN TAKE FROM THE SEMANTIC
-    // ACTION FOR THAT
 
     useEffect(()=>{
-
-    },[articleDetail])
-
-    useEffect(()=>{
-        if (queryId === ''){
-            history.replace('/');
-        }
         setIsLoader(true);
         setTimeout(() => {
             setIsLoader(false);
         }, 1000);
-    },[queryId, articleDetail])
+        if (paperId !== ''){
+            // @ts-ignore
+            dispatch(getArticleDetail(paperId));
+        }
+    },[paperId])
 
+
+    useEffect(()=>{
+        setIsLoader(false);
+        console.log(articleDetail);
+    },[articleDetail])
 
     return (
         <div>
             {Object.keys(articleDetail).length !==0?
                 <div className="article-container">
-                    <div className="left-details">
-                        <div className="card-article-container">
-                            <Card title={`${articleDetail.title}`}  style={{ width: 500 }}>
-                                <p>
-                                    <b>Authors: </b>
-                                    {articleDetail.authors.map((author:Author)=>{
-                                        return(
-                                            <Tag icon={<UserOutlined />} color="default">
-                                                {author.name}
-                                            </Tag>
-                                        );
-                                    })}
-                                </p>
-                                <div>
-                                    <Divider orientation="left">Categories</Divider>
-                                    {/*<CategoryTag article={articleDetail}/>*/}
-                                </div>
-                                <Divider orientation="left">Abstract</Divider>
-                                <div className="abstract-container">
-                                    {articleDetail.abstract}
-                                </div>
-                                <Divider/>
-                            </Card>
-                        </div>
-                    </div>
-                    <div className="right-details">
-                        <div className="statistical-parameters">
-                            <div className="site-statistic-demo-card">
-                                <Row gutter={20}>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="Authors"
-                                                value={articleDetail.authors.length}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="Fluential Citation"
-                                                value={articleDetail.influentialCitationCount}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="Citation Velocity"
-                                                value={articleDetail.citationVelocity}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="Number Cited By"
-                                                value={articleDetail.numCitedBy}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="Number Citing"
-                                                value={articleDetail.numCiting}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                </Row>
-
-                                <Row gutter={20}>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="Topics"
-                                                value={articleDetail.topics.length}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="References"
-                                                value={articleDetail.references.length}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            <Statistic
-                                                title="Citations"
-                                                value={articleDetail.citations.length}
-                                                valueStyle={{ color: "dodgerblue" }}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            {
-                                                articleDetail.isOpenAccess?
-                                                    <Statistic
-                                                        title="Open Access"
-                                                        prefix={<CheckOutlined />}
-                                                        valueStyle={{ color: "green" }}
-                                                    /> :
-                                                    <Statistic
-                                                        title="Open Access"
-                                                        prefix={<CloseOutlined />}
-                                                        valueStyle={{ color: "red" }}
-                                                    />
-                                            }
-                                        </Card>
-                                    </Col>
-                                    <Col span={4}>
-                                        <Card>
-                                            {
-                                                !articleDetail.isPublisherLicensed?
-
-                                                    <Statistic
-                                                        title="Publish License"
-                                                        prefix={<CheckOutlined />}
-                                                        valueStyle={{ color: "green" }}
-                                                    /> :
-                                                    <Statistic
-                                                        title="Publish License"
-                                                        prefix={<CloseOutlined />}
-                                                        valueStyle={{ color: "red" }}
-                                                    />}
-                                        </Card>
-                                    </Col>
-                                </Row>
-
-                            </div>
-                        </div>
-                        <div className="topics-list">
-                            <div className="metadata-list">
-                                {articleDetail.topics.map((topic, index) => {
-                                    return <Tag >
-                                        {topic.topic}
+                    <Card className={"main-article-detail"} title={`${articleDetail.title}`}>
+                        <p>
+                            <Divider style={{fontSize: 20, marginTop: 30}} orientation="left">Authors</Divider>
+                            {articleDetail.authors.map((author:Author)=>{
+                                return(
+                                    <Tag icon={<UserOutlined />} color="default" style={{fontSize: 16, padding: 3}}>
+                                        {author.name}
                                     </Tag>
-                                })}
-                            </div>
+                                );
+                            })}
+                        </p>
+                        <Divider style={{fontSize: 20, marginTop: 30}} orientation="left">Abstract</Divider>
+                        <div className="abstract-container">
+                            {articleDetail.abstract}
                         </div>
+                        <Divider/>
+                        <Row gutter={20}>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="Authors"
+                                        value={articleDetail.authors.length}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="Fluential Citation"
+                                        value={articleDetail.influentialCitationCount}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="Citation Velocity"
+                                        value={articleDetail.citationVelocity}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="Number Cited By"
+                                        value={articleDetail.numCitedBy}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="Number Citing"
+                                        value={articleDetail.numCiting}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                        </Row>
+
+                        <Row gutter={20}>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="Topics"
+                                        value={articleDetail.topics.length}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="References"
+                                        value={articleDetail.references.length}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    <Statistic
+                                        title="Citations"
+                                        value={articleDetail.citations.length}
+                                        valueStyle={{ color: "dodgerblue" }}
+                                    />
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    {
+                                        articleDetail.isOpenAccess?
+                                            <Statistic
+                                                title="Open Access"
+                                                prefix={<CheckOutlined />}
+                                                valueStyle={{ color: "green" }}
+                                            /> :
+                                            <Statistic
+                                                title="Open Access"
+                                                prefix={<CloseOutlined />}
+                                                valueStyle={{ color: "red" }}
+                                            />
+                                    }
+                                </Card>
+                            </Col>
+                            <Col span={4}>
+                                <Card>
+                                    {
+                                        !articleDetail.isPublisherLicensed?
+
+                                            <Statistic
+                                                title="Publish License"
+                                                prefix={<CheckOutlined />}
+                                                valueStyle={{ color: "green" }}
+                                            /> :
+                                            <Statistic
+                                                title="Publish License"
+                                                prefix={<CloseOutlined />}
+                                                valueStyle={{ color: "red" }}
+                                            />}
+                                </Card>
+                            </Col>
+                        </Row>
+
+                        <Divider style={{fontSize: 20, marginTop: 30}} orientation="left">Topics</Divider>
+                        <div className="metadata-list">
+                            {articleDetail.topics.map((topic, index) => {
+                                return <Tag >
+                                    {topic.topic}
+                                </Tag>
+                            })}
+                        </div>
+
+                        <Divider style={{fontSize: 20, marginTop: 30}} orientation="left">Citation articles to this article</Divider>
                         <div className="citations-list">
                             <List
                                 style={{}}
@@ -202,25 +188,28 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
                                 renderItem={item => (
                                     <List.Item>
                                         <List.Item.Meta style={{width: 600}}
-                                            title={<span>{item.year} | {item.title}</span>}
+                                            title={<span style={{fontSize: 17}}>{item.year} | {item.title}</span>}
                                             description={`Venue: ${item.venue} | Authors: ${item.authors.length} | Intent: ${item.intent.length}`}
                                         />
                                     </List.Item>
                                 )}
                             />
                         </div>
-                    </div>
-                    <div className="footer-details">
-                        <div className="reference-container">
-                            {articleDetail.references.map((reference, index) => {
-                                return (
-                                    <Card className="reference-card" title={`${reference.year} | ${reference.title}`} bordered={false}>
-                                        Venue: {reference.venue} | Authors: {reference.authors.length} | Intent: {reference.intent.length}
-                                    </Card>
-                                )
-                            })}
+
+                        <Divider style={{fontSize: 20, marginTop: 30}} orientation="left">Referenced articles to this article</Divider>
+                        <div className="empty-div"></div>
+                        <div className="footer-details">
+                            <div className="reference-container">
+                                {articleDetail.references.map((reference, index) => {
+                                    return (
+                                        <Card className="reference-card" title={`${reference.year} | ${reference.title}`} bordered={false}>
+                                            Venue: {reference.venue} | Authors: {reference.authors.length} | Intent: {reference.intent.length}
+                                        </Card>
+                                    )
+                                })}
+                            </div>
                         </div>
-                    </div>
+                    </Card>
                 </div>
                 : null}
         </div>
