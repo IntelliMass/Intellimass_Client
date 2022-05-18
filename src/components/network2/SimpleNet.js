@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import ForceGraph3D from "react-force-graph-3d";
 import "./SimpleNet.scss"
-import ForceGraph2D from "react-force-graph-2d";
+// import ForceGraph2D from "react-force-graph-2d";
 
 
 export function SimpleNet(props) {
