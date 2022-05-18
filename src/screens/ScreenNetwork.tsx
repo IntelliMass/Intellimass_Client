@@ -122,7 +122,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                 {
                     isLoader ? <div className="loader-container">
                             <Spin size="large" />
-                            <h4 className="loader-articles-details">Uploading the articles network</h4>
+                            <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading the articles network</h4>
                         </div> :
                         <div>
                             <div className="expandable-topbar-container-div">
@@ -135,6 +135,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                                     </div>
                                 </ExpandableTopBar>
                             </div>
+                            <span style={{color: "yellow", fontSize: 18, marginLeft: "5%"}}> Articles-nodes number ( {network.nodes.length || '0'} ) | Nodes-connections ( {network.links.length || '0'} ) </span>
                             <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>
                         </div>
                 }

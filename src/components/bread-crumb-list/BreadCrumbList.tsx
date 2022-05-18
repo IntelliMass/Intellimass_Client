@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Spin, Timeline} from 'antd';
+import {Divider, Spin, Timeline} from 'antd';
 import "./BreadCrumbList.scss";
 import {getBreadcrumb, uploadBreadcrumbs} from "../../actions/BreadCrumbAction";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
@@ -57,6 +57,7 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
 
     return (
         <div className={"bread-crumb-container"}>
+            <Divider orientation="left">Breadcrumbs list ({breadcrumbs.length})</Divider>
             <Timeline className="time-line-list">
                 {
                 isLoader ?

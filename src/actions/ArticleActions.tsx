@@ -151,6 +151,7 @@ export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<v
  */
 export const getFilteredArticles = (id:string, filterItems:string="", limit:number=100, clusters:string="", numOfClusters: number=4): (dispatch: any) => Promise<void> =>
     async dispatch => {
+        console.log(clusters)
         let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
         await fetch(URL_GET_ARTICLES)
             .then(function (response) {
