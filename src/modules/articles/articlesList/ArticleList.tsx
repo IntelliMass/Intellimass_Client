@@ -24,13 +24,12 @@ export const listAuthorsToString = (authors: Array<Author>):string=>{
 
 type ArticleListProps = {
     articles: Array<ArticleOfList>,
-    query: string,
     queryId: string,
     savedMetadataList?: Array<IMetadataWithCategory>
 };
 
 export const ArticleList: React.FC<ArticleListProps> = (props) => {
-    const {articles, query, queryId, savedMetadataList} = props;
+    const {articles, queryId, savedMetadataList} = props;
     const catalog = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.catalogs);
     const dispatch = useAppDispatch();
 

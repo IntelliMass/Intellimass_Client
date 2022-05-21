@@ -3,8 +3,10 @@ import {INewSingleCatalog} from "../reducers/CatalogReducer";
 type UpdateCatalogAction = {type: "GET_CATALOG", payload: any }
 type UpdateSelectedAction = {type: "UPDATE_CATALOG", payload: any}
 type UpdateNumberOfClustersAction = {type: "UPDATE_NUMBER_OF_CLUSTERS", payload: any}
+type ResetClustersAction = {type: "RESET_CATEGORIES", payload: any}
 
-export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction | UpdateNumberOfClustersAction;
+
+export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction | UpdateNumberOfClustersAction |ResetClustersAction;
 
 let URL_GET_CATEGORIES_NEW = "https://api.intellimass.net/clusters";
 
@@ -64,13 +66,19 @@ export function patchCategories(selectedCategories:Array<INewSingleCatalog> ) {
      * @return {dispatch} Type + payload.
      */
     export function patchNumberOfCluster(newNumber: number ) {
-        console.log(newNumber)
         return {
             type: "UPDATE_NUMBER_OF_CLUSTERS",
             payload:  newNumber
         };
     }
 
+
+export function resetCluster() {
+    return {
+        type: "RESET_CATEGORIES",
+        payload:  []
+    };
+}
 
 
 

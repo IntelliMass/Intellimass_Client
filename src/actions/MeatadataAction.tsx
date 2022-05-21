@@ -3,7 +3,9 @@ import {IMetadataWithCategory} from "../components/new-metadata-list/NewMetadata
 
 type UpdateMetadataAction = {type: "UPDATE_METADATA", payload: any }
 type UpdateSelectedMetadataAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
-export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction;
+type ResetMetadataAction = {type: "RESET_METADATA", payload: any}
+
+export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction | ResetMetadataAction;
 
 let URL_GET_METADATA_NEW = "https://api.intellimass.net/metadata";
 
@@ -67,12 +69,21 @@ export const getMetadata = (id:string, count:number=100, filterItems:string="", 
  * @return {dispatch} Type + payload.
  */
 export function patchMetadata(metadata:Array<IMetadata>, savedMetadata:Array<IMetadataWithCategory> ) {
-    console.log(savedMetadata)
     return {
         type: "UPDATE_SELECTED_METADATA",
         payload:  {
             metadata: metadata,
             savedMetadata: savedMetadata
+        }
+    };
+}
+
+export function resetMetadata() {
+    return {
+        type: "RESET_METADATA",
+        payload:  {
+            metadata: [],
+            savedMetadata: []
         }
     };
 }

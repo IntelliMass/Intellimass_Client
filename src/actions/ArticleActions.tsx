@@ -4,9 +4,10 @@ type GetArticlesAction = {type: "GET_ARTICLES", payload: ArticleOfList }
 type GetArticleDetailAction = {type: "GET_ARTICLE_DETAIL", payload: ArticleDetail}
 type UpdateCountAction = {type: "UPDATE_ARTICLES_COUNT", payload: number}
 type UpdatePaperIDAction = {type: "UPDATE_SELECTED_PAPER_ID", payload: string}
+type ResetArticlesAction = {type: "RESET_ARTICLES", payload: any[]}
 
 
-export type ArticleAction = GetArticlesAction|  GetArticleDetailAction  | UpdateCountAction | UpdatePaperIDAction;
+export type ArticleAction = GetArticlesAction|  GetArticleDetailAction  | UpdateCountAction | UpdatePaperIDAction | ResetArticlesAction;
 
 export interface ArticleDetail {
     title: string,
@@ -182,5 +183,12 @@ export function updatePaperID(newID:string) {
     return {
         type: "UPDATE_SELECTED_PAPER_ID",
         payload: newID,
+    };
+}
+
+export function resetArticles() {
+    return {
+        type: "RESET_ARTICLES",
+        payload: [],
     };
 }

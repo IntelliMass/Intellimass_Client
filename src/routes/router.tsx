@@ -16,7 +16,6 @@ import {ScreenArticleDetail} from "../screens/ScreenArticleDetails";
 
 
 function RouterApplication() {
-
   return (
     <div className="app-container">
      <NavBar/>

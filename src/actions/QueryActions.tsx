@@ -1,6 +1,6 @@
 import {joinQuery, QueryState} from "../reducers/QueryReducer"
 type QueryCreateAction = {type: "CREATE_QUERY", payload: QueryState}
-type QueryUpdateKeywordsAction = {type: "UPDATE_KEYWORDS", payload: Array<KeywordsListObject>}
+type QueryUpdateKeywordsAction = {type: "UPDATE_KEYWORDS", payload: Array<string>}
 export type QueryAction = QueryCreateAction | QueryUpdateKeywordsAction;
 
 
@@ -19,10 +19,15 @@ let URL_POST_NEW = "https://api.intellimass.net/query";
  * @param queryParams:QueryState query parameters
  * @return {dispatch} Type + payload.
  */
-export const  createQuery = (queryParams:QueryState): (dispatch: any) => Promise<void> =>{
-    const query = joinQuery(queryParams.first_keyword, queryParams.extra_keywords);
-    const editedQuery = query.slice(0, -1);
-    const body = {query: editedQuery, feature: 'Authors'};
+export const  createQuery = (queryParams: QueryState): (dispatch: any) => Promise<void> =>{
+    let responseQueryString = '';
+    queryParams.searching_words.forEach((item: string) => responseQueryString += item + '+' );
+    let responseQuery = responseQueryString.slice(0, -1);
+    const body = {
+        query:responseQuery,
+        operator: queryParams.searching_operator
+    };
+
     return async dispatch => {
         await fetch(URL_POST_NEW, {
             method: 'post',
@@ -51,7 +56,7 @@ export const  createQuery = (queryParams:QueryState): (dispatch: any) => Promise
  * @param queryParams:QueryState query parameters
  * @return {dispatch} Type + payload.
  */
-export function updateQueryKeywords(keywordsList:Array<KeywordsListObject>):QueryUpdateKeywordsAction {
+export function updateQueryKeywords(keywordsList:Array<string>):QueryUpdateKeywordsAction {
     return {
         type: "UPDATE_KEYWORDS",
         payload: keywordsList

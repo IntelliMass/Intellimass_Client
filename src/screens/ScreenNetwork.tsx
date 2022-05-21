@@ -2,20 +2,23 @@ import React, {useEffect, useState} from "react";
 import {SimpleNet} from "../components/network2/SimpleNet";
 import { useAppSelector, useAppDispatch } from "../hooks/hooks"
 import {INetwork} from "../reducers/NetworkReducer";
-import {getNetwork} from "../actions/NetworkAction";
+import {getNetwork, updateConnectionType} from "../actions/NetworkAction";
 import {IMetadataWithCategory, NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
 import {INewSingleCatalog} from "../reducers/CatalogReducer";
 import {MenuButton2} from "../components/menu-button/MenuButton2";
 import {ClusterContainer} from "../components/cluster-container/ClusterContainer";
 import {ExportAction} from "../components/exort-action/ExportAction";
 import {BreadCrumbList} from "../components/bread-crumb-list/BreadCrumbList";
-import {Spin} from "antd";
+import {Button, Select, Spin} from "antd";
 import aos from "aos";
 import {useHistory} from "react-router-dom";
 import "../index.scss"
 import {ExpandableTopBar} from "../components/expended-bar/ExpandedBar";
 import {ServiceSummary} from "../components/expand-stattistic-panel/ExpandStatisticPanel";
 import {ArticleCard} from "../components/article-card/ArticleCard";
+import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
+import {updateCount} from "../actions/ArticleActions";
+const { Option } = Select;
 
 type ScreenSearchProps = {};
 
@@ -23,11 +26,12 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     // @ts-ignore
     const network = useAppSelector<INetwork>(state => state.network.network);
     const queryId = useAppSelector<string>(state => state.query.queryId);
+    // @ts-ignore
+    const count = useAppSelector<number>(state => state.article.count);
 
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
-    const query = useAppSelector<string>(state => state.query.query);
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [localCount, setCount] = useState<number>(100);
     const [actionOption, setActionOption] = useState<string>('none');
@@ -61,6 +65,27 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
         aos.init({duration: 1000})
     },[])
 
+    function handleChange(value:string) {
+        // @ts-ignore
+        dispatch(updateConnectionType(value));
+    }
+
+    function plus() {
+        if(count === 1000){
+            return;
+        }
+        // @ts-ignore
+        dispatch(updateCount(count+100));
+
+    }
+
+    function minus() {
+        if(count === 100){
+            return;
+        }
+        // @ts-ignore
+        dispatch(updateCount(count-100));
+    }
 
     const nodeHandler = (article:any) => {
         console.log(article);
@@ -135,6 +160,24 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                                     </div>
                                 </ExpandableTopBar>
                             </div>
+                            <div style={{color: "white", fontSize: 18, marginLeft: "5%", marginBottom: "1%"}}>
+                                <span className="action-title"> Connection type: </span>
+                                <Select style={{marginLeft: "1%", marginRight: "1%"}} onChange={handleChange} placeholder="Network connection type">
+                                    <Option value="authors">Authors</Option>
+                                    <Option value="frequentWords">Frequent words</Option>
+                                    <Option value="topics">Topics</Option>
+                                </Select>
+                                <span style={{marginLeft: "5%"}}> Original Articles number ( {localCount} )</span>
+                                <Button style={{marginLeft: "1%", marginRight: "1%"}}
+                                    icon={<PlusOutlined />}
+                                    onClick={() => plus()}
+                                />
+                                <Button
+                                    icon={<MinusOutlined />}
+                                    onClick={() => minus()}
+                                />
+                            </div>
+
                             <span style={{color: "yellow", fontSize: 18, marginLeft: "5%"}}> Articles-nodes number ( {network.nodes.length || '0'} ) | Nodes-connections ( {network.links.length || '0'} ) </span>
                             <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>
                         </div>

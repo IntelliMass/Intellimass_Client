@@ -3,7 +3,7 @@ import './NewMetadataList.scss';
 import { Metadata} from "../metadata/Metadata";
 import {Button, Collapse, Divider, Select, Spin} from "antd";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
-import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
+import {getMetadata, patchMetadata, resetMetadata} from "../../actions/MeatadataAction";
 import {IMetadata, NewMetadata} from "../../reducers/MetadataReducer";
 import Swal from "sweetalert2";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
@@ -118,6 +118,9 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     useEffect(()=>{
         setIsLoader(true);
         // @ts-ignore
+        dispatch(resetMetadata());
+
+        // @ts-ignore
         dispatch( getMetadata(queryId, 100, state_savedMetadataList, categories, numberOfClusters));
     },[queryId])
 
@@ -193,7 +196,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                         else  newMetadata.metadata.fields_of_study.push({...newSavedList[foundIndex].metadata});
                         const list = [...savedMetadataList.filter(item => item.metadata.id !== id)];
                         // @ts-ignore
-                        dispatch(patchMetadata({...newMetadata}, list));
+                        //dispatch(patchMetadata({...newMetadata}, list));
                         Swal.fire(
                             'Deleted!',
                             'Your collection has been deleted.',

@@ -1,24 +1,15 @@
-// QUERY STATE MANAGEMENT REDUCER
 import {KeywordsListObject, QueryAction} from "../actions/QueryActions";
 
 export interface QueryState {
-    query: string,
-    first_keyword: string,
-    first_operator: string,
-    extra_keywords: Array<KeywordsListObject>,
-    //connection: string,
-    queryId: string,
-    //strategy: string
+    searching_words: string[],
+    searching_operator: string
+    queryId: string
 }
 
 const initState = {
-    query: '',
-    first_keyword: '',
-    first_operator: '',
-    extra_keywords: [],
-    //connection: 'authors',
+    searching_words: [],
+    searching_operator: "AND",
     queryId: ''
-    //strategy: 'suggestions'
 };
 
 export const joinQueryString = (firstKeyword: string, allKeywords: Array<string>) => {
@@ -38,20 +29,16 @@ const QueryReducer = (state: QueryState = initState, action:QueryAction) => {
         case "CREATE_QUERY":
             return {
                 ...state,
-                query: action.payload.query,
-                first_keyword: action.payload.first_keyword,
-                first_operator: action.payload.first_operator,
-                extra_keywords: action.payload.extra_keywords,
-                //connection: action.payload.connection,
+                searching_words: [...action.payload.searching_words],
+                searching_operator: action.payload.searching_operator,
                 queryId: action.payload.queryId
-                //strategy: action.payload.strategy
             };
 
 
         case "UPDATE_KEYWORDS":
             return {
                 ...state,
-                extra_keywords: action.payload,
+                searching_words: [...action.payload],
             };
 
         default:

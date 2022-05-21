@@ -39,6 +39,13 @@ const CatalogReducer = (state: CatalogState = initState, action:CatalogAction) =
                 numOfClusters: action.payload
             };
 
+        case "RESET_CATEGORIES":
+            return {
+                ...state,
+                catalogs: [],
+                selectedCategories: [],
+                numOfClusters: 4
+            };
         default:
             return state;
     }
