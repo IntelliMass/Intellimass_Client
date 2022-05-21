@@ -16,14 +16,14 @@ export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
 
     return (
         <div className="home-data-container">
-            <span className="title-home">Hey {userName || 'user'}, Let discover articles with IntelliMass</span>
+            <span className="title-home">Hey {userName || 'user'}, Let's discover articles with IntelliMass</span>
             <Row>
                 <Col className="Col-total">
                     <div className="stati concrete ">
                         <i className="icon-book-open icons"></i>
                         <div>
                             <b> {props.numberOfCollection}</b>
-                            <span>Total Clusters</span>
+                            <span>Total Collections</span>
                         </div>
                     </div>
                 </Col>

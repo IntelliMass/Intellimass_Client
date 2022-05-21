@@ -8,6 +8,7 @@ import {GetMoreButton} from "../../../components/get-more/GetMore";
 import {IMetadataWithCategory} from "../../../components/new-metadata-list/NewMetadataList";
 import {CategoryTag} from "../../../components/category-tags/CategoryTag";
 import {INewSingleCatalog} from "../../../reducers/CatalogReducer";
+import {fromListToString, QueryListHeader} from "../../../components/query-list-header/QueryListHeader";
 
 
 export const fromCategoryToIndex = (category: string, categories: Array<INewSingleCatalog>): number => {
@@ -17,9 +18,9 @@ export const fromCategoryToIndex = (category: string, categories: Array<INewSing
 export const listAuthorsToString = (authors: Array<Author>):string=>{
     let stringAuthores = "";
     authors.forEach(author => {
-        stringAuthores += author.name + " , "
+        stringAuthores += author.name + ", "
     });
-    return stringAuthores;
+    return stringAuthores.slice(0, -2);
 }
 
 type ArticleListProps = {
@@ -31,14 +32,24 @@ type ArticleListProps = {
 export const ArticleList: React.FC<ArticleListProps> = (props) => {
     const {articles, queryId, savedMetadataList} = props;
     const catalog = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.catalogs);
+
+    const searching_words = useAppSelector<string[]>(state => state.query.searching_words);
+    const operator = useAppSelector<string>(state => state.query.searching_operator);
+    const [queryString, setQueryString] = useState<string>('');
+
     const dispatch = useAppDispatch();
+
+    useEffect(()=>{
+        setQueryString(fromListToString(searching_words));
+    },[searching_words])
 
     useEffect(()=>{
     },[ articles, catalog])
 
     return (
         <div className={`Article-list`}>
-            <h3 style={{marginLeft: 15, color: "#E7E9A3"}}>Articles ({articles.length})</h3>
+            <QueryListHeader/>
+            <h3 style={{marginLeft: 15, color: "#E7E9A3"}}>{articles.length} results for '{queryString}' with operator '{operator}'</h3>
             <List
                 itemLayout="vertical"
                 size="small"

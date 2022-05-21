@@ -122,9 +122,6 @@ export const DefinitionForm = () => {
     const onFinish = (values: any) => {
         setIsLoader(true);
         setIsSubmitSelected(true);
-        console.log(values);
-
-        // SEND LIST OF STRINGS
 
         let responseQueryString: string[] = [];
         if(values){
@@ -191,7 +188,7 @@ export const DefinitionForm = () => {
                             <Form.Item
                                 style={{width:350}}
                                 name="first_word"
-                                label="keyword (1):"
+                                label="Keyword (1):"
                                 rules={[{ required: true, message: 'Missing keyword' }]}
                             >
                                 <Input style={{marginLeft:10}}/>
@@ -204,7 +201,7 @@ export const DefinitionForm = () => {
                             <Form.Item
                                 style={{width:350}}
                                 name="second_word"
-                                label="keyword (2):"
+                                label="Keyword (2):"
                                 rules={[{ required: true, message: 'Missing keyword' }]}
                             >
                                 <Input style={{marginLeft:10}}/>
@@ -221,7 +218,7 @@ export const DefinitionForm = () => {
                                         <Form.Item
                                             style={{width:350}}
                                             {...field}
-                                            label={`keyword (${index+3}):`}
+                                            label={`Keyword (${index+3}):`}
                                             rules={[{ required: true, message: 'Missing keyword' }]}
                                         >
                                             <Input style={{marginLeft:10}}/>
@@ -232,7 +229,7 @@ export const DefinitionForm = () => {
 
                                 <Form.Item style={{marginLeft:"7px"}}>
                                     <Button style={{width: 140}} type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                                        Add keywords
+                                        Add keyword
                                     </Button>
                                 </Form.Item>
                             </>

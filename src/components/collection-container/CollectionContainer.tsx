@@ -33,7 +33,7 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
 
     return (
         <div className="collection-container">
-            <h2 style={{color:"white"}}>Private collection</h2>
+            <h2 style={{color:"white"}}>Private collections</h2>
             <Collapse defaultActiveKey={['1']} onChange={callback}>
                 {collection.collection && collection.collection.map((collection: ICollection, index: number)=>(
                     <Panel header={collection.collection_name} key={collection.collection_name + index}>
