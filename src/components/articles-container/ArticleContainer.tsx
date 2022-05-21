@@ -33,7 +33,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
 
     // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
-    const query = useAppSelector<string>(state => state.query.query);
     // @ts-ignore
     const count = useAppSelector<number>(state => state.article.count);
     // @ts-ignore
@@ -244,7 +243,7 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                         <h4 className="loader-articles-details">Searching for articles</h4>
                     </div> :
                         <div>
-                            <ArticleList articles={articles} queryId={queryId} query={query}/>
+                            <ArticleList articles={articles} queryId={queryId}/>
                         </div>}
                 </div>}
 

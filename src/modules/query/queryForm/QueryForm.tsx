@@ -15,33 +15,94 @@ const formItemLayout = {
     wrapperCol: { span: 14 },
 };
 
+ interface FormType {
+     first_word: string,
+     second_word: string,
+     others: any[]
+ }
+
+const fromReducerToQueryForm = (items: string[]): FormType => {
+    let responseObject: FormType = {
+        first_word: '',
+        second_word: '',
+        others: []
+    }
+    if(items.length === 0){
+        responseObject = {
+            first_word: '',
+            second_word: '',
+            others: []
+        }
+    }
+    if(items.length === 1){
+        responseObject = {
+            first_word: items[0],
+            second_word: '',
+            others: []
+        }
+    }
+    if(items.length === 2){
+        responseObject = {
+            first_word: items[0],
+            second_word: items[1],
+            others: []
+        }
+    }
+    else{
+        const first = items[0];
+        const second = items[1];
+        let others : any[] = items.slice(2);
+
+        responseObject = {
+            first_word: first,
+            second_word: second,
+            others: [...others]
+        }
+    }
+    return responseObject;
+}
+
 export const DefinitionForm = () => {
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
     const [form] = Form.useForm();
-    const history = useHistory();
-    const query = useAppSelector<string>(state => state.query.query);
-    const first_keyword = useAppSelector<string>(state => state.query.first_keyword);
-    const first_operator = useAppSelector<string>(state => state.query.first_operator);
-    const extra_keywords = useAppSelector<Array<KeywordsListObject>>(state => state.query.extra_keywords);
-    //const connection = useAppSelector<string>(state => state.query.connection);
+
+    const searching_operator = useAppSelector<string>(state => state.query.searching_operator);
+    const searching_words = useAppSelector<string[]>(state => state.query.searching_words);
     const queryId = useAppSelector<string>(state => state.query.queryId);
-    // const strategy = useAppSelector<string>(state => state.query.strategy)
+
     const dispatch = useAppDispatch()
+    const history = useHistory();
 
     useEffect(()=>{
-        form.setFieldsValue({
-            query: query,
-            first_keyword: first_keyword,
-            first_operator: first_operator,
-            //connection: connection,
-            extra_keywords:extra_keywords
-            // strategy: strategy,
-        });
+        const queryToForm = fromReducerToQueryForm(searching_words);
+        if(queryToForm.others.length > 0){
+            form.setFieldsValue({
+                first_word: queryToForm.first_word,
+                second_word: queryToForm.second_word,
+                keywords: queryToForm.others,
+                operator: searching_operator || 'AND'
+            });
+        }
+        else if(queryToForm.second_word){
+            form.setFieldsValue({
+                first_word: queryToForm.first_word,
+                second_word: queryToForm.second_word,
+                keywords: [],
+                operator: searching_operator || 'AND'
+            });
+        }
+        else {
+            form.setFieldsValue({
+                first_word: queryToForm.first_word,
+                second_word: '',
+                keywords: [],
+                operator: searching_operator || 'AND'
+            });
+        }
     },[]);
 
     useEffect(()=>{
-        console.log(queryId);
         setIsLoader(false);
         if (isSubmitSelected){
             setIsSubmitSelected(false);
@@ -61,18 +122,30 @@ export const DefinitionForm = () => {
     const onFinish = (values: any) => {
         setIsLoader(true);
         setIsSubmitSelected(true);
-        const newKeywords = values.keywords || [];
-        const newQuery:QueryState = {
-            query: joinQuery(values.first_keyword, makeKeywordsTemplate(newKeywords)),
-            first_keyword: values.first_keyword,
-            first_operator: values.first_operator,
-            extra_keywords: makeKeywordsTemplate(newKeywords),
-            //connection: values.connection,
+        console.log(values);
+
+        // SEND LIST OF STRINGS
+
+        let responseQueryString: string[] = [];
+        if(values){
+            if(values.keywords && values.keywords.length > 0){
+                responseQueryString.push(values.first_word);
+                responseQueryString.push(values.second_word);
+                values.keywords.forEach((item: string) => responseQueryString.push(item));
+            } else if (values.second_word != ''){
+                responseQueryString.push(values.first_word);
+                responseQueryString.push(values.second_word);
+            } else {
+                responseQueryString.push(values.first_word);
+            }
+        }
+        const newQuery: QueryState = {
+            searching_words: responseQueryString,
+            searching_operator: values.operator,
             queryId: ''
-            //strategy: values.strategy
         }
         // @ts-ignore
-        dispatch(createQuery(newQuery ));
+            dispatch(createQuery(newQuery ));
     };
 
     const onReset = () => {
@@ -81,17 +154,22 @@ export const DefinitionForm = () => {
 
     const onFill = () => {
         form.setFieldsValue({
-            query: 'IOT',
-            first_keyword: 'cyber',
-            first_operator: 'AND',
-           // connection: 'authors',
-            //strategy: 'suggestions',
+            first_word: 'IOT',
+            second_word: 'Architecture',
+            keywords: ['Academy'],
+            operator: 'AND',
         });
     };
 
     const onCleanFirst = () => {
         form.setFieldsValue({
-            first_keyword: '',
+            first_word: '',
+        });
+    };
+
+    const onCleanSecond = () => {
+        form.setFieldsValue({
+            second_word: '',
         });
     };
 
@@ -107,85 +185,46 @@ export const DefinitionForm = () => {
             >
                 <span className="form-title">Searching Query</span>
                 <Divider className="divider-title-form"/>
-                {/*<Form.Item*/}
-                {/*    name="connection"*/}
-                {/*    label="Connection Type"*/}
-                {/*    hasFeedback*/}
-                {/*    rules={[{ required: true, message: 'Missing connection type input' }]}*/}
-                {/*    className="connection-select"*/}
-                {/*>*/}
-                {/*    <Select placeholder="Please select a connection">*/}
-                {/*        <Option value="authors">Authors</Option>*/}
-                {/*    </Select>*/}
-                {/*</Form.Item>*/}
-                {/*<Form.Item*/}
-                {/*    name="query"*/}
-                {/*    label="Query"*/}
-                {/*    rules={[{ required: true, message: 'Missing search input', type: 'array' }]}*/}
-                {/*>*/}
-                {/*    <Select mode="multiple" placeholder="Please type subject" >*/}
-                {/*        <Option value="IOT">IOT</Option>*/}
-                {/*        <Option value="green">Green</Option>*/}
-                {/*        <Option value="blue">Blue</Option>*/}
-                {/*    </Select>*/}
-                {/*</Form.Item>*/}
-
-
-                {/*<Form.Item*/}
-                {/*    name="query"*/}
-                {/*    label="Query"*/}
-                {/*    rules={[{ required: true, message: 'Missing search input', type: 'string' }]}*/}
-                {/*>*/}
-                {/*    <Input placeholder="Basic usage" />*/}
-                {/*    <Select mode="multiple" placeholder="Please type subject" >*/}
-                {/*        <Option value="IOT">IOT</Option>*/}
-                {/*        <Option value="green">Green</Option>*/}
-                {/*        <Option value="blue">Blue</Option>*/}
-                {/*    </Select>*/}
-                {/*</Form.Item>*/}
                 <div className="select-keyword-container">
                     <div className="select-keyword">
                         <Space key="first_key" align="baseline"  style={{marginRight: 40, width: 550}}>
-                        <Form.Item
-                            style={{width:350}}
-                            name="first_keyword"
-                            label="keyword:"
-                            rules={[{ required: true, message: 'Missing keyword' }]}
-                        >
-                            <Input style={{marginLeft:10}}/>
-                        </Form.Item>
-                        <Form.Item label="Operator" name="first_operator" style={{width:250}}>
-                            <Select style={{marginLeft:14, width:100}}>
-                                {/*<Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>*/}
-                                {/*<Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>*/}
-                                <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
-                            </Select>
-                        </Form.Item>
-                        <MinusCircleOutlined onClick={() => onCleanFirst()} />
-                    </Space>
-                </div>
+                            <Form.Item
+                                style={{width:350}}
+                                name="first_word"
+                                label="keyword (1):"
+                                rules={[{ required: true, message: 'Missing keyword' }]}
+                            >
+                                <Input style={{marginLeft:10}}/>
+                            </Form.Item>
+                            <MinusCircleOutlined onClick={() => onCleanFirst()} />
+                        </Space>
+                    </div>
+                    <div className="select-keyword">
+                        <Space key="first_key" align="baseline"  style={{marginRight: 40, width: 550}}>
+                            <Form.Item
+                                style={{width:350}}
+                                name="second_word"
+                                label="keyword (2):"
+                                rules={[{ required: true, message: 'Missing keyword' }]}
+                            >
+                                <Input style={{marginLeft:10}}/>
+                            </Form.Item>
+                            <MinusCircleOutlined onClick={() => onCleanSecond()} />
+                        </Space>
+                    </div>
                 <div className="select-keyword">
                     <Form.List name="keywords">
                         {(fields, { add, remove }) => (
                             <>
-                                {fields.map(field => (
-                                    <Space key={field.key} align="baseline" style={{marginRight: 40, width: 700}}>
+                                {fields.map((field , index)=> (
+                                    <Space key={field.key} align="baseline" style={{marginRight: 40, width: 550}}>
                                         <Form.Item
                                             style={{width:350}}
                                             {...field}
-                                            label="keyword"
-                                            name={[field.name, 'keyword']}
+                                            label={`keyword (${index+3}):`}
                                             rules={[{ required: true, message: 'Missing keyword' }]}
                                         >
                                             <Input style={{marginLeft:10}}/>
-                                        </Form.Item>
-                                        <Form.Item label="Operator" name={[field.name, 'operator']}
-                                                   style={{width:250}}>
-                                            <Select style={{marginLeft:14, width:100}}>
-                                                {/*<Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>*/}
-                                                {/*<Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>*/}
-                                                <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
-                                            </Select>
                                         </Form.Item>
                                         <MinusCircleOutlined onClick={() => remove(field.name)} />
                                     </Space>
@@ -200,19 +239,18 @@ export const DefinitionForm = () => {
                         )}
                     </Form.List>
                 </div>
+                    <div className="select-keyword">
+                        <Space key="first_key" align="baseline"  style={{marginRight: 40, width: 550}}>
+                            <Form.Item label="Operator" name="operator" style={{width:250}}>
+                                <Select style={{marginLeft:14, width:100}}>
+                                    <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
+                                    {/*<Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>*/}
+                                    <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>
+                                </Select>
+                            </Form.Item>
+                        </Space>
+                    </div>
                 </div>
-
-                {/*<Form.Item*/}
-                {/*    name="strategy"*/}
-                {/*    label="Strategy"*/}
-                {/*    rules={[{ required: true, message: 'Missing strategy input' }]}*/}
-                {/*>*/}
-                {/*    <Radio.Group>*/}
-                {/*        <Radio.Button value="suggestions">Suggestion</Radio.Button>*/}
-                {/*        <Radio.Button value="search">Search AI</Radio.Button>*/}
-                {/*        <Radio.Button value="user">User AI</Radio.Button>*/}
-                {/*    </Radio.Group>*/}
-                {/*</Form.Item>*/}
                 <Divider/>
                 <Form.Item className="action-form-buttons" wrapperCol={{ span: 12, offset: 6 }}>
                     <Button className="action-form-button" type="primary" htmlType="submit">

@@ -9,7 +9,13 @@
 
   .disabled-menu-item{
     cursor: not-allowed;
-    margin: 0 50px;
+    margin: 0 30px;
+    font-size: 15px !important;
+    width: 100px;
+  }
+
+  .ant-menu-horizontal > .ant-menu-item a{
+    margin: 0 30px;
     font-size: 15px !important;
     width: 100px;
   }

@@ -3,7 +3,7 @@ import {Button, Divider, Slider} from "antd";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import "./CategoryList.scss";
 import {CategoryCard} from "../category/CategoryCard";
-import {getCatalog, patchCategories, patchNumberOfCluster} from "../../actions/CatalogAction";
+import {getCatalog, patchCategories, patchNumberOfCluster, resetCluster} from "../../actions/CatalogAction";
 import Swal from "sweetalert2";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 import {IMetadataWithCategory} from "../new-metadata-list/NewMetadataList";
@@ -66,6 +66,8 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     const dispatch = useAppDispatch()
 
     useEffect(()=>{
+        // @ts-ignore
+        dispatch(resetCluster());
         // @ts-ignore
         dispatch(getCatalog(queryId, 100, savedMetadataList, categories, numberOfClusters ));
     },[queryId, numberClusters])

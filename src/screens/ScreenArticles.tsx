@@ -6,7 +6,7 @@ import {useHistory} from "react-router-dom";
 import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
 import {CollectionContainer} from "../components/collection-container/CollectionContainer";
 import {IMetadataWithCategory, NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
-import {ArticleOfList, getFilteredArticles} from "../actions/ArticleActions";
+import {ArticleOfList, getFilteredArticles, resetArticles} from "../actions/ArticleActions";
 import {ArticleList} from "../modules/articles/articlesList/ArticleList";
 import {Spin} from "antd";
 import {getTitlesFromMetadata} from "../components/metadata-list/MetadataList";
@@ -64,12 +64,12 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const queryId = useAppSelector<string>(state => state.query.queryId);
     // @ts-ignore
     const articles = useAppSelector<Array<ArticleOfList>>(state => state.article.serverArticles);
-
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
 
-    const query = useAppSelector<string>(state => state.query.query);
+    const currentState = useAppSelector<string>(state => state.breadcrumbs.currentState);
+
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [localCount, setCount] = useState<number>(100);
     const [actionOption, setActionOption] = useState<string>('none');
@@ -85,8 +85,11 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
+        dispatch(resetArticles());
+
+        // @ts-ignore
         dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount, stringCategoriesFromArray(categories), numberOfClusters ));
-    },[queryId, query, savedMetadataList, numberOfClusters, categories])
+    },[queryId, savedMetadataList, numberOfClusters, categories])
 
 
     useEffect(()=>{
@@ -98,6 +101,19 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     useEffect(()=>{
         aos.init({duration: 1000})
     },[])
+
+    useEffect(()=>{
+        console.log(currentState);
+        // // update - query
+        // dispatch()
+        // // metadata
+        // dispatch()
+        // // clusters
+        // dispatch()
+        // // num of articles
+        // dispatch()
+
+    },[currentState])
 
     const actionHandler = (newAction: string) => {
         setActionOption('none');
@@ -157,7 +173,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
                 <h4 className="loader-articles-details">Searching for articles</h4>
             </div> :
             <div>
-                <ArticleList articles={articles} queryId={queryId} query={query} savedMetadataList={savedMetadataList}/>
+                <ArticleList articles={articles} queryId={queryId} savedMetadataList={savedMetadataList}/>
             </div>
         }
     </div> : <div className="screen screen-articles"> </div>

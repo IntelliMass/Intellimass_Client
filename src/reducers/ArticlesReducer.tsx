@@ -54,6 +54,16 @@ const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) =
                 ...state,
                 selectedPaperID: action.payload,
             };
+
+        case "RESET_ARTICLES":
+            return {
+                ...state,
+                articles: [],
+                serverArticles: [],
+                articleDetail: {},
+                count: 100,
+                selectedPaperID: ""
+            }
         default:
             return state;
     }

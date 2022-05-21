@@ -17,8 +17,9 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
     const dispatch = useAppDispatch()
 
     useEffect(()=>{
-        // @ts-ignore
-        dispatch(getCollections());
+        if(userid !== '')
+            // @ts-ignore
+            dispatch(getCollections());
     },[userid]);
 
 

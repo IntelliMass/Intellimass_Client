@@ -96,7 +96,7 @@ const formItemLayout = {
                 <h2 className="form-auth-title">{formLayout} </h2>
                 <Divider className="divider-title-form"/>
                 <Form.Item
-                    label="userName"
+                    label="User name"
                     name="userName"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
@@ -104,7 +104,7 @@ const formItemLayout = {
                 </Form.Item>
 
                 <Form.Item
-                    label="password"
+                    label="Password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
