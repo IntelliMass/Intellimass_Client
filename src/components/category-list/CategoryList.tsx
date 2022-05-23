@@ -81,6 +81,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     },[ selectedCategories ])
 
     useEffect(()=>{
+        setSelectedCategories([...fromCategoriesToSelected(categories)]);
     },[ categories ])
 
     useEffect(()=>{

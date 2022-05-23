@@ -98,12 +98,12 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     const state_metadataList = useAppSelector<NewMetadata>(state => state.metadata.metadataList);
     const state_savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const queryId = useAppSelector<string>(state => state.query.queryId);
-
-
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
 
+    //  LOCAL ALL METADATA LIST
     const [localMetadata, setLocalMetadata] = useState<NewMetadata>({...state_metadataList});
+    //  LOCAL SAVED METADATA LIST
     const [savedMetadataList, setSavedMetadataList] = useState<Array<IMetadataWithCategory>>([...state_savedMetadataList]);
 
     // TYPE OF TOGGLE
@@ -241,9 +241,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                 if (foundIndex !== -1) newList[foundIndex].isSelected = !newList[foundIndex].isSelected;
                 newMetadata.metadata.fields_of_study = newList;
             }
-            // TODO : DISPATCH AND NOT LOCAL
-            // @ts-ignore
-            dispatch(patchMetadata({...newMetadata}, [...savedMetadataList]))
+            setLocalMetadata({...newMetadata});
         }
     };
 

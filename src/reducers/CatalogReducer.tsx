@@ -36,7 +36,8 @@ const CatalogReducer = (state: CatalogState = initState, action:CatalogAction) =
         case "UPDATE_NUMBER_OF_CLUSTERS":
             return {
                 ...state,
-                numOfClusters: action.payload
+                numOfClusters: action.payload,
+                selectedCategories: []
             };
 
         case "RESET_CATEGORIES":

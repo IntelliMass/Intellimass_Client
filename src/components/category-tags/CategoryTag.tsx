@@ -25,11 +25,16 @@ export const typeGeneretor = (index:number)=>{
     }
 };
 
+export const colorGenerator = (index: number) => {
+    const colors: string[] = ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263','#6AF9C4'];
+    return colors[index];
+}
+
 export const CategoryTag: React.FC<ArticlePopoverProps> = (props) => {
     const {category, index} = props;
     return (
         <>
-            <Alert className={`category-tag`} message={category} type={typeGeneretor(index)} />
+            <Alert style={{backgroundColor: colorGenerator(index)}} className={`category-tag`} message={category} type={typeGeneretor(index)} />
         </>
     );
 };

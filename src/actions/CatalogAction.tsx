@@ -29,6 +29,7 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
 
     async dispatch => {
         const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
+        console.log(URL_GET_CATEGORIES_NEW)
         await fetch(url)
             .then(function (response) {
                 return response.json();
@@ -52,6 +53,7 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
  * @return {dispatch} Type + payload.
  */
 export function patchCategories(selectedCategories:Array<INewSingleCatalog> ) {
+    console.log('woop')
     console.log(selectedCategories)
     return {
         type: "UPDATE_CATALOG",

@@ -10,7 +10,6 @@ export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction
 let URL_GET_METADATA_NEW = "https://api.intellimass.net/metadata";
 
 export const customMetadataMiddleware = (metadata:ServerMetadata):NewMetadata  =>{
-    console.log(metadata)
     let authors: Array<IMetadata> = [];
     let topics:  Array<IMetadata> = [];
     let fields_of_study: Array<IMetadata> = [];

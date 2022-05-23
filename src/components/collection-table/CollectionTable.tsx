@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Table, Tag, Space, Tooltip} from 'antd';
 import "../collection-container/CollectionContainer.scss"
 import {ArticleOfList, Author, updatePaperID} from "../../actions/ArticleActions";
@@ -6,6 +6,9 @@ import {ArticleList} from "../../modules/articles/articlesList/ArticleList";
 import {DeleteOutlined, MoreOutlined} from "@ant-design/icons";
 import {useAppDispatch} from "../../hooks/hooks";
 import {useHistory} from "react-router-dom";
+import Swal from "sweetalert2";
+import {removeFromCollection} from "../../actions/CollectionAction";
+import {ICollection} from "../../reducers/CollectionResucer";
 
 type CollectionTableProps = {
     articles: Array<ArticleOfList>
@@ -22,8 +25,19 @@ export interface VisualCollectionRow {
     paperId: string
 }
 
+export interface VisualCollectionRowNew {
+    title: string,
+    year: number,
+    authors: Array<Author>,
+    frequentWords: Array<string>,
+    paperId: string,
+    collectionName: string
+}
+
 export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
    const {articles} = props;
+
+    const [selectedCollectionName, setSelectedCollectionName] = useState<string>('none');
 
     const dispatch = useAppDispatch();
     const history = useHistory();
@@ -33,6 +47,33 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
         dispatch(updatePaperID(paperID));
         history.replace('/article');
     }
+
+    const removeArticle = ( paperID: string) => {
+        Swal.fire({
+            title: 'Are you sure you want to remove this article?',
+            text: `This will remove the article from ${selectedCollectionName} collection`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, remove it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // @ts-ignore
+                dispatch(removeFromCollection(queryId, userid, collections, selectedCollectionName, paperID))
+                Swal.fire(
+                    'Removed!',
+                    'Your article has been removed.',
+                    'success'
+                )
+                let selectedName = selectedCollectionName;
+                setSelectedCollectionName('none');
+                setSelectedCollectionName(selectedName);
+            }
+        })
+    }
+
+
 
     const columns = [
         {
@@ -90,7 +131,7 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
                         <MoreOutlined onClick={()=>{onClickMoreDetail(paperId)}} className="collection-icon"/>
                     </Tooltip>
                     <Tooltip placement="bottom" title={'Remove article'}>
-                        <DeleteOutlined className="collection-icon"/>
+                        <DeleteOutlined onClick={()=>removeArticle(paperId)} className="collection-icon"/>
                     </Tooltip>
                 </Space>
             ),

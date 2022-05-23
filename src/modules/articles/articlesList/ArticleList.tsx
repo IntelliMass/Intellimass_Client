@@ -37,6 +37,7 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
     const operator = useAppSelector<string>(state => state.query.searching_operator);
     const [queryString, setQueryString] = useState<string>('');
 
+
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
@@ -71,7 +72,9 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                             description={ listAuthorsToString(item.authors)}
                         />
                         <div className="category-tag">
-                            <CategoryTag category={item.cluster || 'none'} index={fromCategoryToIndex(item.cluster || 'none', catalog )}/>
+                            {catalog.length > 0 &&
+                                <CategoryTag category={item.cluster || 'none'} index={fromCategoryToIndex(item.cluster || 'none', catalog )}/>
+                            }
                         </div>
                         {item.abstract}
                     </List.Item>
