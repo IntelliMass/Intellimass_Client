@@ -55,7 +55,7 @@ export const QueryListHeader = (props: QueryListHeaderProps) => {
     return (
         <div className="query-list">
             <Input  size="large" value={queryString} onChange={onChange} className="input-query"/>
-            <Button size="large" type="primary" onClick={onSearch} className="button-query">Filter</Button>
+            <Button size="large" type="primary" onClick={onSearch} className="button-query">Search</Button>
         </div>
     );
 }

@@ -68,7 +68,7 @@ export const unSelectOne = (metadata: NewMetadata ,categoryType: string, index: 
     else if(categoryType === "TOPICS") newMetadata.metadata.topics[index].isSelected = !newMetadata.metadata.topics[index].isSelected;
     else if(categoryType === "YEARS") newMetadata.metadata.years[index].isSelected = !newMetadata.metadata.years[index].isSelected;
     else newMetadata.metadata.fields_of_study[index].isSelected = !newMetadata.metadata.fields_of_study[index].isSelected;
-
+    console.log(newMetadata)
     return newMetadata;
 }
 
@@ -196,7 +196,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                         else  newMetadata.metadata.fields_of_study.push({...newSavedList[foundIndex].metadata});
                         const list = [...savedMetadataList.filter(item => item.metadata.id !== id)];
                         // @ts-ignore
-                        //dispatch(patchMetadata({...newMetadata}, list));
+                        dispatch(patchMetadata({...newMetadata}, list));
                         Swal.fire(
                             'Deleted!',
                             'Your collection has been deleted.',
