@@ -51,7 +51,10 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
     const onClickSingleBreadCrumb = (item: any) => {
         console.log(item);
         // @ts-ignore
-        dispatch(uploadBreadcrumbs(item))
+        dispatch(uploadBreadcrumbs(item));
+        // WHO LISTEN?
+        // 1 - SAVED FILTERS
+        // 2 - ARTICLE COUNT
     }
 
 

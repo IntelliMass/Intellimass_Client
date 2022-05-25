@@ -12,12 +12,13 @@ export interface IBreadCrumb {
     clusters: string[],
     metadataList: ServerStringMetadata[],
     count: number,
-    index: number
+    index: number,
 }
 
 export interface BreadCrumbState {
     breadCrumbList: IBreadCrumb[],
-    currentState: IBreadCrumb
+    currentState: IBreadCrumb,
+    isUpdatedFlag: boolean
 }
 
 const initState: BreadCrumbState = {
@@ -29,7 +30,8 @@ const initState: BreadCrumbState = {
         clusters: ["Systems", "Software", "Network"],
         metadataList: [{type: "year", title: "2020"}],
         count: 100
-    }
+    },
+    isUpdatedFlag: false
 };
 
 const ArticleReducer = (state: BreadCrumbState = initState, action:BreadCrumbAction) => {

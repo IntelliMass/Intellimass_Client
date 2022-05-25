@@ -41,6 +41,12 @@ const QueryReducer = (state: QueryState = initState, action:QueryAction) => {
                 searching_words: [...action.payload],
             };
 
+        case "UPDATE_QUERY_FROM_BREADCRUMBS":
+            return {
+                ...state,
+                searching_words: [...action.payload],
+            };
+
         default:
             return state;
     }

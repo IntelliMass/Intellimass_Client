@@ -47,6 +47,14 @@ const CatalogReducer = (state: CatalogState = initState, action:CatalogAction) =
                 selectedCategories: [],
                 numOfClusters: 4
             };
+
+        case "UPDATE_CATEGORIES_BREADCRUMBS":
+            return{
+                ...state,
+                selectedCategories: [...action.payload.selectedCategories],
+                numOfClusters: action.payload.numOfClusters
+            };
+
         default:
             return state;
     }

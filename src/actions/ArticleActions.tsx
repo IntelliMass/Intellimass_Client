@@ -1,13 +1,11 @@
-import {SharedAction} from "./SharedAction";
-
 type GetArticlesAction = {type: "GET_ARTICLES", payload: ArticleOfList }
 type GetArticleDetailAction = {type: "GET_ARTICLE_DETAIL", payload: ArticleDetail}
 type UpdateCountAction = {type: "UPDATE_ARTICLES_COUNT", payload: number}
 type UpdatePaperIDAction = {type: "UPDATE_SELECTED_PAPER_ID", payload: string}
 type ResetArticlesAction = {type: "RESET_ARTICLES", payload: any[]}
+type UpdateCountFromBreadcrumAction = {type: "UPDATE_NUMBER_BY_BREADCRUMBS", payload: number}
 
-
-export type ArticleAction = GetArticlesAction|  GetArticleDetailAction  | UpdateCountAction | UpdatePaperIDAction | ResetArticlesAction;
+export type ArticleAction = GetArticlesAction|  GetArticleDetailAction  | UpdateCountAction | UpdatePaperIDAction | ResetArticlesAction | UpdateCountFromBreadcrumAction;
 
 export interface ArticleDetail {
     title: string,
@@ -81,7 +79,9 @@ export interface ArticleOfList {
     frequentWords?: string[],
     topics?: any[],
     references?: any[],
-    cluster?: string
+    cluster?: string,
+    query_word?: string[],
+    timestamp?:string
 }
 
 let URL_GET_ARTICLES_NEW = "https://api.intellimass.net/articles/articles";
@@ -192,3 +192,11 @@ export function resetArticles() {
         payload: [],
     };
 }
+
+export function updateCountFromBreadcrum(count: number) {
+    return {
+        type: "UPDATE_NUMBER_BY_BREADCRUMBS",
+        payload: count,
+    };
+}
+

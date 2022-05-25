@@ -2,27 +2,23 @@ import React, {useState} from "react";
 import {Table, Tag, Space, Tooltip} from 'antd';
 import "../collection-container/CollectionContainer.scss"
 import {ArticleOfList, Author, updatePaperID} from "../../actions/ArticleActions";
-import {ArticleList} from "../../modules/articles/articlesList/ArticleList";
 import {DeleteOutlined, MoreOutlined} from "@ant-design/icons";
 import {useAppDispatch} from "../../hooks/hooks";
 import {useHistory} from "react-router-dom";
 import Swal from "sweetalert2";
 import {removeFromCollection} from "../../actions/CollectionAction";
-import {ICollection} from "../../reducers/CollectionResucer";
 
 type CollectionTableProps = {
     articles: Array<ArticleOfList>
 };
 
-// authors
-// frequentWords
 
 export interface VisualCollectionRow {
     title: string,
     year: number,
     authors: Array<Author>,
     frequentWords: Array<string>,
-    paperId: string
+    paperId: string,
 }
 
 export interface VisualCollectionRowNew {
@@ -31,7 +27,11 @@ export interface VisualCollectionRowNew {
     authors: Array<Author>,
     frequentWords: Array<string>,
     paperId: string,
-    collectionName: string
+    // collectionName: string,
+    topics: Array<string>,
+    cluster: string,
+    query_word: Array<string>,
+    timestamp: string
 }
 
 export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
@@ -87,6 +87,34 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
             key: 'year',
         },
         {
+            title: 'Category',
+            dataIndex: 'cluster',
+            key: 'cluster',
+        },
+        {
+            title: 'Saved time',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+        },
+        {
+            title: 'From search',
+            dataIndex: 'query_word',
+            key: 'query_word',
+            render: (query_words: string[]) => (
+                <>
+                    {query_words.map(query_word => {
+                        // @ts-ignore
+                        let color = query_word.length > 5 ? 'geekblue' : 'green';
+                        return (
+                            <Tag color={color} key={query_word}>
+                                {query_word}
+                            </Tag>
+                        );
+                    })}
+                </>
+            ),
+        },
+        {
             title: 'Authors',
             key: 'authors',
             dataIndex: 'authors',
@@ -105,10 +133,27 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
             ),
         },
         {
+            title: 'Topics',
+            key: 'topics',
+            dataIndex: 'topics',
+            render: (topics: any[]) => (
+                <>
+                    {topics.map(topic => {
+                        let color = topic.length > 5 ? 'geekblue' : 'green';
+                        return (
+                            <Tag color={color} key={topic}>
+                                {topic}
+                            </Tag>
+                        );
+                    })}
+                </>
+            ),
+        },
+        {
             title: 'Frequent Words',
             key: 'frequentWords',
             dataIndex: 'frequentWords',
-            render: (frequentWords: any[]) => (
+            render: (frequentWords: string[]) => (
                 <>
                     {frequentWords.map(frequentWord => {
                         let color = frequentWord.length > 5 ? 'geekblue' : 'green';
@@ -137,11 +182,19 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
             ),
         },
     ];
-
-    const visualArticles = (articles: Array<ArticleOfList>) : Array<VisualCollectionRow> => {
-        let dataSet: Array<VisualCollectionRow> = [];
+    const visualArticles = (articles: Array<ArticleOfList>) : Array<VisualCollectionRowNew> => {
+        let dataSet: Array<VisualCollectionRowNew> = [];
         articles.forEach(article => {
-            dataSet.push({title: article.title, year: article.year, authors: article.authors, frequentWords: article.frequentWords || [], paperId: article.paperId})
+            dataSet.push({
+                title: article.title,
+                year: article.year,
+                topics: article.topics || [],
+                cluster: article.cluster || '',
+                query_word: article.query_word || [],
+                timestamp: article.timestamp || '',
+                authors: article.authors,
+                frequentWords: article.frequentWords || [],
+                paperId: article.paperId})
         })
         return dataSet;
     }

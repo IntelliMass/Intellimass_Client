@@ -32,6 +32,9 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
+    // @ts-ignore
+    const numberOfArticles = useAppSelector<number>(state => state.article.count);
+
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [localCount, setCount] = useState<number>(100);
     const [actionOption, setActionOption] = useState<string>('none');
@@ -55,6 +58,10 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     },[ categories ])
 
     useEffect(()=>{
+        setCount(numberOfArticles)
+    },[numberOfArticles])
+
+    useEffect(()=>{
         console.log(network);
         if(network.nodes.length === 0)  setIsLoader(true);
         else setIsLoader(false);
@@ -64,11 +71,6 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     useEffect(()=>{
         aos.init({duration: 1000})
     },[])
-
-    function handleChange(value:string) {
-        // @ts-ignore
-        dispatch(updateConnectionType(value));
-    }
 
     function plus() {
         if(count === 1000){
@@ -161,12 +163,12 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                                 </ExpandableTopBar>
                             </div>
                             <div style={{color: "white", fontSize: 18, marginLeft: "5%", marginBottom: "1%"}}>
-                                <span className="action-title"> Connection type: </span>
-                                <Select style={{marginLeft: "1%", marginRight: "1%"}} onChange={handleChange} placeholder="Network connection type">
-                                    <Option value="authors">Authors</Option>
-                                    <Option value="frequentWords">Frequent words</Option>
-                                    <Option value="topics">Topics</Option>
-                                </Select>
+                                {/*<span className="action-title"> Connection type: </span>*/}
+                                {/*<Select style={{marginLeft: "1%", marginRight: "1%"}} onChange={handleChange} placeholder="Network connection type">*/}
+                                {/*    <Option value="authors">Authors</Option>*/}
+                                {/*    <Option value="frequentWords">Frequent words</Option>*/}
+                                {/*    <Option value="topics">Topics</Option>*/}
+                                {/*</Select>*/}
                                 <span style={{marginLeft: "5%"}}> Original Articles number ( {localCount} )</span>
                                 <Button style={{marginLeft: "1%", marginRight: "1%"}}
                                     icon={<PlusOutlined />}

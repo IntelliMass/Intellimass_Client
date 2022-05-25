@@ -80,6 +80,12 @@ const MetadataReducer = (state: NewMetadataState = initState, action:MetadataAct
                 savedMetadataList: [...action.payload.savedMetadata ]
             };
 
+        case "UPDATE_SELECTED_METADATA_FROM_BREADCRUMB":
+            return {
+                ...state,
+                savedMetadataList: [...action.payload ]
+            };
+
         case "RESET_METADATA":
             return {
                 ...state,

@@ -4,9 +4,9 @@ type UpdateCatalogAction = {type: "GET_CATALOG", payload: any }
 type UpdateSelectedAction = {type: "UPDATE_CATALOG", payload: any}
 type UpdateNumberOfClustersAction = {type: "UPDATE_NUMBER_OF_CLUSTERS", payload: any}
 type ResetClustersAction = {type: "RESET_CATEGORIES", payload: any}
+type UpdateCategoriesFromBreadcrumbs = {type: "UPDATE_CATEGORIES_BREADCRUMBS", payload: any}
 
-
-export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction | UpdateNumberOfClustersAction |ResetClustersAction;
+export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction | UpdateNumberOfClustersAction |ResetClustersAction | UpdateCategoriesFromBreadcrumbs;
 
 let URL_GET_CATEGORIES_NEW = "https://api.intellimass.net/clusters";
 
@@ -83,5 +83,13 @@ export function resetCluster() {
 }
 
 
-
+export function updateCategoriesFromBreadcrumbs(selectedCategories: INewSingleCatalog[] , numOfClusters:number) {
+    return {
+        type: "UPDATE_CATEGORIES_BREADCRUMBS",
+        payload:  {
+            selectedCategories: selectedCategories,
+            numOfClusters: numOfClusters
+        }
+    };
+}
 

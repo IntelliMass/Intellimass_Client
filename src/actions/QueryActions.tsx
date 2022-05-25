@@ -1,7 +1,8 @@
 import {joinQuery, QueryState} from "../reducers/QueryReducer"
 type QueryCreateAction = {type: "CREATE_QUERY", payload: QueryState}
 type QueryUpdateKeywordsAction = {type: "UPDATE_KEYWORDS", payload: Array<string>}
-export type QueryAction = QueryCreateAction | QueryUpdateKeywordsAction;
+type QueryUpdateFromBreadcrumbsAction = {type: "UPDATE_QUERY_FROM_BREADCRUMBS", payload: Array<string>}
+export type QueryAction = QueryCreateAction | QueryUpdateKeywordsAction | QueryUpdateFromBreadcrumbsAction;
 
 
 export interface KeywordsListObject {
@@ -59,6 +60,14 @@ export const  createQuery = (queryParams: QueryState): (dispatch: any) => Promis
 export function updateQueryKeywords(keywordsList:Array<string>):QueryUpdateKeywordsAction {
     return {
         type: "UPDATE_KEYWORDS",
+        payload: keywordsList
+    };
+}
+
+
+export function updateQueryFromBreadCrumbs(keywordsList:Array<string>):QueryUpdateFromBreadcrumbsAction {
+    return {
+        type: "UPDATE_QUERY_FROM_BREADCRUMBS",
         payload: keywordsList
     };
 }

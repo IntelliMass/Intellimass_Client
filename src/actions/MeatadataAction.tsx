@@ -1,11 +1,13 @@
 import {IMetadata, NewMetadata, ServerMetadata} from "../reducers/MetadataReducer";
 import {IMetadataWithCategory} from "../components/new-metadata-list/NewMetadataList";
+import {ServerStringMetadata} from "../reducers/BreadcrumbReducer";
 
 type UpdateMetadataAction = {type: "UPDATE_METADATA", payload: any }
 type UpdateSelectedMetadataAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
 type ResetMetadataAction = {type: "RESET_METADATA", payload: any}
+type UpdateMetadataFromBreadcrumbsAction = {type: "UPDATE_SELECTED_METADATA_FROM_BREADCRUMB", payload: string[]}
 
-export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction | ResetMetadataAction;
+export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction | ResetMetadataAction | UpdateMetadataFromBreadcrumbsAction;
 
 let URL_GET_METADATA_NEW = "https://api.intellimass.net/metadata";
 
@@ -84,5 +86,26 @@ export function resetMetadata() {
             metadata: [],
             savedMetadata: []
         }
+    };
+}
+
+
+export function updateMetadataFromBreadcrumbs(items:ServerStringMetadata[]) {
+
+    let newMetadataArray:IMetadata;
+    let newMetadataCategoryArray:IMetadataWithCategory[] = [];
+    items.forEach(item => {
+        newMetadataArray = {
+            title: item.title,
+            rank: 39,
+            isSelected: false,
+            id: item.title
+        };
+        newMetadataCategoryArray.push({metadata: newMetadataArray, category: item.type});
+    });
+
+    return {
+        type: "UPDATE_SELECTED_METADATA_FROM_BREADCRUMB",
+        payload:  newMetadataCategoryArray
     };
 }

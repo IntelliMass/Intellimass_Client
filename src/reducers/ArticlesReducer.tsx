@@ -64,6 +64,12 @@ const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) =
                 count: 100,
                 selectedPaperID: ""
             }
+
+        case "UPDATE_NUMBER_BY_BREADCRUMBS":
+            return {
+                ...state,
+                count: action.payload,
+            }
         default:
             return state;
     }

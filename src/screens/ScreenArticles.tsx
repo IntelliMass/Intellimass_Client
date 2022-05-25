@@ -6,7 +6,7 @@ import {useHistory} from "react-router-dom";
 import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
 import {CollectionContainer} from "../components/collection-container/CollectionContainer";
 import {IMetadataWithCategory, NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
-import {ArticleOfList, getFilteredArticles, resetArticles} from "../actions/ArticleActions";
+import {ArticleOfList, getFilteredArticles, resetArticles, updateCountFromBreadcrum} from "../actions/ArticleActions";
 import {ArticleList} from "../modules/articles/articlesList/ArticleList";
 import {Spin} from "antd";
 import {getTitlesFromMetadata} from "../components/metadata-list/MetadataList";
@@ -16,7 +16,10 @@ import {ExportAction} from "../components/exort-action/ExportAction";
 import {BreadCrumbList} from "../components/bread-crumb-list/BreadCrumbList";
 import aos from "aos";
 import {INewSingleCatalog} from "../reducers/CatalogReducer";
-import {stringCategoriesFromArray} from "../actions/CatalogAction";
+import {stringCategoriesFromArray, updateCategoriesFromBreadcrumbs} from "../actions/CatalogAction";
+import {updateQueryFromBreadCrumbs} from "../actions/QueryActions";
+import {IBreadCrumb} from "../reducers/BreadcrumbReducer";
+import {updateMetadataFromBreadcrumbs} from "../actions/MeatadataAction";
 
 
 type ScreenProfileProps = {};
@@ -68,7 +71,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
 
-    const currentState = useAppSelector<string>(state => state.breadcrumbs.currentState);
+    const currentState = useAppSelector<IBreadCrumb>(state => state.breadcrumbs.currentState);
 
     const [isLoader, setIsLoader] = useState<boolean>(false);
     const [localCount, setCount] = useState<number>(100);
@@ -104,14 +107,20 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
 
     useEffect(()=>{
         console.log(currentState);
-        // // update - query
-        // dispatch()
-        // // metadata
-        // dispatch()
-        // // clusters
-        // dispatch()
-        // // num of articles
-        // dispatch()
+        // UPDATE QUERY
+        // TODO ADD HERE TO INTERFACE ALSO THE OPERATOR
+        //dispatch(updateQueryFromBreadCrumbs(currentState.queryList));
+
+        // UPDATE METADATA
+        // @ts-ignore
+       // dispatch(updateMetadataFromBreadcrumbs(currentState.metadataList));
+
+        // UPDATE CLUSTER
+        // TODO ADD HERE NUMBER OF CLUSTERS
+        // dispatch(updateCategoriesFromBreadcrumbs(currentState.clusters, 0));
+
+        // UPDATE NUMBER OF ARTICLES
+        // dispatch(updateCountFromBreadcrum(currentState.count));
 
     },[currentState])
 
