@@ -3,11 +3,18 @@ import {Button, Divider, Slider} from "antd";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import "./CategoryList.scss";
 import {CategoryCard} from "../category/CategoryCard";
-import {getCatalog, patchCategories, patchNumberOfCluster, resetCluster} from "../../actions/CatalogAction";
+import {
+    getCatalog,
+    patchCategories,
+    patchNumberOfCluster,
+    resetCluster,
+    stringCategoriesFromArray
+} from "../../actions/CatalogAction";
 import Swal from "sweetalert2";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 import {IMetadataWithCategory} from "../new-metadata-list/NewMetadataList";
 import {PieChartComponent} from "../pie-chart/PieChart";
+import {metadataListToSerialize} from "../../screens/ScreenArticles";
 
 type CategoriesListProps = {
 
@@ -67,9 +74,17 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
 
     useEffect(()=>{
         // @ts-ignore
+        dispatch(resetCluster());
+        // @ts-ignore
+        dispatch(getCatalog(queryId, 100,  metadataListToSerialize(savedMetadataList), stringCategoriesFromArray(categories), numberOfClusters ));
+    },[])
+
+
+    useEffect(()=>{
+        // @ts-ignore
          dispatch(resetCluster());
         // @ts-ignore
-        dispatch(getCatalog(queryId, 100, savedMetadataList, categories, numberOfClusters ));
+        dispatch(getCatalog(queryId, 100,  metadataListToSerialize(savedMetadataList), stringCategoriesFromArray(categories), numberOfClusters ));
     },[queryId, numberOfClusters])
 
     useEffect(()=>{

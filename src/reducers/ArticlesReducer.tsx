@@ -61,7 +61,6 @@ const ArticleReducer = (state: ArticleState = initState, action:ArticleAction) =
                 articles: [],
                 serverArticles: [],
                 articleDetail: {},
-                count: 100,
                 selectedPaperID: ""
             }
 

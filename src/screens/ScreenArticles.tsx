@@ -34,6 +34,7 @@ export const truncateMetadataType = (type: string) => {
 
 
 export const truncateMetadataTypeToObject = (metadata: IMetadataWithCategory) => {
+    console.log(metadata)
     if (metadata.category === "AUTHORS")  return {authors: metadata.metadata.title.toString()};
     else if(metadata.category === "TOPICS") return {topics: metadata.metadata.title.toString()};
     else if(metadata.category === "COMMON_WORDS") return {frequentWords: metadata.metadata.title.toString()};
@@ -44,6 +45,7 @@ export const truncateMetadataTypeToObject = (metadata: IMetadataWithCategory) =>
 
 export const metadataListToSerialize = (metadataList: Array<IMetadataWithCategory>) => {
     let urlParams:string = "";
+    console.log(metadataList)
     metadataList.forEach((metadata:IMetadataWithCategory) => {
         let str = serialize(truncateMetadataTypeToObject(metadata));
         urlParams+=str + '%$';
@@ -90,6 +92,8 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         // @ts-ignore
         dispatch(resetArticles());
 
+        const x = metadataListToSerialize(savedMetadataList);
+        console.log(x)
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount, stringCategoriesFromArray(categories), numberOfClusters ));
     },[queryId, savedMetadataList, numberOfClusters, categories])

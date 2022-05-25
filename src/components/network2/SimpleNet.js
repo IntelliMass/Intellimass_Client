@@ -32,7 +32,6 @@ export function SimpleNet(props) {
 
     function nodePaint({ id, x, y }, color, ctx, size) {
         ctx.fillStyle = color;
-        console.log(size)
         [
             () => { ctx.beginPath(); ctx.arc(x, y, size, 0, 2 * Math.PI, false); ctx.fill(); } // circle
         ][id%4]();

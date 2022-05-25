@@ -18,6 +18,8 @@ import {ServiceSummary} from "../components/expand-stattistic-panel/ExpandStatis
 import {ArticleCard} from "../components/article-card/ArticleCard";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
 import {updateCount} from "../actions/ArticleActions";
+import {metadataListToSerialize} from "./ScreenArticles";
+import {stringCategoriesFromArray} from "../actions/CatalogAction";
 const { Option } = Select;
 
 type ScreenSearchProps = {};
@@ -51,7 +53,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-        dispatch(getNetwork(queryId, savedMetadataList, "frequentWords", 100, categories, numberOfClusters));
+        dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", 100, stringCategoriesFromArray(categories), numberOfClusters));
     },[queryId, savedMetadataList, numberOfClusters])
 
     useEffect(()=>{

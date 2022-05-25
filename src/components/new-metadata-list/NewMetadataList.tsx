@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
 import './NewMetadataList.scss';
 import { Metadata} from "../metadata/Metadata";
-import {Button, Collapse, Divider, Select, Spin} from "antd";
+import {Button, Collapse, Divider, Spin} from "antd";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getMetadata, patchMetadata, resetMetadata} from "../../actions/MeatadataAction";
 import {IMetadata, NewMetadata} from "../../reducers/MetadataReducer";
 import Swal from "sweetalert2";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
+import {metadataListToSerialize} from "../../screens/ScreenArticles";
+import {stringCategoriesFromArray} from "../../actions/CatalogAction";
 
 const { Panel } = Collapse;
 
@@ -68,7 +70,6 @@ export const unSelectOne = (metadata: NewMetadata ,categoryType: string, index: 
     else if(categoryType === "TOPICS") newMetadata.metadata.topics[index].isSelected = !newMetadata.metadata.topics[index].isSelected;
     else if(categoryType === "YEARS") newMetadata.metadata.years[index].isSelected = !newMetadata.metadata.years[index].isSelected;
     else newMetadata.metadata.fields_of_study[index].isSelected = !newMetadata.metadata.fields_of_study[index].isSelected;
-    console.log(newMetadata)
     return newMetadata;
 }
 
@@ -117,12 +118,24 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     **/
     useEffect(()=>{
         setIsLoader(true);
+        const saved = [...state_savedMetadataList];
         // @ts-ignore
-        dispatch(resetMetadata());
+        // dispatch(resetMetadata());
 
         // @ts-ignore
-        dispatch( getMetadata(queryId, 100, state_savedMetadataList, categories, numberOfClusters));
-    },[queryId])
+        dispatch( getMetadata(queryId, 100, metadataListToSerialize(saved), stringCategoriesFromArray(categories), numberOfClusters));
+    },[])
+
+    // useEffect(()=>{
+    //     setIsLoader(true);
+    //     const saved = [...state_savedMetadataList];
+    //     // @ts-ignore
+    //     dispatch(resetMetadata());
+    //
+    //     // @ts-ignore
+    //     dispatch( getMetadata(queryId, 100, metadataListToSerialize(saved), categories, numberOfClusters));
+    // },[queryId])
+
 
     /**
     * LISTENER TO SERVER METADATA
@@ -272,7 +285,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                     <Divider orientation="left">New Metadata ( {count(localMetadata)} )</Divider>
 
                     <Collapse accordion onChange={callback} style={{width: 470}}>
-                        <Panel header={`Common words (${localMetadata.metadata.common_words.length})`} key="1">
+                        <Panel header={`Frequent words (${localMetadata.metadata.common_words.length})`} key="1">
                             <div className="metadata-list">
                                 {localMetadata.metadata.common_words.map((metadata, index) => {
                                     return(
