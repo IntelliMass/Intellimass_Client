@@ -123,9 +123,9 @@ export const getArticles = (id:string, limit: number = 100 ): (dispatch: any) =>
  * Get single article data from the server
  * @return {dispatch} Type + payload.
  */
-export const getArticleDetail = (articleId:string): (dispatch: any) => Promise<void> =>
+export const getArticleDetail = (articleId:string, queryID:string = "e4b549da-d0d6-49ad-93d4-40bc4c9936ad"): (dispatch: any) => Promise<void> =>
     async dispatch => {
-        const url = URL_GET_ARTICLE_NEW + `?id=${articleId}`
+        const url = URL_GET_ARTICLE_NEW + `?id=${articleId}&query_id=${queryID}`;
         await fetch(url)
             .then(function (response) {
                 return response.json();

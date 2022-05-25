@@ -1,8 +1,10 @@
 import React from "react";
 import { useAppSelector } from "../../hooks/hooks"
-import {Col, Row} from 'antd';
+import {Button, Col, Row} from 'antd';
 import {UiTitle} from "../ui-title/UiTitle";
 import "./HomePageHeader.scss"
+import Swal from "sweetalert2";
+import {createCollection} from "../../actions/CollectionAction";
 
 type HomePageHeaderProps = {
     numberOfCollection: number,

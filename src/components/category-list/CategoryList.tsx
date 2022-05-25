@@ -55,39 +55,44 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     // SERVER
     const catalog = useAppSelector<Array< INewSingleCatalog>>(state => state.catalog.catalogs);
     const categories = useAppSelector<Array< INewSingleCatalog>>(state => state.catalog.selectedCategories);
-    const numberClusters = useAppSelector<number>(state => state.catalog.numOfClusters);
     const queryId = useAppSelector<string>(state => state.query.queryId);
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
-    const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
+    const numberOfClusters = useAppSelector<number>(state => state.catalog.numOfClusters);
+
     // SELECTED
-    const [selectedCategories, setSelectedCategories] = useState<Array<SelectedCategory>>([]);
-    const [numOfClusters, setNumOfClusters] = useState<number>(numberClusters);
+    const [selectedCategories, setSelectedCategories] = useState<Array<SelectedCategory>>([...fromCategoriesToSelected(categories)]);
+    const [numOfClusters, setNumOfClusters] = useState<number>(numberOfClusters);
 
     const dispatch = useAppDispatch()
 
     useEffect(()=>{
         // @ts-ignore
-        dispatch(resetCluster());
+         dispatch(resetCluster());
         // @ts-ignore
         dispatch(getCatalog(queryId, 100, savedMetadataList, categories, numberOfClusters ));
-    },[queryId, numberClusters])
+    },[queryId, numberOfClusters])
 
     useEffect(()=>{
         console.log(catalog)
     },[catalog ])
 
     useEffect(()=>{
+        console.log( "selectedCategories")
         console.log(selectedCategories)
     },[ selectedCategories ])
 
+
     useEffect(()=>{
-        setSelectedCategories([...fromCategoriesToSelected(categories)]);
+        console.log(categories)
+        const item = fromCategoriesToSelected(categories);
+        console.log(categories)
+        setSelectedCategories([...item]);
     },[ categories ])
 
     useEffect(()=>{
-        console.log(numberClusters);
-        setNumOfClusters(numberClusters)
-    },[numberClusters])
+        console.log(numberOfClusters);
+        setNumOfClusters(numberOfClusters)
+    },[numberOfClusters])
 
 
     const handlerNumOfClusters = (newNumber: number) => {
