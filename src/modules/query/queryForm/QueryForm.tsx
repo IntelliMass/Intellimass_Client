@@ -239,7 +239,7 @@ export const DefinitionForm = () => {
                     <div className="select-keyword">
                         <Space key="first_key" align="baseline"  style={{marginRight: 40, width: 550}}>
                             <Form.Item label="Operator" name="operator" style={{width:250}}>
-                                <Select style={{marginLeft:14, width:100}}>
+                                <Select style={{marginLeft:"10%", width:"63%"}}>
                                     <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>
                                     {/*<Select.Option value="NOT"><OperatorTag operator={"NOT"}/></Select.Option>*/}
                                     <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>
