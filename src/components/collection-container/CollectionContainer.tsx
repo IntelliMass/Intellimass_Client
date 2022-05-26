@@ -45,7 +45,7 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
             preConfirm: (newCollectionName:string) => {
                 console.log(newCollectionName);
                 // @ts-ignore
-                dispatch(createCollection(queryId, userid, collections, newCollectionName))
+                dispatch(createCollection(queryId || 'test', userid, collection.collection, newCollectionName))
             },
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
@@ -62,7 +62,7 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
     return (
         <div className="collection-container">
             <h2 style={{color:"white"}}>Your private collections</h2>
-            <Button className="button-create-collection" type="primary" onClick={onSave} shape="round">Create new collection</Button>
+            {/*<Button className="button-create-collection" type="primary" onClick={onSave} shape="round">Create new collection</Button>*/}
 
             <Collapse defaultActiveKey={['1']} onChange={callback}>
                 {collection.collection && collection.collection.map((collection: ICollection, index: number)=>(
