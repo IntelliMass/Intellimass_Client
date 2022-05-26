@@ -40,12 +40,26 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
         })
         return responseString.slice(0, -2);
     }
-    const printListOfClusters = (items: ServerStringMetadata[]) => {
-        let responseString = "";
+
+    const printListOfClusters = (items: string[]) => {
+        if (items.length == 0)
+            return ""
+        let responseString = "Clusters: ";
+        console.log(items)
         items.forEach((item) => {
-            responseString+=`Title: ${item.type} | Title: ${item.title}\n`;
+            responseString+=`${item}, `;
         })
-        return responseString;
+        return responseString.slice(0, -2);
+    }
+
+    const printListOfMetadata = (items: ServerStringMetadata[]) => {
+        if (items.length == 0)
+            return ""
+        return (<div><h5 className={"title-time-line "}>Metadata: </h5>
+            {items.map(item =>{
+                return <h5 className={"title-time-line title-time-line-margin"}>Type: {item.type} | Title: {item.title}</h5>
+            })}
+            </div>);
     }
 
     const onClickSingleBreadCrumb = (item: any) => {
@@ -75,10 +89,10 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
                             return (
                                 <Timeline.Item>
                                     <div className="time-line-item" onClick={()=>{onClickSingleBreadCrumb(item)}}>
-                                        <h5 className={"title-time-line"}>({item.index}) {item.time}</h5>
+                                        <h5 className={"title-time-line"}>({item.index + 1}) {item.time}</h5>
                                         <h5 className={"title-time-line"}>Query: {printListOfStrings(item.queryList)}</h5>
-                                        <h5 className={"title-time-line"}>Cluster:  {printListOfStrings(item.clusters)}</h5>
-                                        <h5 className={"title-time-line"}>Metadata: {printListOfClusters(item.metadataList)}</h5>
+                                        <h5 className={"title-time-line"}>{printListOfClusters(item.clusters)}</h5>
+                                        {printListOfMetadata(item.metadataList)}
                                     </div>
                                 </Timeline.Item>
                             );
