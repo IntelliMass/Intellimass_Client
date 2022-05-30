@@ -14,7 +14,7 @@ type GetMoreButtonProps = {
 
 export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
     const {paperId, article} = props;
-
+    console.log(paperId)
     const collections = useAppSelector<CollectionState>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userId) || 'userId';
     const queryId = useAppSelector<string>(state => state.query.queryId) || 'queryId';

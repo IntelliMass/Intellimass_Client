@@ -77,11 +77,12 @@ export interface ArticleOfList {
     venue:string,
     year: number,
     frequentWords?: string[],
-    topics?: any[],
+    topics?: Topic[],
     references?: any[],
     cluster?: string,
     query_word?: string[],
     timestamp?:string
+    queryId? : string
 }
 
 let URL_GET_ARTICLES_NEW = "https://api.intellimass.net/articles/articles";

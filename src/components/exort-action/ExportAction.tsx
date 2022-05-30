@@ -30,8 +30,7 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
     const history = useHistory();
 
     useEffect(()=>{
-        console.log(collections)
-    },[userid, collections, userid])
+    },[userid, collections])
 
 
     useEffect(()=>{
