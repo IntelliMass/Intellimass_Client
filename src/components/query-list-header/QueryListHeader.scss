@@ -2,9 +2,22 @@
   margin-top: 10px;
   margin-bottom: 20px;
 
+  .select-operator{
+    width:6%;
+    height: 40px;
+
+    .ant-select{
+      height: 100px;
+    }
+
+    .ant-select-selector{
+      height: 100px;
+    }
+  }
+
   .input-query{
     display: inline;
-    width: 90%;
+    width: 84%;
   }
   .button-query{
     display: inline;

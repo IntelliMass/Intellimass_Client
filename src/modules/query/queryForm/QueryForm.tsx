@@ -257,7 +257,7 @@ export const DefinitionForm = () => {
                         Clear
                     </Button>
                     <Button className="action-form-button" type="link" htmlType="button" onClick={onFill}>
-                        Fill form
+                        Example
                     </Button>
                 </Form.Item>
             </Form>

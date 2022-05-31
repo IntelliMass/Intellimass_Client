@@ -72,6 +72,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
+    const searching_words = useAppSelector<string[]>(state => state.query.searching_words);
 
     const currentState = useAppSelector<IBreadCrumb>(state => state.breadcrumbs.currentState);
 
@@ -96,7 +97,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         console.log(x)
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount, stringCategoriesFromArray(categories), numberOfClusters ));
-    },[queryId, savedMetadataList, numberOfClusters, categories])
+    },[queryId, savedMetadataList, numberOfClusters, categories, searching_words])
 
 
     useEffect(()=>{

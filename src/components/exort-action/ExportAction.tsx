@@ -142,11 +142,10 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
         })
     }
 
-    function handleMenuClick(e:any) {
-        console.log(e.item);
-
+    function handleMenuClick(paperID: string) {
+        console.log(paperID)
         // @ts-ignore
-        dispatch(updatePaperID(e.item.toString()));
+        dispatch(updatePaperID(paperID));
         history.replace('/article');
     }
 
@@ -189,7 +188,7 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
                                     <List.Item
                                         actions={[
                                             <Tooltip placement="bottom" title={'More details'}>
-                                                <MoreOutlined className="collection-icon" onClick={handleMenuClick}/>
+                                                <MoreOutlined className="collection-icon" onClick={()=>handleMenuClick(item.paperId)}/>
                                             </Tooltip>,
                                             <Tooltip placement="bottom" title={'Remove article'}>
                                                 <DeleteOutlined className="collection-icon" onClick={()=>removeArticle(item.paperId)}/>
