@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 type CollectionContainerProps = {};
 
 export const CollectionContainer: React.FC<CollectionContainerProps> = (props) => {
-    const collection = useAppSelector<CollectionState>(state => state.collection.collection);
+    const collections = useAppSelector<CollectionState>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userId) || 'userId';
     const queryId = useAppSelector<string>(state => state.query.queryId);
     const dispatch = useAppDispatch()
@@ -25,11 +25,9 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
 
 
     useEffect(()=>{
-        console.log(collection)
-    },[collection ])
+    },[collections ])
 
     function callback(key:any) {
-        console.log(key);
     }
 
     const onSave = () => {
@@ -45,7 +43,7 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
             preConfirm: (newCollectionName:string) => {
                 console.log(newCollectionName);
                 // @ts-ignore
-                dispatch(createCollection(queryId || 'test', userid, collection.collection, newCollectionName))
+                dispatch(createCollection( 'test', userid, collections.collection, newCollectionName))
             },
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
@@ -62,12 +60,12 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
     return (
         <div className="collection-container">
             <h2 style={{color:"white"}}>Your private collections</h2>
-            {/*<Button className="button-create-collection" type="primary" onClick={onSave} shape="round">Create new collection</Button>*/}
+            <Button className="button-create-collection" type="primary" onClick={onSave} shape="round">Create new collection</Button>
 
             <Collapse defaultActiveKey={['1']} onChange={callback}>
-                {collection.collection && collection.collection.map((collection: ICollection, index: number)=>(
+                {collections.collection && collections.collection.map((collection: ICollection, index: number)=>(
                     <Panel header={collection.collection_name} key={collection.collection_name + index}>
-                        <CollectionTable articles={collection.articles_list}/>
+                        <CollectionTable articles={collection.articles_list} collection={collections}/>
                     </Panel>
                 ))}
             </Collapse>

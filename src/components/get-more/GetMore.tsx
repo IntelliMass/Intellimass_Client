@@ -14,7 +14,6 @@ type GetMoreButtonProps = {
 
 export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
     const {paperId, article} = props;
-
     const collections = useAppSelector<CollectionState>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userId) || 'userId';
     const queryId = useAppSelector<string>(state => state.query.queryId) || 'queryId';
@@ -23,10 +22,8 @@ export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
     const dispatch = useAppDispatch();
 
     function handleMenuClick(e:any) {
-        console.log(e.item);
         // @ts-ignore
         dispatch(getArticleDetail(paperId));
-        // set selected article
         history.replace('/article');
     }
 

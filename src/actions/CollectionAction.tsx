@@ -74,6 +74,7 @@ export const  changeCollectionName = (id:string, userid:string="anar", collectio
 export const  insertToCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId: string): (dispatch: any) => Promise<void> =>{
     const user_ID = "anar";
     const url = `${URL_COLLECTIONS}insert_article?user_id=${user_ID}&query_id=${id}`;
+    console.log(paperId)
     const body = {collection_name: collectionName, article_id: paperId};
     return async dispatch => {
         await fetch(url, {

@@ -56,7 +56,6 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                 size="small"
                 pagination={{
                     onChange: page => {
-                        console.log(page);
                     },
                     pageSize: 10,
                 }}

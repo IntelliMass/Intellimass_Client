@@ -1,15 +1,17 @@
 import React, {useState} from "react";
 import {Table, Tag, Space, Tooltip} from 'antd';
 import "../collection-container/CollectionContainer.scss"
-import {ArticleOfList, Author, updatePaperID} from "../../actions/ArticleActions";
+import {ArticleOfList, Author, Topic, updatePaperID} from "../../actions/ArticleActions";
 import {DeleteOutlined, MoreOutlined} from "@ant-design/icons";
 import {useAppDispatch} from "../../hooks/hooks";
 import {useHistory} from "react-router-dom";
 import Swal from "sweetalert2";
 import {removeFromCollection} from "../../actions/CollectionAction";
+import {CollectionState, ICollection} from "../../reducers/CollectionResucer";
 
 type CollectionTableProps = {
-    articles: Array<ArticleOfList>
+    articles: Array<ArticleOfList>,
+    collection: CollectionState
 };
 
 
@@ -27,17 +29,25 @@ export interface VisualCollectionRowNew {
     authors: Array<Author>,
     frequentWords: Array<string>,
     paperId: string,
-    // collectionName: string,
-    topics: Array<string>,
+    topics: Array<Topic>,
     cluster: string,
     query_word: Array<string>,
     timestamp: string
 }
 
-export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
-   const {articles} = props;
+export const getCollectionName = (collections : ICollection[], paperId: string ): string => {
+    let collectionName: string = '';
+    collections.forEach((collection: ICollection)=>{
+        collection.articles_list.forEach((article: ArticleOfList)=>{
+            if (article.paperId === paperId)
+                collectionName = collection.collection_name;
+        })
+    })
+    return collectionName;
+}
 
-    const [selectedCollectionName, setSelectedCollectionName] = useState<string>('none');
+export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
+   const {articles, collection} = props;
 
     const dispatch = useAppDispatch();
     const history = useHistory();
@@ -51,7 +61,7 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
     const removeArticle = ( paperID: string) => {
         Swal.fire({
             title: 'Are you sure you want to remove this article?',
-            text: `This will remove the article from ${selectedCollectionName} collection`,
+            text: `This will remove the article from collection`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -60,15 +70,12 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // @ts-ignore
-                dispatch(removeFromCollection(queryId, userid, collections, selectedCollectionName, paperID))
+                dispatch(removeFromCollection("test", "anar", collection.collection, getCollectionName(collection.collection, paperID), paperID))
                 Swal.fire(
                     'Removed!',
                     'Your article has been removed.',
                     'success'
                 )
-                let selectedName = selectedCollectionName;
-                setSelectedCollectionName('none');
-                setSelectedCollectionName(selectedName);
             }
         })
     }
@@ -87,14 +94,25 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
             key: 'year',
         },
         {
+            title: 'Authors',
+            key: 'authors',
+            dataIndex: 'authors',
+            render: (authors: Author[]) => (
+                <>
+                    {authors.map(author => {
+                        return (
+                            <Tag color="purple" key={author.name}>
+                                {author.name}
+                            </Tag>
+                        );
+                    })}
+                </>
+            ),
+        },
+        {
             title: 'Category',
             dataIndex: 'cluster',
             key: 'cluster',
-        },
-        {
-            title: 'Saved time',
-            dataIndex: 'timestamp',
-            key: 'timestamp',
         },
         {
             title: 'From search',
@@ -103,29 +121,9 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
             render: (query_words: string[]) => (
                 <>
                     {query_words.map(query_word => {
-                        // @ts-ignore
-                        let color = query_word.length > 5 ? 'geekblue' : 'green';
                         return (
-                            <Tag color={color} key={query_word}>
+                            <Tag color="blue" key={query_word}>
                                 {query_word}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
-        },
-        {
-            title: 'Authors',
-            key: 'authors',
-            dataIndex: 'authors',
-            render: (authors: Author[]) => (
-                <>
-                    {authors.map(author => {
-                        // @ts-ignore
-                        let color = author.name.length > 5 ? 'geekblue' : 'green';
-                        return (
-                            <Tag color={color} key={author.name}>
-                                {author.name}
                             </Tag>
                         );
                     })}
@@ -136,13 +134,12 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
             title: 'Topics',
             key: 'topics',
             dataIndex: 'topics',
-            render: (topics: any[]) => (
+            render: (topics: Topic[]) => (
                 <>
                     {topics.map(topic => {
-                        let color = topic.length > 5 ? 'geekblue' : 'green';
                         return (
-                            <Tag color={color} key={topic}>
-                                {topic}
+                            <Tag color="blue" key={topic.topic}>
+                                {topic.topic}
                             </Tag>
                         );
                     })}
@@ -156,15 +153,19 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
             render: (frequentWords: string[]) => (
                 <>
                     {frequentWords.map(frequentWord => {
-                        let color = frequentWord.length > 5 ? 'geekblue' : 'green';
                         return (
-                            <Tag color={color} key={frequentWord}>
+                            <Tag color="blue" key={frequentWord}>
                                 {frequentWord}
                             </Tag>
                         );
                     })}
                 </>
             ),
+        },
+        {
+            title: 'Saved time',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
         },
         {
             title: 'Action',
