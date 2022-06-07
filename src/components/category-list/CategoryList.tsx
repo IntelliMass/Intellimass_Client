@@ -8,7 +8,8 @@ import {
     patchCategories,
     patchNumberOfCluster,
     resetCluster,
-    stringCategoriesFromArray
+    stringCategoriesFromArray,
+    setNewIteration
 } from "../../actions/CatalogAction";
 import Swal from "sweetalert2";
 import {INewSingleCatalog} from "../../reducers/CatalogReducer";
@@ -122,13 +123,56 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     /**
      * RIGHT NOW CAN ONLY ADD TO THIS ARRAY
      * */
-    const pieHandleClick = (category: string, color: string ) => {
-        let newItem = catalog.find(item => item.title === category);
-        if (newItem) {
-            let newSavedCategory = {category:newItem, isSelected: true, color: color}
-            setSelectedCategories([...selectedCategories, {...newSavedCategory}]);
-        }
+    // const pieHandleClick = (category: string, color: string ) => {
+    //     let newItem = catalog.find(item => item.title === category);
+    //     console.log(newItem);
+    //     if (newItem) {
+    //         let newSavedCategory = {category:newItem, isSelected: true, color: color}
+    //         console.log([...selectedCategories, {...newSavedCategory}]);
+    //         setSelectedCategories([...selectedCategories, {...newSavedCategory}]);
+    //         const newCategories: INewSingleCatalog[] = fromSelectedToCategories(selectedCategories);
+    //         console.log(newCategories);
+    //         // @ts-ignore
+    //         dispatch(patchCategories(newCategories));
+    //     }
+    // }
+    const pieHandleClick = (categoriesList: INewSingleCatalog[]) => {
+        // @ts-ignore
+        dispatch(patchCategories(categoriesList));
     }
+    // const pieHandleClick = (categoriesList: INewSingleCatalog[]) => {
+    //     // let newCategories: INewSingleCatalog[] = [];
+    //     // categoriesList.forEach(category => {
+    //     //     let newItem = catalog.find(item => item.title === category.name)
+    //     //     console.log(newItem);
+    //     //     newCategories.push({
+    //     //         // @ts-ignore
+    //     //         category: newItem,
+    //     //         isSelected: true, 
+    //     //         color: category.color
+    //     //     })
+    //     // })
+    //     // console.log(newCategories);
+    //     // @ts-ignore
+    //     dispatch(patchCategories(categoriesList));
+    //     // @ts-ignore
+    //     // setSelectedCategories([], newCategories);
+    //     // newCategories = fromSelectedToCategories(selectedCategories);
+    //     // console.log(newCategories);
+    //     // @ts-ignore
+
+    //     // let newItem = catalog.find(item => item.title === category);
+    //     // // console.log(newItem);
+    //     // if (newItem) {
+    //     //     let newSavedCategory = {category:newItem, isSelected: true, color: color}
+    //     //     console.log([...selectedCategories, {...newSavedCategory}]);
+    //     //     setSelectedCategories([...selectedCategories, {...newSavedCategory}]);
+    //     //     const newCategories: INewSingleCatalog[] = fromSelectedToCategories(selectedCategories);
+    //     //     console.log(newCategories);
+    //     //     // @ts-ignore
+    //     //     dispatch(patchCategories(newCategories));
+    //     // }
+    // }
 
     const onClear = () => {
         Swal.fire({
@@ -145,7 +189,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
                 dispatch(getCatalog(queryId, 100, savedMetadataList, categories, numberOfClusters ));
                 Swal.fire(
                     'Clusters removed!',
-                    'Your article list has been updated.',
+                    'Your articles list has been updated.',
                     'success'
                 )
             }
@@ -163,15 +207,17 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             confirmButtonText: 'Yes, zoom in'
         }).then((result) => {
             if (result.isConfirmed) {
-                const newCategories: INewSingleCatalog[] = fromSelectedToCategories(selectedCategories);
-                console.log(newCategories);
-                // @ts-ignore
-                dispatch(patchCategories(newCategories))
-                Swal.fire(
-                    'Success!',
-                    'Your article list has been updated.',
-                    'success'
-                )
+                // dispatch(setNewIteration(queryId, 100, savedMetadataList, categories, numberOfClusters))
+                // const newCategories: INewSingleCatalog[] = fromSelectedToCategories(selectedCategories);
+                // console.log(newCategories);
+                // // @ts-ignore
+                // dispatch(patchCategories(newCategories))
+                // Swal.fire(
+                    // 'Success!',
+                    // 'Your articles list has been updated.',
+                    // 'success'
+                // )
+
             }
         })
     }
@@ -208,9 +254,9 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             </div>
             <div className="option-slider">
                 <Slider className="slider" min={2} max={5} dots={true} tooltipVisible={true} onChange={handlerNumOfClusters} value={numOfClusters} />
-                <Button className="slider-button" onClick={onSaveNumberOfClusters} shape="round" >save new number</Button>
+                <Button className="slider-button" onClick={onSaveNumberOfClusters} shape="round" >Save</Button>
             </div>
-            <Divider orientation="left">Saved categories</Divider>
+            {/* <Divider orientation="left">Saved categories</Divider>
             <div className="categories-list categories-saved-list">
                 {selectedCategories.map((category, index)=>(
                     <CategoryCard isSelected={category.isSelected}
@@ -222,10 +268,10 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
                                   color={category.color}
                     />
                 ))}
-            </div>
-            <Divider orientation="left">Articles categories list</Divider>
-            <h4 style={{color: "#1890ff", marginLeft: 20}}>You select {categories.length} categories</h4>
-            <h5 style={{color: "gray" , marginLeft: 20}}>Maximum to choose is 2 categories</h5>
+            </div> */}
+            {/* <Divider orientation="left">Articles categories list</Divider> */}
+            {/* <h4 style={{color: "#1890ff", marginLeft: 20}}>You select {categories.length} categories</h4> */}
+            {/* <h5 style={{color: "gray" , marginLeft: 20}}>Maximum to choose is 2 categories</h5> */}
             {/*<div className="categories-list">*/}
             {/*    {selectedCategories.map((category, index)=>(*/}
             {/*        <CategoryCard isSelected={category.isSelected} selectedCategories={fromSelectedToCategories(selectedCategories)} title={category.category.title} onCategoryClick={handlerClick} index={index} count={category.category.rank}/>*/}
@@ -233,7 +279,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             {/*</div>*/}
             <PieChartComponent categories={catalog} onSelect={pieHandleClick}/>
             <div className="categories-action">
-                <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Save selected</Button>
+                <Button onClick={onSave} type="primary" className="save-saved-metadata" shape="round" block>Zoom In</Button>
                 <Button onClick={onClear} shape="round" block >Reset clusters</Button>
             </div>
         </div>

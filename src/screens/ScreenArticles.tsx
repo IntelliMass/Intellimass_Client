@@ -154,33 +154,41 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     queryId !== '' || articles.length !== 0 ?
     <div className="screen screen-articles">
         <MenuButton2 actionOption={actionOption} setActionOption={actionHandler} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen}/>
-        {actionOption !== 'none' &&
-        <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
+        {/* {actionOption !== 'none' && */}
+        {/* <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'> */}
             { actionOption === 'Filter' &&
             <>
+                <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
                 <h3 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Filter</h3>
                 <NewMetadataList metadataList={[]} savedMetadataList={[]}/>
+                </div>
             </>
             }
             {actionOption === 'Cluster' &&
             <>
+                <div className={`actions-containers clusters-container-height ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
                 <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Cluster</h2>
                 <ClusterContainer/>
+                </div>
             </>
             }
             { actionOption === 'Export' &&
             <>
+                <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
                 <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Export</h2>
                 <ExportAction/>
+                </div>
             </> }
             { actionOption === 'Breadcrumb' &&
             <>
+                <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
                 <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Breadcrumb</h2>
                 <BreadCrumbList/>
+                </div>
             </>
             }
-        </div>
-        }
+        {/* </div> */}
+        {/* } */}
         {
             isLoader ? <div className="loader-container">
                 <Spin size="large" />

@@ -24,12 +24,17 @@ export const createDataSeries = (categories: Array<INewSingleCatalog>) => {
 
 
 export const PieChartComponent: React.FC<PieChartProps> = (props) => {
+
     const options = {
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
-            type: 'pie'
+            type: 'pie',
+            
+        },
+        credits: {
+            enabled: false
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -50,29 +55,67 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
         plotOptions: {
             pie: {
                 size: 180,
-                allowPointSelect: true,
+                // allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
                     format: '<b>{point.name}</b> ({point.y}): {point.percentage:.1f} %',
                     connectorColor: 'silver'
                 },
+            },
+            series: {
                 point: {
                     events: {
-                        // mouseOver() {},
-                        // mouseOut() {},
-                        click(event: any) {
-                            const color = event.target.point.color;
-                            const value = event.target.point.name;
-                            props.onSelect(value, color);
-                        },
-                        select: function(event:any){
-                            event.preventDefault();
-                            //this.slice(this.sliced);
+                        click: function(this:any, event:any){
+                            this.slice(null);
+                            this.select(null, true);
+                            console.log(this.series.chart.getSelectedPoints());
+                            const selectedCategories: any = [];
+                            this.series.chart.getSelectedPoints().forEach((point: any) => {
+                                selectedCategories.push({title: point.options.name, rank: point.options.y})
+                            });
+                            props.onSelect(selectedCategories);
+                            // props.onSelect(this.series.chart.getSelectedPoints());
                         }
-                    }
-                }
-            }
+                    }  
+                },
+            },
+                
+                // point: {
+                //     events: {
+                //         click: function(this:any, event:any){
+                //             this.slice(null);
+                //             this.select(null, true);
+                //             console.log(this.series.chart.getSelectedPoints());
+                //         }
+                //         // mouseOver() {},
+                //         // mouseOut() {},
+                //         // select: function(this:any, event:any){
+                //         //     event.preventDefault();
+                //         //     this.slice(this.sliced);
+                //         //     // props.onSelect(this.value, this.color);
+                //         // },
+                //         // unselect: function(this:any, event:any){
+                //         //     // event.preventDefault();
+                //         //     // this
+                //         // }
+                //         // click(this: any, event: any) {
+                //         //     const color = event.target.point.color;
+                //         //     const value = event.target.point.name;
+                //         //     console.log(this);
+                //         //     console.log(event);
+                //         //     event.preventDefault();
+                //         //     // props.onSelect(value, color);
+                //         // },
+                //         // select: function(event:any){
+                //             // event.preventDefault();
+                //             // this.slice(this.sliced);
+                //         // },
+                //         // remove(event: any){
+                //             // return true;
+                //         // }
+                //     }
+                // }
         },
         series: [
             {
