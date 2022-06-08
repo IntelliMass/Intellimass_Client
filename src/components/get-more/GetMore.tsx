@@ -55,7 +55,7 @@ export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
 
     const GetMoreMenu = (
         <Menu>
-            <Menu.Item onClick={handleMenuClick} key="1">Get detail</Menu.Item>
+            <Menu.Item onClick={handleMenuClick} key="1">More details</Menu.Item>
             <Menu.Item onClick={insertArticleToCollection} key="2">Export</Menu.Item>
         </Menu>
     );

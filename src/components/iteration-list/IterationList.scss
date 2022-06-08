@@ -1,0 +1,33 @@
+.iteration-list {
+  height: 200px;
+  width: 470px;
+  display: block;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 30px;
+  background-color: #DCDCDC;
+  color: black;
+
+  .iteration {
+    display: flex;
+    justify-content: space-between;
+    border: 0.4px solid gray;
+    margin-bottom: 5px;
+    background-color: white;
+
+    .img-iteration {
+      width: 200px;
+      height: 100px;
+    }
+
+    .saved-iteration-categories:hover {
+      color: #1890ff;
+    }
+  }
+
+  .iteration:hover {
+    transition: 0.5s;
+    cursor: pointer;
+    color: #1890ff;
+  }
+}

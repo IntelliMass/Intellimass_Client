@@ -4,6 +4,9 @@
   padding-top: 10px;
 
   .time-line-list{
+    overflow:hidden;
+    overflow-y:auto;
+    height: 800px;
     padding-right: 10px;
 
     .ant-timeline-item{
