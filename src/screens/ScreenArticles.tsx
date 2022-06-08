@@ -154,8 +154,6 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     queryId !== '' || articles.length !== 0 ?
     <div className="screen screen-articles">
         <MenuButton2 actionOption={actionOption} setActionOption={actionHandler} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen}/>
-        {/* {actionOption !== 'none' && */}
-        {/* <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'> */}
             { actionOption === 'Filter' &&
             <>
                 <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>

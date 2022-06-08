@@ -1,4 +1,5 @@
 import {INewSingleCatalog} from "../reducers/CatalogReducer";
+import {QueryState} from "../reducers/QueryReducer";
 
 type UpdateCatalogAction = {type: "GET_CATALOG", payload: any }
 type UpdateSelectedAction = {type: "UPDATE_CATALOG", payload: any}
@@ -10,7 +11,7 @@ type SetNewIteration = {type: "SET_NEW_ITERATION", payload: any}
 export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction | UpdateNumberOfClustersAction |ResetClustersAction | UpdateCategoriesFromBreadcrumbs| SetNewIteration;
 
 let URL_GET_CATEGORIES_NEW = "https://api.intellimass.net/clusters";
-let URL_PUT_ITERATION = "https://api.intellimass.net/iteration";
+let URL_POST_ITERATION = "https://api.intellimass.net/new_iter";
 
 export const stringCategoriesFromArray = (categories: Array<INewSingleCatalog>) => {
     let newParams = "";
@@ -99,19 +100,26 @@ export function updateCategoriesFromBreadcrumbs(selectedCategories: INewSingleCa
  * Notify new iteration to server
  * @return {dispatch} Type + payload.
  */
-export const setNewIteration = (id:string, count:number=100, filterItems="", clusters:string="", numOfClusters: number=4): (dispatch: any) => Promise<void> => 
-    async dispatch => {
-        const url = `${URL_PUT_ITERATION}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-        
-        console.log(URL_GET_CATEGORIES_NEW)
-        await fetch(url)
+export const  setNewIteration = (id:string, count:number=100, filterItems: any, clusters:any, numOfClusters: number=4): (dispatch: any) => Promise<void> =>{
+    const body = {
+        query_id:id,
+        filters: filterItems,
+        clusters: clusters
+    };
+
+    return async dispatch => {
+        await fetch(URL_POST_ITERATION, {
+            method: 'post',
+            body: JSON.stringify(body)
+        })
             .then(function (response) {
                 return response.json();
             })
-            .then(function (catalog:any) {
-                dispatch({type: "GET_CATALOG",
-                    payload: catalog.clusters
-                });
+            .then(function (res:any) {
+                console.log(res)
+                // dispatch({ type: "CREATE_QUERY",
+                //     payload: { ...queryParams, queryId: res.queryId}
+                // });
             })
             .catch(function (error) {
                 console.log(
@@ -119,4 +127,5 @@ export const setNewIteration = (id:string, count:number=100, filterItems="", clu
                 );
                 throw error;
             });
+    }
 }

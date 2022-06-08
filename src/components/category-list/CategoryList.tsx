@@ -148,7 +148,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     //     //     newCategories.push({
     //     //         // @ts-ignore
     //     //         category: newItem,
-    //     //         isSelected: true, 
+    //     //         isSelected: true,
     //     //         color: category.color
     //     //     })
     //     // })
@@ -207,10 +207,10 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
             confirmButtonText: 'Yes, zoom in'
         }).then((result) => {
             if (result.isConfirmed) {
-                // dispatch(setNewIteration(queryId, 100, savedMetadataList, categories, numberOfClusters))
+                // @ts-ignore
+                dispatch(setNewIteration(queryId, 100, savedMetadataList, categories, numberOfClusters))
                 // const newCategories: INewSingleCatalog[] = fromSelectedToCategories(selectedCategories);
                 // console.log(newCategories);
-                // // @ts-ignore
                 // dispatch(patchCategories(newCategories))
                 // Swal.fire(
                     // 'Success!',
