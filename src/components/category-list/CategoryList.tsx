@@ -16,6 +16,7 @@ import {INewSingleCatalog} from "../../reducers/CatalogReducer";
 import {IMetadataWithCategory} from "../new-metadata-list/NewMetadataList";
 import {PieChartComponent} from "../pie-chart/PieChart";
 import {metadataListToSerialize} from "../../screens/ScreenArticles";
+import {IterationList} from "../iteration-list/IterationList";
 
 type CategoriesListProps = {
 
@@ -67,6 +68,9 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
     const savedMetadataList = useAppSelector<Array<IMetadataWithCategory>>(state => state.metadata.savedMetadataList);
     const numberOfClusters = useAppSelector<number>(state => state.catalog.numOfClusters);
 
+    // @ts-ignore
+    const numberOfArticles = useAppSelector<number>(state => state.article.count);
+
     // SELECTED
     const [selectedCategories, setSelectedCategories] = useState<Array<SelectedCategory>>([...fromCategoriesToSelected(categories)]);
     const [numOfClusters, setNumOfClusters] = useState<number>(numberOfClusters);
@@ -77,7 +81,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
         // @ts-ignore
         dispatch(resetCluster());
         // @ts-ignore
-        dispatch(getCatalog(queryId, 100,  metadataListToSerialize(savedMetadataList), stringCategoriesFromArray(categories), numberOfClusters ));
+        dispatch(getCatalog(queryId, numberOfArticles,  metadataListToSerialize(savedMetadataList), stringCategoriesFromArray(categories), numberOfClusters ));
     },[])
 
 
@@ -85,7 +89,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
         // @ts-ignore
          dispatch(resetCluster());
         // @ts-ignore
-        dispatch(getCatalog(queryId, 100,  metadataListToSerialize(savedMetadataList), stringCategoriesFromArray(categories), numberOfClusters ));
+        dispatch(getCatalog(queryId, numberOfArticles,  metadataListToSerialize(savedMetadataList), stringCategoriesFromArray(categories), numberOfClusters ));
     },[queryId, numberOfClusters])
 
     useEffect(()=>{
@@ -256,6 +260,8 @@ export const CategoriesList: React.FC<CategoriesListProps> = (props) => {
                 <Slider className="slider" min={2} max={5} dots={true} tooltipVisible={true} onChange={handlerNumOfClusters} value={numOfClusters} />
                 <Button className="slider-button" onClick={onSaveNumberOfClusters} shape="round" >Save</Button>
             </div>
+            <Divider orientation="left">Yours saved categories</Divider>
+            <IterationList/>
             {/* <Divider orientation="left">Saved categories</Divider>
             <div className="categories-list categories-saved-list">
                 {selectedCategories.map((category, index)=>(

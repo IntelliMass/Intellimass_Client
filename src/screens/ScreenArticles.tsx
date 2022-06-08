@@ -73,11 +73,13 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
     const searching_words = useAppSelector<string[]>(state => state.query.searching_words);
+    // @ts-ignore
+    const numberOfArticles = useAppSelector<number>(state => state.article.count);
+
 
     const currentState = useAppSelector<IBreadCrumb>(state => state.breadcrumbs.currentState);
 
     const [isLoader, setIsLoader] = useState<boolean>(false);
-    const [localCount, setCount] = useState<number>(100);
     const [actionOption, setActionOption] = useState<string>('none');
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -96,13 +98,14 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         const x = metadataListToSerialize(savedMetadataList);
         console.log(x)
         // @ts-ignore
-        dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , localCount, stringCategoriesFromArray(categories), numberOfClusters ));
+        dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters ));
     },[queryId, savedMetadataList, numberOfClusters, categories, searching_words])
 
 
     useEffect(()=>{
         if(articles.length === 0)  setIsLoader(true);
         else setIsLoader(false);
+        console.log(articles.length)
     },[articles])
 
 
@@ -157,7 +160,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
             { actionOption === 'Filter' &&
             <>
                 <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
-                <h3 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Filter</h3>
+                <h3 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Filter the articles</h3>
                 <NewMetadataList metadataList={[]} savedMetadataList={[]}/>
                 </div>
             </>
@@ -165,7 +168,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
             {actionOption === 'Cluster' &&
             <>
                 <div className={`actions-containers clusters-container-height ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
-                <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Cluster</h2>
+                <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Clusters the articles</h2>
                 <ClusterContainer/>
                 </div>
             </>
@@ -173,20 +176,18 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
             { actionOption === 'Export' &&
             <>
                 <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
-                <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Export</h2>
+                <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Save the articles</h2>
                 <ExportAction/>
                 </div>
             </> }
             { actionOption === 'Breadcrumb' &&
             <>
                 <div className={`actions-containers ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
-                <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Breadcrumb</h2>
+                <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Upload yours activity history</h2>
                 <BreadCrumbList/>
                 </div>
             </>
             }
-        {/* </div> */}
-        {/* } */}
         {
             isLoader ? <div className="loader-container">
                 <Spin size="large" />

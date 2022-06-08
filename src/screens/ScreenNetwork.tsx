@@ -9,14 +9,14 @@ import {MenuButton2} from "../components/menu-button/MenuButton2";
 import {ClusterContainer} from "../components/cluster-container/ClusterContainer";
 import {ExportAction} from "../components/exort-action/ExportAction";
 import {BreadCrumbList} from "../components/bread-crumb-list/BreadCrumbList";
-import {Button, Select, Spin} from "antd";
+import {Button, Select, Spin, Tooltip} from "antd";
 import aos from "aos";
 import {useHistory} from "react-router-dom";
 import "../index.scss"
 import {ExpandableTopBar} from "../components/expended-bar/ExpandedBar";
 import {ServiceSummary} from "../components/expand-stattistic-panel/ExpandStatisticPanel";
 import {ArticleCard} from "../components/article-card/ArticleCard";
-import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
+import {MinusOutlined, MoreOutlined, PlusOutlined} from "@ant-design/icons";
 import {updateCount} from "../actions/ArticleActions";
 import {metadataListToSerialize} from "./ScreenArticles";
 import {stringCategoriesFromArray} from "../actions/CatalogAction";
@@ -38,7 +38,6 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     const numberOfArticles = useAppSelector<number>(state => state.article.count);
 
     const [isLoader, setIsLoader] = useState<boolean>(false);
-    const [localCount, setCount] = useState<number>(100);
     const [actionOption, setActionOption] = useState<string>('none');
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [selectedNode, setSelectedNode] = useState<any>(null);
@@ -53,14 +52,15 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-        dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", 100, stringCategoriesFromArray(categories), numberOfClusters));
+        dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
     },[queryId, savedMetadataList, numberOfClusters])
 
     useEffect(()=>{
     },[ categories ])
 
     useEffect(()=>{
-        setCount(numberOfArticles)
+        // @ts-ignore
+        dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
     },[numberOfArticles])
 
     useEffect(()=>{
@@ -171,15 +171,19 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                                 {/*    <Option value="frequentWords">Frequent words</Option>*/}
                                 {/*    <Option value="topics">Topics</Option>*/}
                                 {/*</Select>*/}
-                                <span style={{marginLeft: "5%"}}> Original Articles number ( {localCount} )</span>
-                                <Button style={{marginLeft: "1%", marginRight: "1%"}}
-                                    icon={<PlusOutlined />}
-                                    onClick={() => plus()}
-                                />
-                                <Button
-                                    icon={<MinusOutlined />}
-                                    onClick={() => minus()}
-                                />
+                                <span style={{marginLeft: "5%"}}> Original Articles number ( {numberOfArticles} )</span>
+                                <Tooltip placement="bottom" title={'Insert more 100'}>
+                                    <Button style={{marginLeft: "1%", marginRight: "1%"}}
+                                            icon={<PlusOutlined />}
+                                            onClick={() => plus()}
+                                    />
+                                </Tooltip>
+                                <Tooltip placement="bottom" title={'More details'}>
+                                    <Button
+                                        icon={<MinusOutlined />}
+                                        onClick={() => minus()}
+                                    />
+                                </Tooltip>
                             </div>
 
                             <span style={{color: "yellow", fontSize: 18, marginLeft: "5%"}}> Articles-nodes number ( {network.nodes.length || '0'} ) | Nodes-connections ( {network.links.length || '0'} ) </span>

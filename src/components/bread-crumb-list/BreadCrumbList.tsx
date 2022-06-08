@@ -74,14 +74,14 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
 
     return (
         <div className={"bread-crumb-container"}>
-            <Divider orientation="left">Breadcrumbs list ({breadcrumbs.length})</Divider>
+            <Divider orientation="left">Activity history ({breadcrumbs.length})</Divider>
             <Timeline className="time-line-list">
                 {
                 isLoader ?
                     <div className="screen-articles">
                         <div className="loader-container">
                             <Spin size="large" />
-                            <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading your private collections</h4>
+                            <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading your private activity history</h4>
                         </div>
                     </div> :
                     <div style={{marginTop: 20}} className="home-page-container">

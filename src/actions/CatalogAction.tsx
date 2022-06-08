@@ -102,7 +102,7 @@ export function updateCategoriesFromBreadcrumbs(selectedCategories: INewSingleCa
  */
 export const  setNewIteration = (id:string, count:number=100, filterItems: any, clusters:any, numOfClusters: number=4): (dispatch: any) => Promise<void> =>{
     const body = {
-        query_id:id,
+        id:id,
         filters: filterItems,
         clusters: clusters
     };
@@ -112,11 +112,27 @@ export const  setNewIteration = (id:string, count:number=100, filterItems: any, 
             method: 'post',
             body: JSON.stringify(body)
         })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (res:any) {
+            // .then(function (response) {
+            //     return response.json();
+            // })
+            .then(async function (res:any) {
                 console.log(res)
+                const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${''}&numOfClusters=${numOfClusters}`;
+                await fetch(url)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (catalog:any) {
+                        dispatch({type: "GET_CATALOG",
+                            payload: catalog.clusters
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(
+                            "There has been a problem with your fetch operation: " + error.message
+                        );
+                        throw error;
+                    });
                 // dispatch({ type: "CREATE_QUERY",
                 //     payload: { ...queryParams, queryId: res.queryId}
                 // });

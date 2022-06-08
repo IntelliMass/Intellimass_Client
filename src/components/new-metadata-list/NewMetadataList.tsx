@@ -102,6 +102,9 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
     const categories = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.selectedCategories);
     const numberOfClusters = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.numOfClusters);
 
+    // @ts-ignore
+    const numberOfArticles = useAppSelector<number>(state => state.article.count);
+
     //  LOCAL ALL METADATA LIST
     const [localMetadata, setLocalMetadata] = useState<NewMetadata>({...state_metadataList});
     //  LOCAL SAVED METADATA LIST
@@ -123,7 +126,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
         // dispatch(resetMetadata());
 
         // @ts-ignore
-        dispatch( getMetadata(queryId, 100, metadataListToSerialize(saved), stringCategoriesFromArray(categories), numberOfClusters));
+        dispatch( getMetadata(queryId, numberOfArticles, metadataListToSerialize(saved), stringCategoriesFromArray(categories), numberOfClusters));
     },[])
 
     // useEffect(()=>{
@@ -274,7 +277,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
 
                 localMetadata.metadata &&
                 <>
-                    <Divider orientation="left">Saved Metadata ( {savedMetadataList.length} )</Divider>
+                    <Divider orientation="left">Yours saved filter</Divider>
                     <div className="saved-metadata-list">
                         {savedMetadataList.map((metadata, index) => {
                             return(
@@ -282,7 +285,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
                             )
                         })}
                     </div>
-                    <Divider orientation="left">New Metadata ( {count(localMetadata)} )</Divider>
+                    <Divider orientation="left">Choose yours filters for the articles</Divider>
 
                     <Collapse accordion onChange={callback} style={{width: 470}}>
                         <Panel header={`Frequent words (${localMetadata.metadata.common_words.length})`} key="1">
