@@ -34,7 +34,6 @@ export const truncateMetadataType = (type: string) => {
 
 
 export const truncateMetadataTypeToObject = (metadata: IMetadataWithCategory) => {
-    console.log(metadata)
     if (metadata.category === "AUTHORS")  return {authors: metadata.metadata.title.toString()};
     else if(metadata.category === "TOPICS") return {topics: metadata.metadata.title.toString()};
     else if(metadata.category === "COMMON_WORDS") return {frequentWords: metadata.metadata.title.toString()};
@@ -45,13 +44,11 @@ export const truncateMetadataTypeToObject = (metadata: IMetadataWithCategory) =>
 
 export const metadataListToSerialize = (metadataList: Array<IMetadataWithCategory>) => {
     let urlParams:string = "";
-    console.log(metadataList)
     metadataList.forEach((metadata:IMetadataWithCategory) => {
         let str = serialize(truncateMetadataTypeToObject(metadata));
         urlParams+=str + '%$';
     });
     let responseStr =  urlParams.slice(0,-2);
-    console.log(responseStr);
     return responseStr;
 }
 
@@ -96,7 +93,6 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         dispatch(resetArticles());
 
         const x = metadataListToSerialize(savedMetadataList);
-        console.log(x)
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters ));
     },[queryId, savedMetadataList, numberOfClusters, categories, searching_words])
@@ -105,7 +101,6 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     useEffect(()=>{
         if(articles.length === 0)  setIsLoader(true);
         else setIsLoader(false);
-        console.log(articles.length)
     },[articles])
 
 
@@ -115,20 +110,23 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
 
     useEffect(()=>{
         console.log(currentState);
+        if(currentState.index === -1) return
         // UPDATE QUERY
         // TODO ADD HERE TO INTERFACE ALSO THE OPERATOR
-        //dispatch(updateQueryFromBreadCrumbs(currentState.queryList));
+        dispatch(updateQueryFromBreadCrumbs(currentState.queryList));
 
         // UPDATE METADATA
         // @ts-ignore
-       // dispatch(updateMetadataFromBreadcrumbs(currentState.metadataList));
+       dispatch(updateMetadataFromBreadcrumbs(currentState.metadataList));
 
         // UPDATE CLUSTER
         // TODO ADD HERE NUMBER OF CLUSTERS
-        // dispatch(updateCategoriesFromBreadcrumbs(currentState.clusters, 0));
+        // @ts-ignore
+        dispatch(updateCategoriesFromBreadcrumbs(currentState.clusters, 4));
 
         // UPDATE NUMBER OF ARTICLES
-        // dispatch(updateCountFromBreadcrum(currentState.count));
+        // @ts-ignore
+        dispatch(updateCountFromBreadcrum(currentState.count));
 
     },[currentState])
 

@@ -15,9 +15,6 @@ export const Network2 = () => {
         forceRef.current.d3Force("charge").distanceMax(150);
     }, []);
 
-    useEffect(()=>{
-        console.log(graphData)
-    },[])
 
     const toggleClusterCollapse = (clusterId) => {
         if (collapsedClusters.includes(clusterId)) {
@@ -111,7 +108,6 @@ export const Network2 = () => {
                         ctx.textBaseline = "middle";
                         ctx.fillStyle = node.isClusterNode ? "white" : "black"; //node.color;
                         if (node.isClusterNode) {
-                            // console.log();
                             const lineHeight = fontSize * 1.2;
                             const lines = label.split(",");
                             let x = node.x;

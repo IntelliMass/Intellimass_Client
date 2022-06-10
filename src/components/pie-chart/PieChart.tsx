@@ -31,7 +31,7 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie',
-            
+
         },
         credits: {
             enabled: false
@@ -69,7 +69,6 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
                         click: function(this:any, event:any){
                             this.slice(null);
                             this.select(null, true);
-                            console.log(this.series.chart.getSelectedPoints());
                             const selectedCategories: any = [];
                             this.series.chart.getSelectedPoints().forEach((point: any) => {
                                 selectedCategories.push({title: point.options.name, rank: point.options.y})
@@ -77,16 +76,15 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
                             props.onSelect(selectedCategories);
                             // props.onSelect(this.series.chart.getSelectedPoints());
                         }
-                    }  
+                    }
                 },
             },
-                
+
                 // point: {
                 //     events: {
                 //         click: function(this:any, event:any){
                 //             this.slice(null);
                 //             this.select(null, true);
-                //             console.log(this.series.chart.getSelectedPoints());
                 //         }
                 //         // mouseOver() {},
                 //         // mouseOut() {},
@@ -102,8 +100,6 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
                 //         // click(this: any, event: any) {
                 //         //     const color = event.target.point.color;
                 //         //     const value = event.target.point.name;
-                //         //     console.log(this);
-                //         //     console.log(event);
                 //         //     event.preventDefault();
                 //         //     // props.onSelect(value, color);
                 //         // },

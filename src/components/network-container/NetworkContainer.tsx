@@ -16,12 +16,6 @@ export const NetworkContainer: React.FC<NetworkContainerProps> = () => {
 
     const forceRef = useRef();
 
-    useEffect(()=>{
-        console.log(clusters)
-        console.log(nodes)
-        console.log(links)
-    },[])
-
 
 
     const graphData = useMemo(() => {
@@ -32,7 +26,6 @@ export const NetworkContainer: React.FC<NetworkContainerProps> = () => {
     }, []);
 
     const handleNodeClick = (node:any) => {
-        console.log(node);
         // toggleClusterCollapse(node.id);
         // if (collapsedClusters.includes(node.id)) {
         //     forceRef.current.zoom(3.5, 400);
@@ -66,7 +59,6 @@ export const NetworkContainer: React.FC<NetworkContainerProps> = () => {
             {/*        ctx.textBaseline = "middle";*/}
             {/*        ctx.fillStyle = node.isClusterNode ? "white" : "black"; //node.color;*/}
             {/*        if (node.isClusterNode) {*/}
-            {/*            // console.log();*/}
             {/*            const lineHeight = fontSize * 1.2;*/}
             {/*            const lines = label.split(",");*/}
             {/*            let x = node.x;*/}

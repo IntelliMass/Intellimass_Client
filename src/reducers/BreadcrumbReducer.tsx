@@ -24,11 +24,11 @@ export interface BreadCrumbState {
 const initState: BreadCrumbState = {
     breadCrumbList: [],
     currentState: {
-        index: 0,
+        index: -1,
         time: "2015-09-01 | 14:32:15",
-        queryList: ["cyber", "IOT"],
-        clusters: ["Systems", "Software", "Network"],
-        metadataList: [{type: "year", title: "2020"}],
+        queryList: [],
+        clusters: [],
+        metadataList: [],
         count: 100
     },
     isUpdatedFlag: false

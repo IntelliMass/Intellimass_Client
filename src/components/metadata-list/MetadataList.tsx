@@ -58,8 +58,6 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
     * LISTENER TO SERVER METADATA
     */
     useEffect(() => {
-        console.log(state_metadataList)
-        console.log(state_savedMetadataList)
         setMetadataList([...state_metadataList]);
         setSavedMetadataList([...state_savedMetadataList]);
         setIsLoader(false);

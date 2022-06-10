@@ -3,22 +3,35 @@
   margin-bottom: 20px;
 
   .select-operator{
-    width:6%;
-    height: 40px;
+    //width:6%;
+    //position: absolute;
+    //margin-top: 15px;
+
+    .ant-select-single.ant-select-show-arrow .ant-select-selection-search{
+      height: 390px;
+    }
 
     .ant-select{
       height: 100px;
     }
-
-    .ant-select-selector{
-      height: 100px;
-    }
   }
+  //.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  //  position: absolute;
+  //  height: 39px;
+  //  margin-top: 15px;
+  //}
+  //
+  //.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input).ant-select-selector {
+  //  position: absolute;
+  //  height: 39px;
+  //  margin-top: 15px;
+  //}
 
   .input-query{
     display: inline;
-    width: 84%;
+    width: 90%;
   }
+
   .button-query{
     display: inline;
     width: 10%;

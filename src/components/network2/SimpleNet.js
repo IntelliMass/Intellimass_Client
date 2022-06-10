@@ -12,7 +12,6 @@ export function SimpleNet(props) {
 
 
     useEffect(()=>{
-        console.log(network)
         forceRef.current.d3Force("charge").strength(-400);
     },[network])
 
@@ -74,7 +73,6 @@ export function SimpleNet(props) {
                 }}
                 onNodeClick={(node) => {
                     if (node) {
-                        console.log(node)
                         setSelectedNode(node);
                     } else {
                         setSelectedNode(null);

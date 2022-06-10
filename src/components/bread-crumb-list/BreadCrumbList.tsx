@@ -7,6 +7,8 @@ import {IBreadCrumb, ServerStringMetadata} from "../../reducers/BreadcrumbReduce
 import {string} from "prop-types";
 import {HomePageHeader} from "../home-page-header/HomePageHeader";
 import {CollectionContainer} from "../collection-container/CollectionContainer";
+import Swal from "sweetalert2";
+import {patchMetadata} from "../../actions/MeatadataAction";
 
 type BreadCrumbListProps = {
 };
@@ -26,7 +28,6 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
     },[queryId])
 
     useEffect(()=>{
-        console.log(breadcrumbs)
         setTimeout(() => {
             setIsLoader(false);
         }, 1500);
@@ -34,7 +35,6 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
 
     const printListOfStrings = (items: string[]) => {
         let responseString = "";
-        console.log(items)
         items.forEach((item) => {
             responseString+=`${item}, `;
         })
@@ -45,7 +45,6 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
         if (items.length == 0)
             return ""
         let responseString = "Clusters: ";
-        console.log(items)
         items.forEach((item) => {
             responseString+=`${item}, `;
         })
@@ -63,12 +62,27 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
     }
 
     const onClickSingleBreadCrumb = (item: any) => {
-        console.log(item);
-        // @ts-ignore
-        dispatch(uploadBreadcrumbs(item));
-        // WHO LISTEN?
-        // 1 - SAVED FILTERS
-        // 2 - ARTICLE COUNT
+        Swal.fire({
+            title: 'Are you sure you want to upload this activity?',
+            text: `Your data set will be change`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, upload it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // @ts-ignore
+
+                // @ts-ignore
+                dispatch(uploadBreadcrumbs(item));
+                Swal.fire(
+                    'Uploaded!',
+                    'Your states has been updated.',
+                    'success'
+                )
+            }
+        })
     }
 
 

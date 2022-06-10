@@ -143,7 +143,6 @@ export const ExportAction: React.FC<ExportActionProps> = (props) => {
     }
 
     function handleMenuClick(paperID: string) {
-        console.log(paperID)
         // @ts-ignore
         dispatch(updatePaperID(paperID));
         history.replace('/article');

@@ -58,7 +58,7 @@
   .stati div{
     width: calc(100% - 3.5em);
     display: block;
-    float:right;
+    float: left;
     text-align:right;
   }
   .stati div b {
@@ -68,12 +68,14 @@
     margin-top:-0.2em;
     margin-bottom:-0.2em;
     display: block;
+    text-align: left;
   }
   .stati div span {
     font-size:1em;
     width: 100%;
     color: rgb(0, 0, 0,0.8);
     display: block;
+    text-align: left;
   }
 
   .stati.left div{

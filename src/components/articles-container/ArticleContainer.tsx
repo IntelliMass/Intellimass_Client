@@ -68,32 +68,26 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     },[queryId]);
 
     useEffect(()=>{
-        console.log(network);
         setIsLoader(false);
         customNodesSize(network);
     },[network])
 
     useEffect(()=>{
-        console.log(articles);
         setIsLoader(false);
     },[articles])
 
     useEffect(() => {
-        console.log(metadataList)
         setIsMetadataLoader(false);
     },[metadataList])
 
     useEffect(()=>{
-        console.log(connectionType)
         setConnectionType(connectionType);
     },[connectionType])
 
     useEffect(()=>{
-        console.log(savedMetadataList)
     },[savedMetadataList])
 
     useEffect(()=>{
-        console.log(count)
         setCount(count);
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, '', count));
@@ -106,7 +100,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     },[ count])
 
     useEffect(()=>{
-        console.log(connectionType)
         setConnectionType(connectionType);
 
         // @ts-ignore
@@ -117,7 +110,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     },[ connectionType])
 
     useEffect(()=>{
-        console.log(localCount)
     },[localCount])
 
     useEffect(()=>{
@@ -144,7 +136,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     }
 
     const nodeHandler = (article:any) => {
-        console.log(article);
         setSelectedNode({...article});
     }
 

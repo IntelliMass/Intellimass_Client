@@ -19,7 +19,6 @@ export const stringCategoriesFromArray = (categories: Array<INewSingleCatalog>) 
         newParams += category.title + '%$';
     })
     const urlParams = newParams.slice(0,-2);
-    console.log(urlParams)
     return urlParams;
 }
 
@@ -32,7 +31,6 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
 
     async dispatch => {
         const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-        console.log(URL_GET_CATEGORIES_NEW)
         await fetch(url)
             .then(function (response) {
                 return response.json();
@@ -43,9 +41,6 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
@@ -56,8 +51,6 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
  * @return {dispatch} Type + payload.
  */
 export function patchCategories(selectedCategories:Array<INewSingleCatalog> ) {
-    console.log('woop')
-    console.log(selectedCategories)
     return {
         type: "UPDATE_CATALOG",
         payload: {
@@ -86,11 +79,17 @@ export function resetCluster() {
 }
 
 
-export function updateCategoriesFromBreadcrumbs(selectedCategories: INewSingleCatalog[] , numOfClusters:number) {
+export function updateCategoriesFromBreadcrumbs(selectedCategories: string[] , numOfClusters:number) {
+    console.log(selectedCategories)
+    //selectedCategories: INewSingleCatalog[]
+    let resArray:INewSingleCatalog[] = [];
+    selectedCategories.forEach(item => resArray.push({rank: 25, title: item}));
+    //    title: string,
+    //     rank: number
     return {
         type: "UPDATE_CATEGORIES_BREADCRUMBS",
         payload:  {
-            selectedCategories: selectedCategories,
+            selectedCategories: resArray,
             numOfClusters: numOfClusters
         }
     };
@@ -112,11 +111,7 @@ export const  setNewIteration = (id:string, count:number=100, filterItems: any, 
             method: 'post',
             body: JSON.stringify(body)
         })
-            // .then(function (response) {
-            //     return response.json();
-            // })
             .then(async function (res:any) {
-                console.log(res)
                 const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${''}&numOfClusters=${numOfClusters}`;
                 await fetch(url)
                     .then(function (response) {
@@ -128,9 +123,6 @@ export const  setNewIteration = (id:string, count:number=100, filterItems: any, 
                         });
                     })
                     .catch(function (error) {
-                        console.log(
-                            "There has been a problem with your fetch operation: " + error.message
-                        );
                         throw error;
                     });
                 // dispatch({ type: "CREATE_QUERY",
@@ -138,9 +130,6 @@ export const  setNewIteration = (id:string, count:number=100, filterItems: any, 
                 // });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }

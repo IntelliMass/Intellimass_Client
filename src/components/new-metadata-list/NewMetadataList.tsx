@@ -261,9 +261,7 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
         }
     };
 
-    function callback(key:any) {
-        console.log(key);
-    }
+    function callback(key:any) {}
 
     return (
         <div className="metadata-list-container">

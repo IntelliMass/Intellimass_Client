@@ -33,9 +33,6 @@ export const getCollections = (userid:string="anar"): (dispatch: any) => Promise
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
         return {
@@ -63,9 +60,6 @@ export const  changeCollectionName = (id:string, userid:string="anar", collectio
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
@@ -74,7 +68,6 @@ export const  changeCollectionName = (id:string, userid:string="anar", collectio
 export const  insertToCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId: string): (dispatch: any) => Promise<void> =>{
     const user_ID = "anar";
     const url = `${URL_COLLECTIONS}insert_article?user_id=${user_ID}&query_id=${id}`;
-    console.log(paperId)
     const body = {collection_name: collectionName, article_id: paperId};
     return async dispatch => {
         await fetch(url, {
@@ -90,9 +83,6 @@ export const  insertToCollection = (id:string, userid: string, collections: Arra
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
@@ -116,9 +106,6 @@ export const  removeFromCollection = (id:string, userid: string, collections: Ar
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
@@ -143,9 +130,6 @@ export const  deleteCollection = (id:string, userid: string, collections: Array<
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
@@ -169,9 +153,6 @@ export const  createCollection = (id:string, userid: string, collections: Array<
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
