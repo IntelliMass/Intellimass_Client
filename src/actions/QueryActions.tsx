@@ -43,9 +43,6 @@ export const  createQuery = (queryParams: QueryState): (dispatch: any) => Promis
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }

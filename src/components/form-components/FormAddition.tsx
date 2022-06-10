@@ -4,9 +4,7 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 export const FormEdition = () => {
     const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
-        console.log('validation + sending ', values);
-    };
+    const onFinish = (values: any) => {};
 
     return (
         <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">

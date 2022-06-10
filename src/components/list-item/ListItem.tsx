@@ -30,9 +30,7 @@ export const ItemList: React.FC<{}> = () => {
             itemLayout="vertical"
             size="large"
             pagination={{
-                onChange: page => {
-                    console.log(page);
-                },
+                onChange: page => {},
                 pageSize: 3,
             }}
             dataSource={listData}

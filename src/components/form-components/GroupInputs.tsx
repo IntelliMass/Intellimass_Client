@@ -73,9 +73,7 @@ export const GroupInputs = () => {
         setVisible(false);
     };
 
-    const onFinish = (values: any) => {
-        console.log('Finish:', values);
-    };
+    const onFinish = (values: any) => {};
 
     return (
         <Form.Provider

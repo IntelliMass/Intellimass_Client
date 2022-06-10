@@ -51,15 +51,11 @@ export const getMetadata = (id:string, count:number=100, filterItems:string="", 
                 return response.json();
             })
             .then(function (metadata:any) {
-                console.log(metadata)
                 dispatch({type: "UPDATE_METADATA",
                     payload: customMetadataMiddleware(metadata)
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }

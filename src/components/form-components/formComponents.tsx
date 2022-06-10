@@ -22,7 +22,6 @@ const formItemLayout = {
 };
 
 const normFile = (e: any) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
         return e;
     }
@@ -30,9 +29,7 @@ const normFile = (e: any) => {
 };
 
 export const Demo = () => {
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-    };
+    const onFinish = (values: any) => {};
 
     return (
         <Form

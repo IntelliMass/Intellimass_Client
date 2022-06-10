@@ -110,9 +110,7 @@ export const getArticles = (id:string, limit: number = 100 ): (dispatch: any) =>
                     });
                 })
                 .catch(function (error) {
-                    console.log(
-                        "There has been a problem with your fetch operation: " + error.message
-                    );
+
                     throw error;
                 });
         }
@@ -132,15 +130,12 @@ export const getArticleDetail = (articleId:string, queryID:string = "e4b549da-d0
                 return response.json();
             })
             .then(function (recivedArticle:ArticleDetail) {
-                console.log(recivedArticle)
                 dispatch({type: "GET_ARTICLE_DETAIL",
                     payload:  recivedArticle
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
+
                 throw error;
             });
     }
@@ -154,7 +149,6 @@ export const getArticleDetail = (articleId:string, queryID:string = "e4b549da-d0
 export const getFilteredArticles = (id:string, filterItems:string="", limit:number=100, clusters:string="", numOfClusters: number=4): (dispatch: any) => Promise<void> =>
     async dispatch => {
         let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-        console.log(URL_GET_ARTICLES)
         await fetch(URL_GET_ARTICLES)
             .then(function (response) {
                 return response.json();
@@ -165,9 +159,6 @@ export const getFilteredArticles = (id:string, filterItems:string="", limit:numb
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }

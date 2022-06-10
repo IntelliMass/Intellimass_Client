@@ -62,8 +62,6 @@ export const customNodesSize = (network: INetwork) => {
     if(network){
         network.links.forEach(link => {
             let newNode = link.target;
-            // if(nodesNewSizes.length > 0)
-            //     console.log(nodesNewSizes)
             if (nodesNewSizes && nodesNewSizes.indexOf(newNode) != -1) {
                 nodesCounter[nodesNewSizes.indexOf(newNode)] = nodesCounter[nodesNewSizes.indexOf(newNode)] + 10;
             } else {
@@ -107,16 +105,11 @@ export const getNetwork = (id:string, filterItems:string="", feature:string="fre
                 //     nodes: [...customNodesSize(customNetwork)],
                 //     links: customNetwork.links
                 // } ;
-
-                console.log(customNetwork)
                 dispatch({type: "GET_NETWORK",
                     payload:  customNetwork
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
@@ -138,9 +131,6 @@ export const getFilteredNetwork = (categories:Array<string>): (dispatch: any) =>
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }

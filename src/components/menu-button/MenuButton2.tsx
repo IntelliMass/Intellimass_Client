@@ -42,7 +42,7 @@ export const MenuButton2: React.FC<MenuButton2Props> = (props) => {
                 <Tooltip placement="bottom" title={'Export'}>
                     <span onClick={()=>setActionOption('Export')} className="menu-item"> <PlusOutlined /> </span>
                 </Tooltip>
-                <Tooltip placement="bottom" title={'Breadcrumb'}>
+                <Tooltip placement="bottom" title={'Activity history'}>
                     <span onClick={()=>setActionOption('Breadcrumb')} className="menu-item"> <ArrowLeftOutlined /> </span>
                 </Tooltip>
             </nav>

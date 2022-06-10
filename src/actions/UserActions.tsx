@@ -20,8 +20,6 @@ let NODE_SERVER = "http://localhost:8080/";
 
 export const  signup = (userState: UserState): (dispatch: any) => Promise<void> =>{
     const body = {userName: userState.userName, password: userState.userPassword};
-    console.log(body)
-    console.log(JSON.stringify(body))
     const path = NODE_SERVER + 'api/signup'
     return async dispatch => {
         await fetch(path, {
@@ -37,9 +35,6 @@ export const  signup = (userState: UserState): (dispatch: any) => Promise<void> 
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }

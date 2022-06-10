@@ -1,6 +1,8 @@
 import {IBreadCrumb, ServerStringMetadata} from "../reducers/BreadcrumbReducer";
 import {INewSingleCatalog} from "../reducers/CatalogReducer";
 import {stringCategoriesFromArray} from "./CatalogAction";
+import {IMetadata, NewMetadata} from "../reducers/MetadataReducer";
+import {IMetadataWithCategory} from "../components/new-metadata-list/NewMetadataList";
 
 type GetBreadCrumbAction = {type: "GET_BREADCRUMB", payload: any }
 type UploadCrumbAction = {type: "LOCAL_UPLOAD_BREADCRUMB", payload: any}
@@ -26,23 +28,27 @@ export const getBreadcrumb = (queryId: string): (dispatch: any) => Promise<void>
                 return response.json();
             })
             .then(function (breadcrumbs: any) {
-                console.log(breadcrumbs.breadCrumbList)
+                console.log(breadcrumbs)
                 dispatch({
                     type: "GET_BREADCRUMB",
                     payload: breadcrumbs.breadCrumbList
                 });
             })
             .catch(function (error) {
-                console.log(
-                    "There has been a problem with your fetch operation: " + error.message
-                );
                 throw error;
             });
     }
 
-    const customMetadataForBreadCrumb = (items: string[]) => {
+    const customMetadataForBreadCrumb = (items: ServerStringMetadata[]) => {
         let responseItems: ServerStringMetadata[] = [];
-        items.forEach(item => responseItems.push({type: "COMMON_WORDS", title: item}));
+        items.forEach(item => {
+            if (item.type === 'frequentWords') responseItems.push({type: "COMMON_WORDS", title: item.title});
+            else if (item.type === 'authors') responseItems.push({type: "AUTHORS", title: item.title});
+            else if (item.type === 'topics') responseItems.push({type: "TOPICS", title: item.title});
+            else if (item.type === 'years') responseItems.push({type: "YEARS", title: item.title});
+            else  responseItems.push({type: "FIELDS_OF_STUDY", title: item.title});
+
+        });
         return responseItems;
     }
 

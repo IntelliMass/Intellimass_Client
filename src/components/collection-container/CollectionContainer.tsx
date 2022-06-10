@@ -41,7 +41,6 @@ export const CollectionContainer: React.FC<CollectionContainerProps> = (props) =
             confirmButtonText: 'Create',
             showLoaderOnConfirm: true,
             preConfirm: (newCollectionName:string) => {
-                console.log(newCollectionName);
                 // @ts-ignore
                 dispatch(createCollection( 'test', userid, collections.collection, newCollectionName))
             },

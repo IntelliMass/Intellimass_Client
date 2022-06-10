@@ -64,7 +64,6 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     },[numberOfArticles])
 
     useEffect(()=>{
-        console.log(network);
         if(network.nodes.length === 0)  setIsLoader(true);
         else setIsLoader(false);
     },[network])
@@ -92,7 +91,6 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     }
 
     const nodeHandler = (article:any) => {
-        console.log(article);
         setSelectedNode({...article});
     }
 
@@ -172,13 +170,13 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                                 {/*    <Option value="topics">Topics</Option>*/}
                                 {/*</Select>*/}
                                 <span style={{marginLeft: "5%"}}> Original Articles number ( {numberOfArticles} )</span>
-                                <Tooltip placement="bottom" title={'Insert more 100'}>
+                                <Tooltip placement="bottom" title={'Insert more 100 articles'}>
                                     <Button style={{marginLeft: "1%", marginRight: "1%"}}
                                             icon={<PlusOutlined />}
                                             onClick={() => plus()}
                                     />
                                 </Tooltip>
-                                <Tooltip placement="bottom" title={'More details'}>
+                                <Tooltip placement="bottom" title={'Reduce by 100 articles'}>
                                     <Button
                                         icon={<MinusOutlined />}
                                         onClick={() => minus()}

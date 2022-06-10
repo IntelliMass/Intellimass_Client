@@ -24,12 +24,6 @@ export const NetworkContainerSecond = () => {
         };
     }, []);
 
-    useEffect(()=>{
-        console.log(clusters)
-        console.log(nodes)
-        console.log(links)
-        console.log(graphData)
-    },[])
 
     useEffect(() => {
         // forceRef.current.d3Force("collide", d3.forceCollide(13));
@@ -40,7 +34,6 @@ export const NetworkContainerSecond = () => {
 
 
     const handleNodeClick = (node) => {
-        console.log(node);
         // toggleClusterCollapse(node.id);
         // if (collapsedClusters.includes(node.id)) {
         //     forceRef.current.zoom(3.5, 400);
@@ -74,7 +67,6 @@ export const NetworkContainerSecond = () => {
                     ctx.textBaseline = "middle";
                     ctx.fillStyle = node.color;
                     //if (node.isClusterNode) {
-                        // console.log();
                         const lineHeight = fontSize * 1.2;
                         const lines = label.split(",");
                         let x = node.x;
