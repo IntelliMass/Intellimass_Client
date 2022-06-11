@@ -52,13 +52,13 @@ export function SimpleNet(props) {
                 graphData={network}
                 nodeId="title"
                 nodeLabel="title"
-                height={800}
-                width={customWidth}
+                height={700}
+                width={700}
                 linkWidth={2}
-                linkColor={"#FFFFFF"}
+                linkColor={'red'}
                 nodeAutoColorBy="cluster"
                 nodeVal='size'
-                backgroundColor={'#1e3b5e'}
+                backgroundColor={'white'}
                 linkCurvature={0.05}
                 enablePointerInteraction={true}
                 enableNodeDrag={true}

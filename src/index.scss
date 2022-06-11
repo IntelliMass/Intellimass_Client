@@ -128,3 +128,38 @@ code {
   height: 700px !important;
 }
 
+
+.radio-group-network-choice{
+  margin: 10px auto;
+
+  .radio-group-header{
+    color: #ffd591;
+    text-align: center;
+    font-size: 24px;
+    margin-left: -10%;
+  }
+
+  .radio-options{
+
+  }
+}
+
+.actions-containers-network{
+  position: absolute;
+  margin-top: 100px;
+  min-height: 780px;
+  max-height: 980px;
+  background-color: #FFFCFC;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border: 1px solid gray;
+  color: white;
+  left: 0;
+}
+
+.network-new-container{
+  width: 400px;
+  height: 400px;
+  margin-top: 80px;
+  position: absolute;
+  right: 43%;
+}
