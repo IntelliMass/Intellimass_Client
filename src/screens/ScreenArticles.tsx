@@ -109,7 +109,6 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
     },[])
 
     useEffect(()=>{
-        console.log(currentState);
         if(currentState.index === -1) return
         // UPDATE QUERY
         // TODO ADD HERE TO INTERFACE ALSO THE OPERATOR

@@ -45,7 +45,23 @@ export const customLinks = (links: Array<any>):Array<any> => {
         newLink = {...link,
             name: customValue(link.value as Array<string>),
             size: 2,
-            color: "#555",
+            color: "black",
+        };
+        newLinks.push(newLink);
+    })
+    return newLinks;
+}
+
+export const customSemanticLinks = (links: Array<any>):Array<any> => {
+    let newLinks:Array<any>  = [];
+    let newLink = {};
+    console.log(links[0])
+    links.forEach(link => {
+        newLink = {};
+        newLink = {...link,
+            name:link.target,
+            size: 2,
+            color: "white",
         };
         newLinks.push(newLink);
     })

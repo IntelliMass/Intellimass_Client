@@ -2,8 +2,8 @@ import {customLinks, customNodes, NetworkAction} from "../actions/NetworkAction"
 import {SemanticNetworkAction} from "../actions/SemanticNetworkAction";
 
 export interface ISemanticNetwork {
-    nodes: Array<ISemanticNode>,
-    links: Array<ISemanticLink>,
+    nodes: Array<any>,
+    links: Array<any>,
 }
 
 export interface NetworkState {

@@ -1,4 +1,5 @@
 import {NetworkState} from "../reducers/SemanticNetworkReducer";
+import {customLinks, customNodes, customSemanticLinks} from "./NetworkAction";
 
 type getNetworkAction = {type: "GET_SEMANTIC_NETWORK", payload: any };
 export type SemanticNetworkAction = getNetworkAction;
@@ -19,8 +20,12 @@ export const getSemanticNetwork = (id:string, filterItems:string="", feature:str
                 return response.json();
             })
             .then(function (network:NetworkState) {
+                const customNetwork = {
+                    nodes: customNodes(network.network.nodes),
+                    links: customSemanticLinks(network.network.links),
+                }
                 dispatch({type: "GET_SEMANTIC_NETWORK",
-                    payload:  network
+                    payload:  customNetwork
                 });
             })
             .catch(function (error) {

@@ -48,7 +48,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     const [actionOption, setActionOption] = useState<string>('none');
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [selectedNode, setSelectedNode] = useState<any>(null);
-    const [screenType, setScreenType] = useState<string>('articles');
+    const [screenType, setScreenType] = useState<string>('semantic');
 
     const history = useHistory();
     const dispatch = useAppDispatch();
@@ -60,7 +60,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-        dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
+       dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
         // @ts-ignore
         dispatch(getSemanticNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
 
@@ -72,7 +72,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
 
     useEffect(()=>{
         // @ts-ignore
-        dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
+        //dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
     },[numberOfArticles])
 
     useEffect(()=>{
@@ -81,7 +81,9 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     },[network])
 
     useEffect(()=>{
-        console.log(semanticNetwork)},[semanticNetwork])
+        console.log(semanticNetwork)
+       setIsLoader(false);
+    },[semanticNetwork])
 
     useEffect(()=>{
         aos.init({duration: 1000})
@@ -192,7 +194,6 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                             <Spin size="large" />
                             <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading the articles network</h4>
                         </div> :
-                        // <h1>It worked</h1>
                         <SemanticNetworkComp network={semanticNetwork}/>
                     }
                 </div>
