@@ -60,7 +60,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
         }
         setIsLoader(true);
         // @ts-ignore
-       dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
+      // dispatch(getNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
         // @ts-ignore
         dispatch(getSemanticNetwork(queryId, metadataListToSerialize(savedMetadataList), "frequentWords", numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters));
 
@@ -167,7 +167,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                                         <Spin size="large" />
                                         <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading the articles network</h4>
                                     </div> :
-                            <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>
+                            // <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>
                         }
                     </div>
                 }
