@@ -32,7 +32,10 @@ export const  createQuery = (queryParams: QueryState): (dispatch: any) => Promis
     return async dispatch => {
         await fetch(URL_POST_NEW, {
             method: 'post',
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            headers: {
+                'use-mock': 'true'
+            }
         })
             .then(function (response) {
                 return response.json();
