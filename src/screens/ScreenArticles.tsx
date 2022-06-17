@@ -95,7 +95,7 @@ const ScreenArticles: React.FC<ScreenProfileProps> = () => {
         const x = metadataListToSerialize(savedMetadataList);
         // @ts-ignore
         dispatch(getFilteredArticles(queryId, metadataListToSerialize(savedMetadataList) , numberOfArticles, stringCategoriesFromArray(categories), numberOfClusters ));
-    },[queryId, savedMetadataList, numberOfClusters, categories, searching_words])
+    },[queryId, savedMetadataList, numberOfClusters, categories, searching_words, numberOfArticles])
 
 
     useEffect(()=>{

@@ -29,6 +29,7 @@ export const ArticleDetailContainer: React.FC<ArticleDetailContainerProps> = () 
 
 
     useEffect(()=>{
+        console.log(articleDetail)
         setTimeout(() => {
             setIsLoader(false);
         }, 1500);

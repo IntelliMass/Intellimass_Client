@@ -89,23 +89,6 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
         aos.init({duration: 1000})
     },[])
 
-    function plus() {
-        if(count === 1000){
-            return;
-        }
-        // @ts-ignore
-        dispatch(updateCount(count+100));
-
-    }
-
-    function minus() {
-        if(count === 100){
-            return;
-        }
-        // @ts-ignore
-        dispatch(updateCount(count-100));
-    }
-
     const nodeHandler = (article:any) => {
         setSelectedNode({...article});
     }

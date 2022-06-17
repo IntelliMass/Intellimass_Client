@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import "./ArticleList.scss";
-import {Avatar, List, Space, Spin} from "antd";
-import {LikeOutlined, MessageOutlined, StarOutlined} from "@ant-design/icons";
+import {Avatar, Button, List, Space, Spin, Tooltip} from "antd";
+import {LikeOutlined, MessageOutlined, MinusOutlined, PlusOutlined, StarOutlined} from "@ant-design/icons";
 import { useAppSelector, useAppDispatch } from "../../../hooks/hooks"
-import {ArticleOfList, Author, getArticles} from "../../../actions/ArticleActions";
+import {ArticleOfList, Author, getArticles, updateCount} from "../../../actions/ArticleActions";
 import {GetMoreButton} from "../../../components/get-more/GetMore";
 import {IMetadataWithCategory} from "../../../components/new-metadata-list/NewMetadataList";
 import {CategoryTag} from "../../../components/category-tags/CategoryTag";
@@ -30,6 +30,9 @@ type ArticleListProps = {
 };
 
 export const ArticleList: React.FC<ArticleListProps> = (props) => {
+    // @ts-ignore
+    const count = useAppSelector<number>(state => state.article.count);
+
     const {articles, queryId, savedMetadataList} = props;
     const catalog = useAppSelector<Array<INewSingleCatalog>>(state => state.catalog.catalogs);
 
@@ -47,10 +50,43 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
     useEffect(()=>{
     },[ articles, catalog])
 
+    function plus() {
+        if(count === 1000){
+            return;
+        }
+        // @ts-ignore
+        dispatch(updateCount(count+100));
+
+    }
+
+    function minus() {
+        if(count === 100){
+            return;
+        }
+        // @ts-ignore
+        dispatch(updateCount(count-100));
+    }
+
+
     return (
         <div className={`Article-list`}>
             <QueryListHeader/>
             <h3 style={{marginLeft: 15, color: "#E7E9A3"}}>{articles.length} results for '{queryString}' with operator '{operator}'</h3>
+            <div className="plus-minus-articles">
+                <Tooltip placement="bottom" title={'Insert more 100 articles'}>
+                    <Button style={{marginLeft: "1%", marginRight: "1%"}}
+                            icon={<PlusOutlined />}
+                            onClick={() => plus()}
+                    />
+                </Tooltip>
+                <Tooltip placement="bottom" title={'Reduce by 100 articles'}>
+                    <Button className="minus-button"
+                            icon={<MinusOutlined />}
+                            onClick={() => minus()}
+                    />
+                </Tooltip>
+                <span style={{marginLeft: "5%"}}> Original Articles number ( {count} )</span>
+            </div>
             <List
                 itemLayout="vertical"
                 size="small"

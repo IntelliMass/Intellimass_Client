@@ -21,7 +21,8 @@ function RouterApplication() {
      <NavBar/>
       <Switch>
         <Route path="/" exact>
-          <ScreenIndex />
+          {/*<ScreenIndex />*/}
+          <ScreenHome />
         </Route>
 
         <Route path="/home" >

@@ -68,7 +68,7 @@ const ScreenError500: React.FC<Screen500Props> = () => {
                     </> }
                     { actionOption === 'Breadcrumb' &&
                     <>
-                        <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Breadcrumb</h2>
+                        <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Active history</h2>
                         <BreadCrumbList/>
                     </>
                     }
