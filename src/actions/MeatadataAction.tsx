@@ -46,7 +46,11 @@ export const customMetadataMiddleware = (metadata:ServerMetadata):NewMetadata  =
 export const getMetadata = (id:string, count:number=100, filterItems:string="", clusters:string="", numOfClusters:number=4): (dispatch: any) => Promise<void> =>
     async dispatch => {
         const url = `${URL_GET_METADATA_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-        await fetch(url)
+        await fetch(url, {
+            headers: {
+                'use-mock': 'true'
+            }
+        })
             .then(function (response) {
                 return response.json();
             })

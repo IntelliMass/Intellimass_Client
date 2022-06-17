@@ -31,7 +31,11 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
 
     async dispatch => {
         const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-        await fetch(url)
+        await fetch(url, {
+            headers: {
+                'use-mock': 'true'
+            }
+        })
             .then(function (response) {
                 return response.json();
             })

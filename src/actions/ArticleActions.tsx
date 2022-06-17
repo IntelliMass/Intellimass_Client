@@ -151,7 +151,8 @@ export const getFilteredArticles = (id:string, filterItems:string="", limit:numb
         let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
         await fetch(URL_GET_ARTICLES, {
             headers: {
-                'use-mock': 'true' }
+                'use-mock': 'true'
+            }
         })
             .then(function (response) {
                 return response.json();
