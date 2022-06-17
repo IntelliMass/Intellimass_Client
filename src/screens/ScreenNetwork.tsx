@@ -166,7 +166,7 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
                         {isLoader ? <div className="loader-container">
                                         <Spin size="large" />
                                         <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading the articles network</h4>
-                                    </div> :
+                                    </div> : ''
                             // <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>
                         }
                     </div>
