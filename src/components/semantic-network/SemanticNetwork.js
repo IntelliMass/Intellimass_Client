@@ -42,6 +42,7 @@ export function SemanticNetworkComp(props) {
                         return sprite;
                     }}
                     width={1630}
+                    height={950}
                     linkWidth={'size'}
                     linkOpacity={0.3}
                     nodeVal='size'
