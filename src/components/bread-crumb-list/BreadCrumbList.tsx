@@ -75,7 +75,7 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
                 // @ts-ignore
 
                 // @ts-ignore
-                dispatch(uploadBreadcrumbs(item));
+                dispatch(uploadBreadcrumbs(item, queryId));
                 Swal.fire(
                     'Uploaded!',
                     'Your states has been updated.',

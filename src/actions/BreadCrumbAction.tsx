@@ -10,6 +10,8 @@ type UploadCrumbAction = {type: "LOCAL_UPLOAD_BREADCRUMB", payload: any}
 export type BreadCrumbAction = GetBreadCrumbAction|  UploadCrumbAction;
 
 let URL_GET_BREADCRUMBS = "https://api.intellimass.net/breadcrumbs";
+let URL_SET_ITER = "https://api.intellimass.net/set_iter";
+
 
 const extractFromListToString = (items: string[]) => {
     let responseString: string = "";
@@ -56,19 +58,51 @@ export const getBreadcrumb = (queryId: string): (dispatch: any) => Promise<void>
         return responseItems;
     }
 
-export function uploadBreadcrumbs(breadCrumb: any) {
-    const resivedBreadcrumbs: IBreadCrumb = {
-        clusters: breadCrumb.clusters,
-        results: breadCrumb.results,
-        metadataList: customMetadataForBreadCrumb(breadCrumb.metadataList),
-        index: breadCrumb.index,
-        queryList: breadCrumb.queryList,
-        time: breadCrumb.time
+// export function uploadBreadcrumbs(breadCrumb: any) {
+//     const resivedBreadcrumbs: IBreadCrumb = {
+//         clusters: breadCrumb.clusters,
+//         results: breadCrumb.results,
+//         metadataList: customMetadataForBreadCrumb(breadCrumb.metadataList),
+//         index: breadCrumb.index,
+//         queryList: breadCrumb.queryList,
+//         time: breadCrumb.time
+//     }
+//
+//     return {
+//         type: "LOCAL_UPLOAD_BREADCRUMB",
+//         payload: { ... resivedBreadcrumbs }
+//     };
+// }
+
+
+
+export const uploadBreadcrumbs = (breadCrumb: IBreadCrumb, queryId:string): (dispatch: any) => Promise<void> =>
+
+    async dispatch => {
+        const url = `${URL_SET_ITER}?id=${queryId}`;
+
+        const body = {
+            id:queryId,
+            iter: 0
+        };
+
+        await fetch(url, {
+            method: 'post',
+            body: JSON.stringify(body),
+            headers: {
+                'use-mock': 'true'
+            }
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (breadcrumbs: any) {
+                dispatch({
+                    type: "LOCAL_UPLOAD_BREADCRUMB",
+                    payload: {...breadCrumb}
+                });
+            })
+            .catch(function (error) {
+                throw error;
+            });
     }
-
-    return {
-        type: "LOCAL_UPLOAD_BREADCRUMB",
-        payload: { ... resivedBreadcrumbs }
-    };
-}
-
