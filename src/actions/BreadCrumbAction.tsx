@@ -23,7 +23,11 @@ export const getBreadcrumb = (queryId: string): (dispatch: any) => Promise<void>
 
     async dispatch => {
         const url = `${URL_GET_BREADCRUMBS}?id=${queryId}`;
-        await fetch(url)
+        await fetch(url, {
+            headers: {
+                'use-mock': 'true'
+            }
+        })
             .then(function (response) {
                 return response.json();
             })
