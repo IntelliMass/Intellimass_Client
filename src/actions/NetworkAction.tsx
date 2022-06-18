@@ -31,6 +31,7 @@ export const customNodes = (nodes: Array<any>):Array<any> => {
             id: node.title,
             isClusterNode: true,
             name: node.title,
+            size: node.size/200
         };
         newNodes.push(newNode);
     })
@@ -60,7 +61,7 @@ export const customSemanticLinks = (links: Array<any>):Array<any> => {
         newLink = {};
         newLink = {...link,
             name:link.target,
-            size: 2,
+            size: link.size/10,
             color: "white",
         };
         newLinks.push(newLink);
