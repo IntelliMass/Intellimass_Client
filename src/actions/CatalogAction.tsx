@@ -113,7 +113,10 @@ export const  setNewIteration = (id:string, count:number=100, filterItems: any, 
     return async dispatch => {
         await fetch(URL_POST_ITERATION, {
             method: 'post',
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            headers: {
+                'use-mock': 'true'
+            }
         })
             .then(async function (res:any) {
                 const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${''}&numOfClusters=${numOfClusters}`;

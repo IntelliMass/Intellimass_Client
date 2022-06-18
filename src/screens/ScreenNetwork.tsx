@@ -122,55 +122,55 @@ const ScreenNetwork: React.FC<ScreenSearchProps> = () => {
     return (
         queryId !== '' || network.nodes.length !== 0 ?
             <div className="screen screen-network">
-                <div className="radio-group-network-choice">
-                    <h3 className="radio-group-header">Which Network would you like to see? </h3>
-                    <Radio.Group className="radio-options" defaultValue={screenType} buttonStyle="solid" onChange={onScreenTypeChange}>
-                        <Radio.Button value="articles">Articles network</Radio.Button>
-                        <Radio.Button value="semantic">Metadata semantic network</Radio.Button>
-                    </Radio.Group>
-                </div>
-                {screenType === 'articles' &&
-                <MenuButton2 actionOption={actionOption} setActionOption={actionHandler} isOpen={isMenuOpen}
-                             setIsOpen={setIsMenuOpen}/>
-                }
-                { actionOption !== 'none' &&
-                <div className={`actions-containers-network ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>
-                    { actionOption === 'Filter' &&
-                    <>
-                        <h3 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Filter</h3>
-                        <NewMetadataList metadataList={[]} savedMetadataList={[]}/>
-                    </>
-                    }
-                    {actionOption === 'Cluster' &&
-                    <>
-                        <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Cluster</h2>
-                        <ClusterContainer/>
-                    </>
-                    }
-                    {actionOption === 'Export' &&
-                    <>
-                        <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Export</h2>
-                        <ExportAction/>
-                    </>
-                    }
-                    { actionOption === 'Breadcrumb' &&
-                    <>
-                        <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Breadcrumb</h2>
-                        <BreadCrumbList/>
-                    </>
-                    }
-                </div>
-                }
-                {screenType === 'articles' &&
-                    <div className="network-new-container">
-                        {isLoader ? <div className="loader-container">
-                                        <Spin size="large" />
-                                        <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading the articles network</h4>
-                                    </div> : ''
-                            // <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>
-                        }
-                    </div>
-                }
+                {/*<div className="radio-group-network-choice">*/}
+                {/*    <h3 className="radio-group-header">Which Network would you like to see? </h3>*/}
+                {/*    <Radio.Group className="radio-options" defaultValue={screenType} buttonStyle="solid" onChange={onScreenTypeChange}>*/}
+                {/*        <Radio.Button value="articles">Articles network</Radio.Button>*/}
+                {/*        <Radio.Button value="semantic">Metadata semantic network</Radio.Button>*/}
+                {/*    </Radio.Group>*/}
+                {/*</div>*/}
+                {/*{screenType === 'articles' &&*/}
+                {/*<MenuButton2 actionOption={actionOption} setActionOption={actionHandler} isOpen={isMenuOpen}*/}
+                {/*             setIsOpen={setIsMenuOpen}/>*/}
+                {/*}*/}
+                {/*{ actionOption !== 'none' &&*/}
+                {/*<div className={`actions-containers-network ${isMenuOpen && 'isMenuOpen'}`} data-aos='fade-right' data-aos-duration='1500'>*/}
+                {/*    { actionOption === 'Filter' &&*/}
+                {/*    <>*/}
+                {/*        <h3 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Filter</h3>*/}
+                {/*        <NewMetadataList metadataList={[]} savedMetadataList={[]}/>*/}
+                {/*    </>*/}
+                {/*    }*/}
+                {/*    {actionOption === 'Cluster' &&*/}
+                {/*    <>*/}
+                {/*        <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Cluster</h2>*/}
+                {/*        <ClusterContainer/>*/}
+                {/*    </>*/}
+                {/*    }*/}
+                {/*    {actionOption === 'Export' &&*/}
+                {/*    <>*/}
+                {/*        <h2 style={{textAlign: 'center', lineHeight: 2, fontSize: 18}}>Export</h2>*/}
+                {/*        <ExportAction/>*/}
+                {/*    </>*/}
+                {/*    }*/}
+                {/*    { actionOption === 'Breadcrumb' &&*/}
+                {/*    <>*/}
+                {/*        <h2 style={{textAlign: 'center',lineHeight: 2, fontSize: 18}}>Breadcrumb</h2>*/}
+                {/*        <BreadCrumbList/>*/}
+                {/*    </>*/}
+                {/*    }*/}
+                {/*</div>*/}
+                {/*}*/}
+                {/*{screenType === 'articles' &&*/}
+                {/*    <div className="network-new-container">*/}
+                {/*        {isLoader ? <div className="loader-container">*/}
+                {/*                        <Spin size="large" />*/}
+                {/*                        <h4 style={{marginLeft: -100}} className="loader-articles-details">Uploading the articles network</h4>*/}
+                {/*                    </div> : ''*/}
+                {/*            // <SimpleNet network={network} selectedNode={selectedNode} setSelectedNode={nodeHandler} actionOption={actionOption}/>*/}
+                {/*        }*/}
+                {/*    </div>*/}
+                {/*}*/}
                 {screenType === 'semantic' &&
                 <div className="network-new-container">
                     {isLoader ? <div className="loader-container">

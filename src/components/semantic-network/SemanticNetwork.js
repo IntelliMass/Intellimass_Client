@@ -6,15 +6,11 @@ import SpriteText from 'three-spritetext';
 
 export function SemanticNetworkComp(props) {
     const { network } = props;
-    const [hoveredNode, setHoveredNode] = useState(null);
     const forceRef = useRef(null);
 
 
     useEffect(()=>{
-        console.log('Woop')
-        console.log(network)
         if (network !== null && network.nodes.length > 0){
-            console.log(network)
             forceRef.current.d3Force("charge").strength(-400);
         }
     },[network])
@@ -31,14 +27,10 @@ export function SemanticNetworkComp(props) {
         );
     }, [forceRef]);
 
-    // useEffect(()=>{
-    //     console.log(network)
-    // },[])
-
     return (
-        <div className="network-wrapper">
-            {network !== undefined && network.nodes.length > 0 &&
+
             <div>
+                {network !== undefined && network.nodes.length > 0 &&
                 <ForceGraph3D
                     graphData={network}
                     nodeId="title"
@@ -49,32 +41,18 @@ export function SemanticNetworkComp(props) {
                         sprite.textHeight = 8;
                         return sprite;
                     }}
-                    height={700}
-                    width={700}
+                    width={1630}
                     linkWidth={'size'}
-
-                    // linkColor={'red'}
-                    // nodeAutoColorBy="cluster"
                     linkOpacity={0.3}
                     nodeVal='size'
                     backgroundColor={'black'}
-                    // linkCurvature={0.05}
-                    // enablePointerInteraction={true}
                     enableNodeDrag={true}
                     ref={forceRef}
-                    onNodeHover={(node) => {
-                        if (node) {
-                            setHoveredNode(node);
-                        } else {
-                            setHoveredNode(null);
-                        }
-                    }}
                     zoomToFit={{ms: 0, px: 0}}
                     onNodeClick={handleClick}
                 />
+                }
             </div>
-            }
-        </div>
     );
 }
 
