@@ -59,7 +59,7 @@ export const getBreadcrumb = (queryId: string): (dispatch: any) => Promise<void>
 export function uploadBreadcrumbs(breadCrumb: any) {
     const resivedBreadcrumbs: IBreadCrumb = {
         clusters: breadCrumb.clusters,
-        count: breadCrumb.count,
+        results: breadCrumb.results,
         metadataList: customMetadataForBreadCrumb(breadCrumb.metadataList),
         index: breadCrumb.index,
         queryList: breadCrumb.queryList,

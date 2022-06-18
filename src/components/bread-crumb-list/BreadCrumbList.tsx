@@ -105,6 +105,7 @@ export const BreadCrumbList: React.FC<BreadCrumbListProps> = (props) => {
                                     <div className="time-line-item" onClick={()=>{onClickSingleBreadCrumb(item)}}>
                                         <h5 className={"title-time-line"}>({item.index + 1}) {item.time}</h5>
                                         <h5 className={"title-time-line"}>Query: {printListOfStrings(item.queryList)}</h5>
+                                        <h5 className={"title-time-line"}>Articles: {item.results}</h5>
                                         <h5 className={"title-time-line"}>{printListOfClusters(item.clusters)}</h5>
                                         {printListOfMetadata(item.metadataList)}
                                     </div>

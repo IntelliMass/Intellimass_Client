@@ -11,7 +11,7 @@ export interface IBreadCrumb {
     queryList: string[],
     clusters: string[],
     metadataList: ServerStringMetadata[],
-    count: number,
+    results: number,
     index: number,
 }
 
@@ -29,7 +29,7 @@ const initState: BreadCrumbState = {
         queryList: [],
         clusters: [],
         metadataList: [],
-        count: 100
+        results: 300
     },
     isUpdatedFlag: false
 };
