@@ -25,7 +25,7 @@ const initState = {
     articles: [],
     serverArticles: [],
     articleDetail: {},
-    count: 300,
+    count: 100,
     selectedPaperID: ""
 };
 
