@@ -15,11 +15,7 @@ export const getSemanticNetwork = (id:string, filterItems:string="", feature:str
     async dispatch => {
         const url = `${URL_GET_SEMANTIC_NETWORK}?id=${id}&count=${count}&feature=${feature}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
 
-        await fetch(url, {
-            headers: {
-                'use-mock': 'true'
-            }
-        })
+        await fetch(url)
             .then(function (response) {
                 return response.json();
             })

@@ -29,7 +29,7 @@ const initState: BreadCrumbState = {
         queryList: [],
         clusters: [],
         metadataList: [],
-        results: 300
+        results: 100
     },
     isUpdatedFlag: false
 };

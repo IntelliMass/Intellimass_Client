@@ -31,11 +31,7 @@ export const getCatalog = (id:string, count:number=100, filterItems="", clusters
 
     async dispatch => {
         const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-        await fetch(url, {
-            headers: {
-                'use-mock': 'true'
-            }
-        })
+        await fetch(url)
             .then(function (response) {
                 return response.json();
             })
@@ -114,17 +110,10 @@ export const  setNewIteration = (id:string, count:number=100, filterItems: any, 
         await fetch(URL_POST_ITERATION, {
             method: 'post',
             body: JSON.stringify(body),
-            headers: {
-                'use-mock': 'true'
-            }
         })
             .then(async function (res:any) {
                 const url = `${URL_GET_CATEGORIES_NEW}?id=${id}&count=${count.toString()}&filters=${filterItems}&clusters=${''}&numOfClusters=${numOfClusters}`;
-                await fetch(url, {
-                    headers: {
-                        'use-mock': 'true'
-                    }
-                })
+                await fetch(url)
                     .then(function (response) {
                         return response.json();
                     })
@@ -136,9 +125,6 @@ export const  setNewIteration = (id:string, count:number=100, filterItems: any, 
                     .catch(function (error) {
                         throw error;
                     });
-                // dispatch({ type: "CREATE_QUERY",
-                //     payload: { ...queryParams, queryId: res.queryId}
-                // });
             })
             .catch(function (error) {
                 throw error;

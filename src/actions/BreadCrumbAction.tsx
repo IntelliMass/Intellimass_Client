@@ -25,11 +25,7 @@ export const getBreadcrumb = (queryId: string): (dispatch: any) => Promise<void>
 
     async dispatch => {
         const url = `${URL_GET_BREADCRUMBS}?id=${queryId}`;
-        await fetch(url, {
-            headers: {
-                'use-mock': 'true'
-            }
-        })
+        await fetch(url)
             .then(function (response) {
                 return response.json();
             })
@@ -89,9 +85,6 @@ export const uploadBreadcrumbs = (breadCrumb: IBreadCrumb, queryId:string): (dis
         await fetch(url, {
             method: 'post',
             body: JSON.stringify(body),
-            headers: {
-                'use-mock': 'true'
-            }
         })
             .then(function (response) {
                 return response.json();
