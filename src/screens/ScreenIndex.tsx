@@ -12,12 +12,6 @@ import {useHistory} from "react-router-dom";
 type ResearchesScreenProps = {};
 
 const ScreenIndex: React.FC<ResearchesScreenProps> = () => {
-    const history = useHistory();
-    useEffect(()=>{
-        history.replace('/home');
-    },[])
-
-
     return (
         <div >
             <Header/>
