@@ -38,7 +38,7 @@ export function SemanticNetworkComp(props) {
                     nodeThreeObject={node => {
                         const sprite = new SpriteText(node.title);
                         sprite.color = 'pink';
-                        sprite.textHeight = 8;
+                        sprite.textHeight = node.size;
                         return sprite;
                     }}
                     width={1630}
