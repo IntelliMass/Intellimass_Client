@@ -3,7 +3,7 @@ import {Table, Tag, Space, Tooltip} from 'antd';
 import "../collection-container/CollectionContainer.scss"
 import {ArticleOfList, Author, Topic, updatePaperID} from "../../actions/ArticleActions";
 import {DeleteOutlined, MoreOutlined} from "@ant-design/icons";
-import {useAppDispatch} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {useHistory} from "react-router-dom";
 import Swal from "sweetalert2";
 import {removeFromCollection} from "../../actions/CollectionAction";
@@ -48,6 +48,7 @@ export const getCollectionName = (collections : ICollection[], paperId: string )
 
 export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
    const {articles, collection} = props;
+    const userid = useAppSelector<string>(state => state.user.userName) || 'userId';
 
     const dispatch = useAppDispatch();
     const history = useHistory();
@@ -70,7 +71,7 @@ export const CollectionTable: React.FC<CollectionTableProps> = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // @ts-ignore
-                dispatch(removeFromCollection("test", "anar", collection.collection, getCollectionName(collection.collection, paperID), paperID))
+                dispatch(removeFromCollection("test", userid, collection.collection, getCollectionName(collection.collection, paperID), paperID))
                 Swal.fire(
                     'Removed!',
                     'Your article has been removed.',

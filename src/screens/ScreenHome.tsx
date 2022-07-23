@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../hooks/hooks"
+import {useAppSelector} from "../hooks/hooks"
 import {useHistory} from "react-router-dom";
 import {CollectionContainer} from "../components/collection-container/CollectionContainer";
 import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
@@ -7,7 +7,6 @@ import {CollectionState} from "../reducers/CollectionResucer";
 import {ArticleOfList} from "../actions/ArticleActions";
 import {Spin} from "antd";
 import "../index.scss";
-import {login} from "../actions/UserActions";
 
 type HomeScreenProps = {};
 
@@ -16,16 +15,6 @@ const HomeScreen: React.FC<HomeScreenProps> = (props) => {
     const history = useHistory();
     const collection = useAppSelector<CollectionState>(state => state.collection.collection);
     const [isLoader, setIsLoader] = useState<boolean>(false);
-    const dispatch = useAppDispatch();
-
-    useEffect(()=>{
-        const user = {
-            userName: 'Oranit',
-            userPassword:  'Oranit',
-            userId: 'Oranit'
-        }
-        dispatch(login(user ));
-    },[])
 
     useEffect(()=>{
         if (userId === ''){

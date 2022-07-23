@@ -9,6 +9,7 @@ import { Amplify } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
+
 Amplify.configure(awsExports);
 
 const formItemLayout = {
@@ -16,9 +17,8 @@ const formItemLayout = {
     wrapperCol: { span: 14 },
 };
 
-// export const AuthenticationForm = withAuthenticator(() => {
-    export const AuthenticationForm = (() => {
-        const [isLoader, setIsLoader] = useState<boolean>(false);
+export const AuthenticationForm = withAuthenticator(() => {
+    const [isLoader, setIsLoader] = useState<boolean>(false);
     const [isSubmitSelected, setIsSubmitSelected] = useState<boolean>(false);
 
     const [formLayout, setFormLayout] = useState<string>('Login');
@@ -137,4 +137,4 @@ const formItemLayout = {
         </div>
     );
 });
-// });
+

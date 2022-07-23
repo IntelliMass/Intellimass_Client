@@ -18,7 +18,7 @@ export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
 
     return (
         <div className="home-data-container">
-            <span className="title-home">Hey {userName || 'Oranit'}, Let's discover articles with IntelliMass</span>
+            <span className="title-home">Hey {userName || 'User'}, Let's discover articles with IntelliMass</span>
             <Row>
                 <Col className="Col-total">
                     <div className="stati concrete ">
