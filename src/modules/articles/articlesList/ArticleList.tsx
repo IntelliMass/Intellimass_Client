@@ -85,7 +85,7 @@ export const ArticleList: React.FC<ArticleListProps> = (props) => {
                             onClick={() => minus()}
                     />
                 </Tooltip>
-                <span style={{marginLeft: "5%"}}> Original Articles number ( 300 )</span>
+                <span style={{marginLeft: "5%"}}> Original Articles number ( {count} )</span>
             </div>
             <List
                 itemLayout="vertical"

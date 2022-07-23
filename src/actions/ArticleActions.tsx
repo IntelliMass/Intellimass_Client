@@ -149,11 +149,7 @@ export const getArticleDetail = (articleId:string, queryID:string = "e4b549da-d0
 export const getFilteredArticles = (id:string, filterItems:string="", limit:number=100, clusters:string="", numOfClusters: number=4): (dispatch: any) => Promise<void> =>
     async dispatch => {
         let URL_GET_ARTICLES = `${URL_GET_FILTERED_ARTICLES}?id=${id}&count=${limit.toString()}&filters=${filterItems}&clusters=${clusters}&numOfClusters=${numOfClusters}`;
-        await fetch(URL_GET_ARTICLES, {
-            headers: {
-                'use-mock': 'true'
-            }
-        })
+        await fetch(URL_GET_ARTICLES)
             .then(function (response) {
                 return response.json();
             })
@@ -166,8 +162,6 @@ export const getFilteredArticles = (id:string, filterItems:string="", limit:numb
                 throw error;
             });
     }
-
-    //            headers: { 'use-mock:': 'true' }
 
 export function updateCount(count:number) {
     return {

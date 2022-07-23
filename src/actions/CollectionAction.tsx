@@ -73,9 +73,6 @@ export const  insertToCollection = (id:string, userid: string, collections: Arra
         await fetch(url, {
             method: 'POST',
             body: JSON.stringify(body),
-            headers: {
-                'use-mock': 'true'
-            }
         })
             .then(function (response) {
                 return response.json();
