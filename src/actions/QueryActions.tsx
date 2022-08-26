@@ -1,4 +1,10 @@
-import {joinQuery, QueryState} from "../reducers/QueryReducer"
+/**
+ * Redux architecture
+ * Query action file
+ * */
+import {QueryState} from "../reducers/QueryReducer";
+
+//ACTION TYPES
 type QueryCreateAction = {type: "CREATE_QUERY", payload: QueryState}
 type QueryUpdateKeywordsAction = {type: "UPDATE_KEYWORDS", payload: Array<string>}
 type QueryUpdateFromBreadcrumbsAction = {type: "UPDATE_QUERY_FROM_BREADCRUMBS", payload: Array<string>}
@@ -61,7 +67,12 @@ export function updateQueryKeywords(keywordsList:Array<string>):QueryUpdateKeywo
     };
 }
 
-
+/**
+ * Update query parameters from upload breadcrumb state
+ *
+ * @param  keY words list
+ * @return {dispatch} Type + payload.
+ */
 export function updateQueryFromBreadCrumbs(keywordsList:Array<string>):QueryUpdateFromBreadcrumbsAction {
     return {
         type: "UPDATE_QUERY_FROM_BREADCRUMBS",

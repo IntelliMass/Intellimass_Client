@@ -1,3 +1,9 @@
+/**
+ * Redux architecture
+ * Articles action file
+ * */
+
+//ACTION TYPES
 type GetArticlesAction = {type: "GET_ARTICLES", payload: ArticleOfList }
 type GetArticleDetailAction = {type: "GET_ARTICLE_DETAIL", payload: ArticleDetail}
 type UpdateCountAction = {type: "UPDATE_ARTICLES_COUNT", payload: number}
@@ -89,10 +95,6 @@ let URL_GET_ARTICLES_NEW = "https://api.intellimass.net/articles/articles";
 let URL_GET_ARTICLE_NEW = "https://api.intellimass.net/getOne";
 let URL_GET_FILTERED_ARTICLES = "https://api.intellimass.net/articles";
 
-
-let OFFSET = 100;
-let FIELDS = "title,authors,abstract,fieldsOfStudy,influentialCitationCount,isOpenAccess,paperId,venue,year";
-
 /**
  * Get Articles from the server
  * @return {dispatch} Type + payload.
@@ -140,8 +142,6 @@ export const getArticleDetail = (articleId:string, queryID:string = "e4b549da-d0
             });
     }
 
-
-
 /**
  * Get Articles from the server
  * @return {dispatch} Type + payload.
@@ -163,6 +163,9 @@ export const getFilteredArticles = (id:string, filterItems:string="", limit:numb
             });
     }
 
+/**
+ * Update articles amount
+ */
 export function updateCount(count:number) {
     return {
         type: "UPDATE_ARTICLES_COUNT",
@@ -170,6 +173,9 @@ export function updateCount(count:number) {
     };
 }
 
+/**
+ * Update selected article
+ */
 export function updatePaperID(newID:string) {
     return {
         type: "UPDATE_SELECTED_PAPER_ID",
@@ -177,6 +183,9 @@ export function updatePaperID(newID:string) {
     };
 }
 
+/**
+ * reset articles list
+ */
 export function resetArticles() {
     return {
         type: "RESET_ARTICLES",
@@ -184,6 +193,9 @@ export function resetArticles() {
     };
 }
 
+/**
+ * Update articles state from breadcrumb changes
+ */
 export function updateCountFromBreadcrum(count: number) {
     return {
         type: "UPDATE_NUMBER_BY_BREADCRUMBS",

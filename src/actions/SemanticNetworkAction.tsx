@@ -1,6 +1,11 @@
+/**
+ * Redux architecture
+ * Semantic Network action file
+ * */
 import {NetworkState} from "../reducers/SemanticNetworkReducer";
-import {customLinks, customNodes, customSemanticLinks} from "./NetworkAction";
+import { customNodes, customSemanticLinks} from "./NetworkAction";
 
+//ACTION TYPES
 type getNetworkAction = {type: "GET_SEMANTIC_NETWORK", payload: any };
 export type SemanticNetworkAction = getNetworkAction;
 

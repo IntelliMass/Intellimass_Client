@@ -1,7 +1,11 @@
-import {UserState} from "../reducers/UserReducer";
-import {joinQuery, QueryState} from "../reducers/QueryReducer";
+/**
+ * Redux architecture
+ * User async action file
+ * */
 
-export type SharedAction = {type: "SIGN_UP  LOGIN  SIGN_OUT\n", payload: string}
+import {UserState} from "../reducers/UserReducer";
+
+//ACTION TYPES
 type signupAction = {type: "SIGN_UP", payload: any }
 type loginAction = {type: "LOGIN", payload: any}
 type logoutAction = {type: "SIGN_OUT", payload: string}
@@ -14,10 +18,9 @@ let NODE_SERVER = "http://localhost:8080/";
 /**
  * SIGN UP NEW USER
  *
- * @param userState:string user name, pass, id
+ * @param  user name, pass, id
  * @return {dispatch} Type + payload.
  */
-
 export const  signup = (userState: UserState): (dispatch: any) => Promise<void> =>{
     const body = {userName: userState.userName, password: userState.userPassword};
     const path = NODE_SERVER + 'api/signup'

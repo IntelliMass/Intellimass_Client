@@ -1,7 +1,13 @@
+/**
+ * Redux architecture
+ * Properties action file
+ * */
+
 import {IMetadata, NewMetadata, ServerMetadata} from "../reducers/MetadataReducer";
 import {IMetadataWithCategory} from "../components/new-metadata-list/NewMetadataList";
 import {ServerStringMetadata} from "../reducers/BreadcrumbReducer";
 
+//ACTION TYPES
 type UpdateMetadataAction = {type: "UPDATE_METADATA", payload: any }
 type UpdateSelectedMetadataAction = {type: "UPDATE_SELECTED_METADATA", payload: any}
 type ResetMetadataAction = {type: "RESET_METADATA", payload: any}
@@ -11,6 +17,13 @@ export type MetadataAction = UpdateMetadataAction|  UpdateSelectedMetadataAction
 
 let URL_GET_METADATA_NEW = "https://api.intellimass.net/metadata";
 
+
+/**
+ * Middleware for custom metadata
+ *
+ * @param  one metadata object
+ * @return new metadata custom object
+ */
 export const customMetadataMiddleware = (metadata:ServerMetadata):NewMetadata  =>{
     let authors: Array<IMetadata> = [];
     let topics:  Array<IMetadata> = [];
@@ -85,7 +98,11 @@ export function resetMetadata() {
     };
 }
 
-
+/**
+ * upload the metadata from breadcrum state
+ *
+ * @param  list of metadata
+ */
 export function updateMetadataFromBreadcrumbs(items:ServerStringMetadata[]) {
 
     let newMetadataArray:IMetadata;

@@ -1,6 +1,10 @@
-import {CollectionState, ICollection} from "../reducers/CollectionResucer";
-import {ArticleOfList} from "./ArticleActions";
-import {joinQuery, QueryState} from "../reducers/QueryReducer";
+/**
+ * Redux architecture
+ * Collection action file
+ * */
+
+//ACTION TYPES
+import {ICollection} from "../reducers/CollectionResucer";
 
 type GetCollectionsAction = {type: "GET_COLLECTIONS", payload: any };
 type UpdateCollectionNameAction = {type: "UPDATE_COLLECTION_NAME", payload: any};
@@ -41,7 +45,10 @@ export const getCollections = (userid:string): (dispatch: any) => Promise<{ payl
         };
     }
 
-
+/**
+ * Update collection name
+ * @return {dispatch} Type + payload.
+ */
 export const  changeCollectionName = (id:string, userid:string, collections: Array<ICollection>, oldName:string, newName: string): (dispatch: any) => Promise<void> =>{
     const url = `${URL_COLLECTIONS}rename_collection?user_id=${userid}`;
     const body = {collection_name: oldName, new_collection: newName};
@@ -64,6 +71,10 @@ export const  changeCollectionName = (id:string, userid:string, collections: Arr
     }
 }
 
+/**
+ * Update collection's article by adding new article
+ * @return {dispatch} Type + payload.
+ */
 export const  insertToCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId: string): (dispatch: any) => Promise<void> =>{
     const url = `${URL_COLLECTIONS}insert_article?user_id=${userid}&query_id=${id}`;
     const body = {collection_name: collectionName, article_id: paperId};
@@ -86,6 +97,10 @@ export const  insertToCollection = (id:string, userid: string, collections: Arra
     }
 }
 
+/**
+ * Update collection's article by adding remove article
+ * @return {dispatch} Type + payload.
+ */
 export const  removeFromCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string, paperId:string): (dispatch: any) => Promise<void> =>{
     const url = `${URL_COLLECTIONS}pop_article?user_id=${userid}`;
     const body = {collection_name: collectionName, article_id: paperId};
@@ -109,6 +124,10 @@ export const  removeFromCollection = (id:string, userid: string, collections: Ar
 }
 
 
+/**
+ * Delete collection
+ * @return {dispatch} Type + payload.
+ */
 export const  deleteCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string): (dispatch: any) => Promise<void> =>{
     const url = `${URL_COLLECTIONS}collection_delete?user_id=${userid}`;
     const body = {collection_name: collectionName};
@@ -131,6 +150,10 @@ export const  deleteCollection = (id:string, userid: string, collections: Array<
     }
 }
 
+/**
+ * Create new collection with a collection name and user id
+ * @return {dispatch} Type + payload.
+ */
 export const  createCollection = (id:string, userid: string, collections: Array<ICollection>, collectionName: string): (dispatch: any) => Promise<void> =>{
     const url = `${URL_COLLECTIONS}create_collection?user_id=${userid}`;
     const body = {collection_name: collectionName};

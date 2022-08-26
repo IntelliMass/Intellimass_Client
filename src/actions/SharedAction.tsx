@@ -1,4 +1,9 @@
+/**
+ * Redux architecture
+ * Shared sync action file
+ * */
 
+//ACTION TYPES
 export type SharedAction = {type: "SET_THEME", payload: string}
 
 /**

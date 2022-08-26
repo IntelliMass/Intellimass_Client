@@ -1,6 +1,10 @@
+/**
+ * Redux architecture
+ * Categories action file
+ * */
 import {INewSingleCatalog} from "../reducers/CatalogReducer";
-import {QueryState} from "../reducers/QueryReducer";
 
+//ACTION TYPES
 type UpdateCatalogAction = {type: "GET_CATALOG", payload: any }
 type UpdateSelectedAction = {type: "UPDATE_CATALOG", payload: any}
 type UpdateNumberOfClustersAction = {type: "UPDATE_NUMBER_OF_CLUSTERS", payload: any}
@@ -13,6 +17,9 @@ export type CatalogAction = UpdateCatalogAction|  UpdateSelectedAction | UpdateN
 let URL_GET_CATEGORIES_NEW = "https://api.intellimass.net/clusters";
 let URL_POST_ITERATION = "https://api.intellimass.net/new_iter";
 
+/**
+ * Extract string categories from categories list
+ */
 export const stringCategoriesFromArray = (categories: Array<INewSingleCatalog>) => {
     let newParams = "";
     categories.forEach(category => {
@@ -59,18 +66,20 @@ export function patchCategories(selectedCategories:Array<INewSingleCatalog> ) {
     };
 }
 
-    /**
-     * patch selected Metadata to filter articles
-     * @return {dispatch} Type + payload.
-     */
-    export function patchNumberOfCluster(newNumber: number ) {
-        return {
-            type: "UPDATE_NUMBER_OF_CLUSTERS",
-            payload:  newNumber
-        };
-    }
+/**
+ * patch selected Metadata to filter articles
+ * @return {dispatch} Type + payload.
+ */
+export function patchNumberOfCluster(newNumber: number ) {
+    return {
+        type: "UPDATE_NUMBER_OF_CLUSTERS",
+        payload:  newNumber
+    };
+}
 
-
+/**
+ * Reset the categories
+ */
 export function resetCluster() {
     return {
         type: "RESET_CATEGORIES",
@@ -78,14 +87,12 @@ export function resetCluster() {
     };
 }
 
-
+/**
+ * Update categories state from current breadcrumb
+ */
 export function updateCategoriesFromBreadcrumbs(selectedCategories: string[] , numOfClusters:number) {
-    console.log(selectedCategories)
-    //selectedCategories: INewSingleCatalog[]
     let resArray:INewSingleCatalog[] = [];
     selectedCategories.forEach(item => resArray.push({rank: 25, title: item}));
-    //    title: string,
-    //     rank: number
     return {
         type: "UPDATE_CATEGORIES_BREADCRUMBS",
         payload:  {

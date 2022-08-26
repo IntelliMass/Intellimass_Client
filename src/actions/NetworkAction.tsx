@@ -1,27 +1,28 @@
-import { string } from "prop-types";
+/**
+ * Redux architecture
+ * Network action file
+ * */
 import {INetwork} from "../reducers/NetworkReducer";
 
+//ACTION TYPES
 type getNetworkAction = {type: "GET_NETWORK", payload: any }
 type getFilteredNetworkAction = {type: "GET_FILTERED_NETWORK", payload: any}
 type UpdateConnectionAction = {type: "UPDATE_CONNECTION_TYPE", payload: string}
 
 export type NetworkAction = getNetworkAction| UpdateConnectionAction|  getFilteredNetworkAction;
 
-
-
-let URL_GET_NETWORK = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/network";
-let URL_GET_FILTERED_NETWORK = "https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/filter-network";
 let URL_GET_NETWORK_NEW = "https://api.intellimass.net/network";
-
-
-//f3b3b7a0-eed7-49e0-a21a-d540d6cc22db
-// https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/network?id=3cf608e5-a8aa-4eed-a2dd-832f51fc4fb3&size=100&feature=Authors
-// https://6ic62rws84.execute-api.eu-west-2.amazonaws.com/dev/network?id=44e50536-7d82-4426-b88f-888ad408181f&size=100&feature=Authors
 
 export const customValue = (listAuthorsNames: Array<string>) => {
     return listAuthorsNames.join();
 };
 
+/**
+ * Middleware for custom nodes
+ *
+ * @param  nodes list
+ * @return {dispatch} Type + payload.
+ */
 export const customNodes = (nodes: Array<any>):Array<any> => {
     let newNodes:Array<any>  = [];
     let newNode = {};
@@ -38,6 +39,12 @@ export const customNodes = (nodes: Array<any>):Array<any> => {
     return newNodes;
 }
 
+/**
+ * Middleware for custom links
+ *
+ * @param  links list
+ * @return {dispatch} Type + payload.
+ */
 export const customLinks = (links: Array<any>):Array<any> => {
     let newLinks:Array<any>  = [];
     let newLink = {};
@@ -53,6 +60,12 @@ export const customLinks = (links: Array<any>):Array<any> => {
     return newLinks;
 }
 
+/**
+ * Middleware for custom semantic links
+ *
+ * @param  links list
+ * @return {dispatch} Type + payload.
+ */
 export const customSemanticLinks = (links: Array<any>):Array<any> => {
     let newLinks:Array<any>  = [];
     let newLink = {};
@@ -70,6 +83,12 @@ export const customSemanticLinks = (links: Array<any>):Array<any> => {
 }
 
 
+/**
+ * Middleware for custom nodes
+ *
+ * @param  links list
+ * @return {dispatch} Type + payload.
+ */
 export const customNodesSize = (network: INetwork) => {
     // COUNT OF CONNECTION ON EACH NODE
     let nodesNewSizes: Array<string> = [];
@@ -118,10 +137,6 @@ export const getNetwork = (id:string, filterItems:string="", feature:string="fre
                     nodes: customNodes(network.network.nodes),
                     links: customLinks(network.network.links),
                 }
-                // const networkNodesAfterResize = {
-                //     nodes: [...customNodesSize(customNetwork)],
-                //     links: customNetwork.links
-                // } ;
                 dispatch({type: "GET_NETWORK",
                     payload:  customNetwork
                 });
@@ -131,27 +146,12 @@ export const getNetwork = (id:string, filterItems:string="", feature:string="fre
             });
     }
 
-
 /**
- * Get filtered Network from the server
+ * Upadate the conection network type
+ *
+ * @param  type
  * @return {dispatch} Type + payload.
  */
-export const getFilteredNetwork = (categories:Array<string>): (dispatch: any) => Promise<void> =>
-    async dispatch => {
-        await fetch(URL_GET_FILTERED_NETWORK)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (network: any) {
-                dispatch({type: "GET_FILTERED_NETWORK",
-                    payload:  network
-                });
-            })
-            .catch(function (error) {
-                throw error;
-            });
-    }
-
 export function updateConnectionType(type:string) {
     return {
         type: "UPDATE_CONNECTION_TYPE",
