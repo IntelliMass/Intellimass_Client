@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
-import { Card, Divider, Tag, Button} from 'antd';
-import { getArticleDetail, ArticleDetail, ArticleOfList} from "../../actions/ArticleActions";
+import {  Divider, Tag } from 'antd';
+import { ArticleDetail } from "../../actions/ArticleActions";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks"
 
 import "./ArticleCard.scss"
 import { Author } from "../../actions/ArticleActions";
 import {UserOutlined} from "@ant-design/icons";
-import {CategoryTag} from "../category-tags/CategoryTag";
 import {useHistory} from "react-router-dom";
 import {GetMoreButton} from "../get-more/GetMore";
 
@@ -24,20 +23,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = (props) => {
     const [isGetDetail, setIsGetDetail] = useState<boolean>(false);
     const [localArticleDetail, setLocalArticleDetail] = useState<any>(articleDetail);
 
-    // useEffect(()=>{
-    //     // @ts-ignore
-    //     dispatch(getArticleDetail(article.paperId));
-    // },[])
-
     useEffect(()=>{
        const newArticle = {...articleDetail};
        setLocalArticleDetail(newArticle);
     },[articleDetail])
-
-    const showDetail = () => {
-        setIsGetDetail(!isGetDetail);
-        history.replace('/article');
-    };
 
     return (
         <div className="card-article-container">

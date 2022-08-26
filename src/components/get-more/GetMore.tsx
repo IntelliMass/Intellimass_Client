@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 import {ArticleOfList, getArticleDetail} from "../../actions/ArticleActions";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks"
 import Swal from 'sweetalert2'
-import {CollectionState, ICollection} from "../../reducers/CollectionResucer";
+import {CollectionState} from "../../reducers/CollectionResucer";
 import {insertToCollection} from "../../actions/CollectionAction";
 
 type GetMoreButtonProps = {
@@ -13,7 +13,7 @@ type GetMoreButtonProps = {
 };
 
 export const GetMoreButton: React.FC<GetMoreButtonProps> = (props) => {
-    const {paperId, article} = props;
+    const {paperId} = props;
     const collections = useAppSelector<CollectionState>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userName) || 'userId';
     const queryId = useAppSelector<string>(state => state.query.queryId) || 'queryId';

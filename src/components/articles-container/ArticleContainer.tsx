@@ -5,13 +5,10 @@ import "./ArticleContainer.scss"
 import {Alert, Button, Col, Form, InputNumber, Row, Spin} from "antd";
 import {SimpleNet} from "../network2/SimpleNet";
 import {getTitlesFromMetadata, MetadataList} from "../metadata-list/MetadataList";
-import {CategoriesList} from "../category-list/CategoryList";
-import {INetwork} from "../../reducers/NetworkReducer";
 import {customNodesSize, getNetwork, updateConnectionType} from "../../actions/NetworkAction";
-import {ArticleOfList, getArticleDetail, getArticles, getFilteredArticles, updateCount} from "../../actions/ArticleActions";
+import {ArticleOfList, getArticleDetail, getFilteredArticles, updateCount} from "../../actions/ArticleActions";
 import {ExpandableTopBar} from "../expended-bar/ExpandedBar";
 import {ServiceSummary} from "../expand-stattistic-panel/ExpandStatisticPanel";
-import {getMetadata} from "../../actions/MeatadataAction";
 import { Select } from 'antd';
 import {PlusOutlined, MinusOutlined} from "@ant-design/icons";
 import {ArticleCard} from "../article-card/ArticleCard";
@@ -105,8 +102,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         // @ts-ignore
         dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), connectionType, count));
 
-        // @ts-ignore
-      //  dispatch(getMetadata(queryId));
     },[ connectionType])
 
     useEffect(()=>{
@@ -131,7 +126,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
         } else if (value === "List"){
             // @ts-ignore
             dispatch(queryId, '', localCount);
-            // dispatch(getArticles(queryId));
         }
     }
 
@@ -140,11 +134,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
     }
 
     const ItemCurrentCount = () => {
-        // if (selectedPosition.type === "Categories"){
-        //     return(
-        //         <span className="count-items"> Categories number ( {catalog.length || '0'} ) </span>
-        //     );
-        // } else
         if (selectedPosition.type === "List"){
             return(
                 <span className="count-items"> Filtered articles number ( {articles.length || '0'} ) </span>
@@ -221,12 +210,6 @@ export const ArticlesContainer: React.FC<ArticlesContainerProps> = (props) => {
                         </div>
                     </ExpandableTopBar>
                 </div>
-                {/*{selectedPosition.type === "Categories" && <div className="categories-right-container">*/}
-                {/*    {isLoader ? <div className="loader-container">*/}
-                {/*        <Spin size="large" />*/}
-                {/*        <h4 className="loader-details">Searching for articles categories</h4>*/}
-                {/*    </div> :  <CategoriesList/>}*/}
-                {/*</div>}*/}
                 <ItemCurrentCount/>
                 {selectedPosition.type === "List" && <div className="articles-right-container">
                     {isLoader ? <div className="loader-container">

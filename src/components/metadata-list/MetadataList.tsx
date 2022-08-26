@@ -3,9 +3,7 @@ import './MetadataList.scss';
 import {Button, Divider, Select, Spin} from "antd";
 import Search from "antd/es/input/Search";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
-import {getMetadata, patchMetadata} from "../../actions/MeatadataAction";
-import {SimpleNet} from "../network2/SimpleNet";
-import {getArticleDetail, getFilteredArticles} from "../../actions/ArticleActions";
+import { patchMetadata} from "../../actions/MeatadataAction";
 import {getNetwork} from "../../actions/NetworkAction";
 import {IMetadata} from "../../reducers/MetadataReducer";
 import {Metadata} from "../metadata/Metadata";
@@ -15,9 +13,6 @@ type MetadataListProps = {
     metadataList: any[];
     savedMetadataList: any[];
 };
-
-export const FUNCTION_TYPE = "REMOVE_SAVED_METADATA" || "SELECT_UNSAVED_METADATA";
-export const LIST_TYPE = "SAVED" || "UN_SAVED";
 
 export const getTitlesFromMetadata = (metadataList:Array<IMetadata>) => {
     let titles: Array<string | number> = [];
@@ -86,50 +81,14 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
             // @ts-ignore
             dispatch(getNetwork(queryId, "frequentWords",getTitlesFromMetadata(savedMetadataList), 'Authors'));
 
-            // // @ts-ignore
-            // dispatch(patchMetadata(filteredSavedMetadataList));
         }
     },[savedMetadataList])
 
     const checkFilters = (items: IMetadata[]) => {
-        // const newItems = [...items];
-        // let newFiltered;
-        // // ALL SAME
-        // if (filterTitle === "" && filterTypeRank === "ALL"){
-        //     return items;
-        // }
-        // // TITLE CHANGE
-        // if (filterTitle != ""){
-        //     newFiltered = newItems.filter(item => item.title.includes(filterTitle));
-        //     return newFiltered? newFiltered : [];
-        // }
-        // // RANK CHANGE
-        // if (filterTypeRank === "MORE"){
-        //     newFiltered = items.filter(item => item.rank > parseInt(filterRank));
-        //     return newFiltered? newFiltered : [];
-        // } else if (filterTypeRank === "LESS"){
-        //     newFiltered = items.filter(item => item.rank < parseInt(filterRank));
-        //     return newFiltered? newFiltered : [];
-        // } else if (filterTypeRank === "EQUAL"){
-        //     newFiltered = items.filter(item => item.rank == parseInt(filterRank));
-        //     return newFiltered? newFiltered : [];
-        // }
         return [...items];
     }
 
     const onFilterByTitle = (value:string) => {
-        // const items = [...metadataList];
-        // const savedItems = [...savedMetadataList];
-        // if(value===""){
-        //     setFilteredMetadataList([...items]);
-        //     setFilteredSavedMetadataList([...savedItems]);
-        //     return;
-        // }
-        // // update
-        // const newFiltered = items.filter(item => item.title.includes(value));
-        // const newSavedFiltered = savedItems.filter(item => item.title.includes(value));
-        // newFiltered? setFilteredMetadataList([...newFiltered]) : setFilteredMetadataList([]);
-        // newSavedFiltered? setFilteredSavedMetadataList([...newSavedFiltered]) : setFilteredSavedMetadataList([]);
         return;
     };
 
@@ -201,16 +160,12 @@ export const MetadataList: React.FC<MetadataListProps> = (props) => {
             else
                 newUnsavedMetadataList.push(metadata);
         });
-        // setMetadataList([...newUnsavedMetadataList]);
-        // setSavedMetadataList([...filteredSavedMetadataList,...newSavedMetadataList]);
-        // FILTER
 
         // @ts-ignore
         dispatch(patchMetadata(metadataList, savedMetadataList));
     }
 
     const onMetadataChange = (listName: string, changeType: string, id:string ) => {
-        // become reducer later
         // SELECTED
         const newMeta = [...metadataList];
 

@@ -14,7 +14,6 @@ type CollectionContainerProps = {};
 export const CollectionContainer: React.FC<CollectionContainerProps> = (props) => {
     const collections = useAppSelector<CollectionState>(state => state.collection.collection);
     const userid = useAppSelector<string>(state => state.user.userName) || 'userId';
-    const queryId = useAppSelector<string>(state => state.query.queryId);
     const dispatch = useAppDispatch()
 
     useEffect(()=>{

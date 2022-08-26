@@ -3,10 +3,9 @@ import './NavBar.scss';
 import NavigationMenu from '../navigation-menu/NavigationMenu';
 import {useHistory, useLocation} from 'react-router-dom';
 import {MenuDrawer} from '../drawer/Drawer';
-import { ImportOutlined, AppstoreOutlined, CloseOutlined } from '@ant-design/icons';
+import { ImportOutlined } from '@ant-design/icons';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks'
-import {changeTheme} from "../../actions/SharedAction";
-import {login, logout} from "../../actions/UserActions";
+import {logout} from "../../actions/UserActions";
 
 
 interface INavBarProps {}

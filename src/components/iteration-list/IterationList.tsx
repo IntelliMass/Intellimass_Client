@@ -1,9 +1,7 @@
 import React from "react";
 import './IterationList.scss';
 import CAKE from '../../assets/cake.png';
-import {CategoryTag} from "../category-tags/CategoryTag";
 import {Tag} from "antd";
-import {UserOutlined} from "@ant-design/icons";
 
 
 type IterationListProps = {

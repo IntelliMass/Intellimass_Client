@@ -14,15 +14,6 @@ type CollectionTableProps = {
     collection: CollectionState
 };
 
-
-export interface VisualCollectionRow {
-    title: string,
-    year: number,
-    authors: Array<Author>,
-    frequentWords: Array<string>,
-    paperId: string,
-}
-
 export interface VisualCollectionRowNew {
     title: string,
     year: number,

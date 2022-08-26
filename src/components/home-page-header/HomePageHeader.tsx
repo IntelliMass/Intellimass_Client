@@ -1,10 +1,7 @@
 import React from "react";
 import { useAppSelector } from "../../hooks/hooks"
-import {Button, Col, Row} from 'antd';
-import {UiTitle} from "../ui-title/UiTitle";
+import { Col, Row} from 'antd';
 import "./HomePageHeader.scss"
-import Swal from "sweetalert2";
-import {createCollection} from "../../actions/CollectionAction";
 
 type HomePageHeaderProps = {
     numberOfCollection: number,
@@ -38,24 +35,6 @@ export const HomePageHeader: React.FC<HomePageHeaderProps> = (props) => {
                         </div>
                     </div>
                 </Col>
-                {/*<Col className="Col-total">*/}
-                {/*    <div className="stati bg-concrete ">*/}
-                {/*        <i className="icon-basket icons"></i>*/}
-                {/*        <div>*/}
-                {/*            <b>{props.numberOfFrequentsWord}</b>*/}
-                {/*            <span>Total frequents word</span>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</Col>*/}
-                {/*<Col className="Col-total">*/}
-                {/*    <div className="stati bg-concrete ">*/}
-                {/*        <i className="icon-bag icons"></i>*/}
-                {/*        <div>*/}
-                {/*            <b>{props.numberOfArticles}</b>*/}
-                {/*            <span>Total authors</span>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</Col>*/}
             </Row>
         </div>
     );

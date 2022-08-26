@@ -4,11 +4,7 @@ import "./BreadCrumbList.scss";
 import {getBreadcrumb, uploadBreadcrumbs} from "../../actions/BreadCrumbAction";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {IBreadCrumb, ServerStringMetadata} from "../../reducers/BreadcrumbReducer";
-import {string} from "prop-types";
-import {HomePageHeader} from "../home-page-header/HomePageHeader";
-import {CollectionContainer} from "../collection-container/CollectionContainer";
 import Swal from "sweetalert2";
-import {patchMetadata} from "../../actions/MeatadataAction";
 
 type BreadCrumbListProps = {
 };
