@@ -23,8 +23,6 @@ export interface IMetadataWithCategory {
     category: string
 }
 
-export const FUNCTION_TYPE = "REMOVE_SAVED_METADATA" || "SELECT_UNSAVED_METADATA";
-export const LIST_TYPE = "SAVED" || "UN_SAVED";
 
 export const fromCatalogToArray = (metadata: NewMetadata, savedMetaata: Array<IMetadataWithCategory>) => {
     const newSavedMetadata: Array<IMetadataWithCategory> = [...savedMetaata];
@@ -128,16 +126,6 @@ export const NewMetadataList: React.FC<MetadataListProps> = (props) => {
         // @ts-ignore
         dispatch( getMetadata(queryId, numberOfArticles, metadataListToSerialize(saved), stringCategoriesFromArray(categories), numberOfClusters));
     },[])
-
-    // useEffect(()=>{
-    //     setIsLoader(true);
-    //     const saved = [...state_savedMetadataList];
-    //     // @ts-ignore
-    //     dispatch(resetMetadata());
-    //
-    //     // @ts-ignore
-    //     dispatch( getMetadata(queryId, 100, metadataListToSerialize(saved), categories, numberOfClusters));
-    // },[queryId])
 
 
     /**

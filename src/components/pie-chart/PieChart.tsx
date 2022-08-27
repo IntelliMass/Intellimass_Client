@@ -48,14 +48,9 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
             }
         },
         colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263','#6AF9C4'],
-        /*
-        *    Highcharts.setOptions({
-     colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263',      '#6AF9C4']
-        * */
         plotOptions: {
             pie: {
                 size: 180,
-                // allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
@@ -74,51 +69,14 @@ export const PieChartComponent: React.FC<PieChartProps> = (props) => {
                                 selectedCategories.push({title: point.options.name, rank: point.options.y})
                             });
                             props.onSelect(selectedCategories);
-                            // props.onSelect(this.series.chart.getSelectedPoints());
                         }
                     }
                 },
             },
-
-                // point: {
-                //     events: {
-                //         click: function(this:any, event:any){
-                //             this.slice(null);
-                //             this.select(null, true);
-                //         }
-                //         // mouseOver() {},
-                //         // mouseOut() {},
-                //         // select: function(this:any, event:any){
-                //         //     event.preventDefault();
-                //         //     this.slice(this.sliced);
-                //         //     // props.onSelect(this.value, this.color);
-                //         // },
-                //         // unselect: function(this:any, event:any){
-                //         //     // event.preventDefault();
-                //         //     // this
-                //         // }
-                //         // click(this: any, event: any) {
-                //         //     const color = event.target.point.color;
-                //         //     const value = event.target.point.name;
-                //         //     event.preventDefault();
-                //         //     // props.onSelect(value, color);
-                //         // },
-                //         // select: function(event:any){
-                //             // event.preventDefault();
-                //             // this.slice(this.sliced);
-                //         // },
-                //         // remove(event: any){
-                //             // return true;
-                //         // }
-                //     }
-                // }
         },
         series: [
             {
                 data: createDataSeries(props.categories),
-                // fillColor: {
-                //     linearGradient: [0, 0, 0, 300],
-                // }
             }
         ]
     };

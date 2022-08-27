@@ -4,7 +4,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {Button, Input, Select} from "antd";
 import Swal from "sweetalert2";
 import {updateQueryKeywords} from "../../actions/QueryActions";
-import {OperatorTag} from "../tag/OperatorTag";
 
 interface QueryListHeaderProps {}
 
@@ -72,10 +71,6 @@ export const QueryListHeader = (props: QueryListHeaderProps) => {
     },[])
     return (
         <div className="query-list">
-            {/*<Select className="select-operator" >*/}
-            {/*    <Select.Option value="AND"><OperatorTag operator={"AND"}/></Select.Option>*/}
-            {/*    <Select.Option value="OR"><OperatorTag operator={"OR"}/></Select.Option>*/}
-            {/*</Select>*/}
             <Input  size="large" value={queryString} onChange={onChange} className="input-query"/>
             <Button size="large" type="primary" onClick={onSearch} className="button-query">Search</Button>
         </div>
