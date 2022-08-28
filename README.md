@@ -7,7 +7,7 @@ A system for researchers to improve the research process on the big data era.
 
 
 ## Demo
-![DEMO](https://www.youtube.com/watch?v=yt_wwqp0PmE)
+https://www.youtube.com/watch?v=yt_wwqp0PmE
 
 ## 🏁 Technology Stack
 - [React](https://reactjs.org/)
