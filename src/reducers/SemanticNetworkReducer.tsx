@@ -1,4 +1,3 @@
-import {customLinks, customNodes, NetworkAction} from "../actions/NetworkAction";
 import {SemanticNetworkAction} from "../actions/SemanticNetworkAction";
 
 export interface ISemanticNetwork {
@@ -8,17 +7,6 @@ export interface ISemanticNetwork {
 
 export interface NetworkState {
     network : ISemanticNetwork ;
-}
-
-export interface ISemanticNode {
-    title: string,
-    size: number
-}
-
-export interface ISemanticLink {
-    source: string,
-    target: string,
-    size: number
 }
 
 const initState = {

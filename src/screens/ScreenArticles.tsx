@@ -1,15 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import "../index.scss"
-import {ArticlesContainer} from "../components/articles-container/ArticleContainer";
 import {useHistory} from "react-router-dom";
-import {HomePageHeader} from "../components/home-page-header/HomePageHeader";
-import {CollectionContainer} from "../components/collection-container/CollectionContainer";
 import {IMetadataWithCategory, NewMetadataList} from "../components/new-metadata-list/NewMetadataList";
 import {ArticleOfList, getFilteredArticles, resetArticles, updateCountFromBreadcrum} from "../actions/ArticleActions";
 import {ArticleList} from "../modules/articles/articlesList/ArticleList";
 import {Spin} from "antd";
-import {getTitlesFromMetadata} from "../components/metadata-list/MetadataList";
 import {MenuButton2} from "../components/menu-button/MenuButton2";
 import {ClusterContainer} from "../components/cluster-container/ClusterContainer";
 import {ExportAction} from "../components/exort-action/ExportAction";
@@ -23,14 +19,6 @@ import {updateMetadataFromBreadcrumbs} from "../actions/MeatadataAction";
 
 
 type ScreenProfileProps = {};
-
-export const truncateMetadataType = (type: string) => {
-    if (type === "AUTHORS")  return "authors";
-    else if(type === "TOPICS") return "topics";
-    else if(type === "COMMON_WORDS") return "frequentWords";
-    else if(type === "YEARS") return "year";
-    else return "fieldsOfStudy";
-}
 
 
 export const truncateMetadataTypeToObject = (metadata: IMetadataWithCategory) => {
